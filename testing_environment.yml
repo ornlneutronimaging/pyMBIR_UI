@@ -1,0 +1,14 @@
+name: pyMBIR_UI
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.7
+  - pyqt=5.*
+  - astropy
+  - numpy
+  - scipy
+  - qtpy=1.9*
+  - pip
+  - pip:
+      - pyqtgraph

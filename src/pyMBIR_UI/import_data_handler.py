@@ -1,0 +1,301 @@
+from qtpy.QtWidgets import QFileDialog
+from qtpy import QtGui
+import os
+import logging
+
+from dataio import DataScan, DataType, NgiExperiment, DataImage
+
+from .status_message_config import show_status_message, StatusMessageStatus
+from .utilities.file_utilities import get_list_files
+from .filter_tab_handler import FilterTabHandler
+
+
+class ImportDataHandler:
+    list_ui = None
+
+    def __init__(self, parent=None, data_type=DataType.sample):
+        """
+        Parameters:
+        data_type: DataType object (DataType.sample, DataType.ob or DataType.di)
+        """
+        self.parent = parent
+        self.data_type = data_type
+        self.config = self.parent.config
+        self.list_ui = self.parent.list_ui
+
+    def browse_via_filedialog(self):
+        """
+        retrieve the full list of files found in the defined location
+        """
+        folder_name = QFileDialog.getExistingDirectory(self.parent,
+                                                       caption='Select directory',
+                                                       directory=self.parent.homepath)
+        if len(folder_name) > 0:
+            self.update_widgets_with_list_of_files(folder_name=folder_name)
+
+    def browse_via_manual_input(self):
+        folder_name = str(self.list_ui['folder lineEdit'][self.data_type].text())
+        logging.info(f"browse {self.data_type} via manual input: {folder_name}")
+        self.update_widgets_with_list_of_files(folder_name=folder_name)
+
+    def _fill_list_of_files_combo_boxes(self, list_files=None):
+        data_type = self.data_type
+
+        self.list_ui['first file comboBox'][data_type].blockSignals(True)
+        self.list_ui['last file comboBox'][data_type].blockSignals(True)
+        self.list_ui['first file comboBox'][data_type].addItems(list_files)
+
+        self.list_ui['first file comboBox'][data_type].setCurrentIndex(0)
+        self.list_ui['last file comboBox'][data_type].addItems(list_files)
+        self.list_ui['last file comboBox'][data_type].setCurrentIndex(len(list_files) - 1)
+        self.list_ui['first file comboBox'][data_type].blockSignals(False)
+        self.list_ui['last file comboBox'][data_type].blockSignals(False)
+
+    def update_widgets_with_list_of_files(self, folder_name="./"):
+        """
+        this retrieve the list of files and then updated the widgets such as clear comboBox,
+        populate them with list of files, and enable
+        or not the widgets if files have been found or not.
+        """
+
+        if len(folder_name) == 0:
+            return
+
+        folder_name = os.path.abspath(folder_name)
+        logging.info(f"Looking for {self.data_type} in {folder_name}")
+
+        data_type = self.data_type
+        if not os.path.exists(folder_name):
+            # folder does not exist
+            self.list_ui['first file comboBox'][data_type].clear()
+            self.list_ui['last file comboBox'][data_type].clear()
+            self.parent.list_files[data_type] = None
+            widgets_state = False
+            show_status_message(parent=self.parent,
+                                message="Folder does not exist!",
+                                status=StatusMessageStatus.error,
+                                duration_s=5)
+            logging.error(f"Folder does not exist!")
+
+        else:
+            # folder exists
+            file_extension = self.config['list_of_instruments'][self.parent.selected_instrument]["file_extension"]
+            list_files = get_list_files(directory=str(folder_name), file_extension=file_extension)
+            self.list_ui['first file comboBox'][data_type].clear()
+            self.list_ui['last file comboBox'][data_type].clear()
+
+            if len(list_files) > 0:
+                # we found files in the folder
+                self.parent.homepath = os.path.abspath(os.path.dirname(folder_name))
+                self.parent.list_files[data_type] = list_files
+                self._fill_list_of_files_combo_boxes(list_files=list_files)
+                self.list_ui['folder lineEdit'][data_type].setText(str(folder_name) + os.path.sep)
+                widgets_state = True
+                show_status_message(parent=self.parent,
+                                    message="",
+                                    status=StatusMessageStatus.ready)
+                logging.info(f"We found {len(list_files)} files!")
+            else:
+                # we did not find any files in the folder
+                widgets_state = False
+                show_status_message(parent=self.parent,
+                                    message="No files with correct extension ({}) found!".format(file_extension),
+                                    status=StatusMessageStatus.error,
+                                    duration_s=5)
+                logging.error(f"No files with correct extension {file_extension} found!")
+
+        if widgets_state:
+            # we retrieved a list of files
+            self.list_ui['folder browse'][data_type].setStyleSheet("")
+            self.list_ui['load pushButton'][data_type].setStyleSheet(self.parent.interact_me_style)
+
+        self.list_ui['first file comboBox'][data_type].setEnabled(widgets_state)
+        self.list_ui['last file comboBox'][data_type].setEnabled(widgets_state)
+        self.list_ui['load pushButton'][data_type].setEnabled(widgets_state)
+        self.list_ui['preview pushButton'][data_type].setEnabled(False)
+        self.list_ui['preview pushButton'][data_type].setStyleSheet("")
+
+    def load(self):
+        data_type = self.data_type
+
+        show_status_message(parent=self.parent,
+                            message="Loading {} ...".format(self.data_type),
+                            status=StatusMessageStatus.working)
+
+        load_success = self.loading_data()
+        if load_success:
+            self.list_ui['load pushButton'][data_type].setStyleSheet("")
+            self.list_ui['preview pushButton'][data_type].setStyleSheet(self.parent.interact_me_style)
+            self.list_ui['preview pushButton'][data_type].setEnabled(True)
+            if self.data_type == DataType.sample:
+                self.parent.ui.region_of_interest_groupBox.setEnabled(True)
+                self.parent.ui.select_roi_pushButton.setStyleSheet(self.parent.interact_me_style)
+            self.activate_next_data_type()
+            show_status_message(parent=self.parent,
+                                message="{} LOADED!".format(self.data_type),
+                                status=StatusMessageStatus.ready,
+                                duration_s=10)
+            logging.info(f"{self.data_type} data have been loaded!")
+
+            self.update_preview_window()
+            self.list_ui['load pushButton'][data_type].setEnabled(False)
+
+        else:
+            show_status_message(parent=self.parent,
+                                message="Loading of {} FAILED!".format(self.data_type),
+                                status=StatusMessageStatus.error,
+                                duration_s=10)
+            logging.error(f"loading of {self.data_type} data FAILED!")
+
+        self.update_list_of_selected_files(load_success=load_success)
+
+        if data_type == DataType.sample:
+            o_pre_processing = FilterTabHandler(parent=self.parent)
+            o_pre_processing.data_run_to_use_radioButton_clicked()
+
+    def update_preview_window(self):
+        if self.parent.preview_id:
+            self.parent.preview_id.change_data_type(new_data_type=self.data_type)
+            self.parent.preview_id.update_radiobuttons_state()
+
+    def activate_next_data_type(self):
+        list_data_type = [DataType.sample, DataType.ob, DataType.di, 'pre processing']
+        index_data_type = list_data_type.index(self.data_type)
+        if self.data_type == list_data_type[-1]:
+            raise ValueError("Need to add element to list!")
+
+        if index_data_type == len(list_data_type) - 2:
+            # last one
+            self.parent.ui.top_tabWidget.setTabEnabled(1, True)
+        else:
+            # other ones
+            self.parent.ui.import_data_tabs.setTabEnabled(index_data_type + 1, True)
+
+    def get_list_of_files_to_load(self):
+        """
+        return the list of files we really need to load
+        """
+        data_type = self.data_type
+        from_file = str(self.list_ui['first file comboBox'][data_type].currentText())
+        to_file = str(self.list_ui['last file comboBox'][data_type].currentText())
+
+        from_file_index = self.parent.list_files[data_type].index(from_file)
+        to_file_index = self.parent.list_files[data_type].index(to_file)
+
+        list_files = self.parent.list_files[data_type]
+
+        return list_files[from_file_index: to_file_index + 1]
+
+    def loading_data(self):
+        """
+        method that loads the data arrays
+
+        Return:
+            status of the loading (True or False)
+        """
+        # load_success = False
+        # data_type = self.data_type
+
+        list_files_to_load = self.get_list_of_files_to_load()
+        nbr_files = len(list_files_to_load)
+
+        o_experiment = NgiExperiment() if self.parent.o_experiment is None else self.parent.o_experiment
+
+        self.parent.eventProgress.setVisible(True)
+        self.parent.eventProgress.setMaximum(nbr_files-1)
+        self.parent.eventProgress.setValue(0)
+
+        dataimage_list = list()
+        for _index, _file in enumerate(list_files_to_load):
+            o_dataimage = DataImage.from_file(_file, datatype=self.data_type)
+            dataimage_list.append(o_dataimage)
+            self.parent.eventProgress.setValue(_index+1)
+            QtGui.QGuiApplication.processEvents()
+
+        o_datascan = DataScan(dataimage_list=dataimage_list, datatype=self.data_type)
+        o_experiment.add_datascan(datascan=o_datascan)
+        if self.data_type == DataType.sample:
+            o_experiment.generate_stepping()
+        self.parent.o_experiment = o_experiment
+
+        self.parent.eventProgress.setVisible(False)
+
+        return True  # FIX ME, add a try  catch that return False if error is thrown
+
+    def check_widgets_state(self):
+        """
+        according to the info selected, will enabled or not the load button for example and display a status
+        message
+        """
+        data_type = self.data_type
+
+        def _load_push_button_widget_status(parent=None,
+                                            button_enabled=True,
+                                            button_style=None,
+                                            message="",
+                                            message_style=None):
+            """
+            this method takes care of the style sheet of the load button and status message
+            """
+            self.list_ui['load pushButton'][data_type].setEnabled(button_enabled)
+            self.list_ui['load pushButton'][data_type].setStyleSheet(button_style)
+            show_status_message(parent=parent, message=message, status=message_style)
+
+        from_file = str(self.list_ui['first file comboBox'][data_type].currentText())
+        to_file = str(self.list_ui['last file comboBox'][data_type].currentText())
+
+        if from_file == "":
+            _load_push_button_widget_status(parent=self.parent,
+                                            button_enabled=False,
+                                            button_style="",
+                                            message="No {} files found!".format(
+                                                    self.data_type),
+                                            message_style=StatusMessageStatus.error)
+            logging.error(f"No {self.data_type} files found!")
+            return
+
+        if from_file == to_file:
+            _load_push_button_widget_status(parent=self.parent,
+                                            button_enabled=False,
+                                            button_style="",
+                                            message="{} 'from file' and 'to file' can not be identical!".format(
+                                                    data_type),
+                                            message_style=StatusMessageStatus.error)
+        else:
+
+            from_file_index = self.parent.list_files[data_type].index(from_file)
+            to_file_index = self.parent.list_files[data_type].index(to_file)
+
+            if from_file_index > to_file_index:
+                _load_push_button_widget_status(parent=self.parent,
+                                                button_enabled=False,
+                                                button_style="",
+                                                message="{} 'from file' must be before 'to file'".format(
+                                                        self.data_type),
+                                                message_style=StatusMessageStatus.error)
+            else:
+                _load_push_button_widget_status(parent=self.parent,
+                                                button_enabled=True,
+                                                button_style=self.parent.interact_me_style,
+                                                message="",
+                                                message_style=StatusMessageStatus.ready)
+
+    def update_list_of_selected_files(self, load_success=True):
+        """use the from and to index to keep only the files between (including the first and last file selected
+        in the range)"""
+        data_type = self.data_type
+        if load_success:
+            from_index = self.list_ui['first file comboBox'][data_type].currentIndex()
+            to_index = self.list_ui['last file comboBox'][data_type].currentIndex()
+
+            if from_index >= to_index:
+                working_list = []
+            else:
+                full_list = self.parent.list_files[data_type]
+                working_list = full_list[from_index: to_index+1]
+
+        else:
+            working_list = []
+
+        self.parent.working_list_files[data_type] = working_list
+        self.parent.ui.pre_processing_sample_run_comboBox.addItems(working_list)
