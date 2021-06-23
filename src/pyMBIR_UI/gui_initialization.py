@@ -20,6 +20,8 @@ class GuiInitialization:
 
     def widgets(self):
         self.parent.ui.select_projections_pushButton.setStyleSheet(interact_me_style)
+        self.parent.ui.tabWidget.setTabEnabled(1, False)
+        self.parent.ui.tabWidget.setTabEnabled(2, False)
 
     def statusbar(self):
         self.parent.eventProgress = QProgressBar(self.parent.ui.statusbar)
@@ -27,4 +29,3 @@ class GuiInitialization:
         self.parent.eventProgress.setMaximumSize(540, 100)
         self.parent.eventProgress.setVisible(False)
         self.parent.ui.statusbar.addPermanentWidget(self.parent.eventProgress)
-

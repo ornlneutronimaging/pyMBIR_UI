@@ -26,6 +26,8 @@ interact_me_style = "background-color: lime"
 error_style = "background-color: red"
 normal_style = ""
 
+file_extension_accepted = ['tiff', 'tif', 'fits']
+
 
 class DataType:
     projections = "projections"

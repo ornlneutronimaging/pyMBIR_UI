@@ -2,11 +2,12 @@ from qtpy.QtWidgets import QFileDialog
 from qtpy import QtGui
 import os
 import logging
+import glob
 
 from .status_message_config import show_status_message, StatusMessageStatus
-from .utilities.file_utilities import get_list_files
+from .utilities.file_utilities import get_list_files, get_list_file_extensions
 from .filter_tab_handler import FilterTabHandler
-from . import DataType, normal_style, error_style, interact_me_style
+from . import DataType, normal_style, error_style, interact_me_style, file_extension_accepted
 
 
 class ImportDataHandler:
@@ -35,10 +36,37 @@ class ImportDataHandler:
         else:
             logging.info(f"User cancel browsing for {self.data_type}")
 
+    def browse_output_folder_via_filedialog(self):
+        folder_name = QFileDialog.getExistingDirectory(self.parent,
+                                                       caption='Select directory',
+                                                       directory=self.parent.homepath)
+        if len(folder_name) > 0:
+            logging.info(f"select output folder: {folder_name}")
+            self.update_widgets_with_name_of_folder(folder_name=folder_name)
+        else:
+            logging.info(f"User cancel browsing for {self.data_type}")
+
     def browse_via_manual_input(self):
-        folder_name = self.parent.ui.projections_lineEdit.text()
+        folder_name = self.list_ui['select lineEdit'][self.data_type].text()
         logging.info(f"browse {self.data_type} via manual input: {folder_name}")
-        self.update_widgets_with_name_of_folder(folder_name=folder_name)
+        self.update_widgets_with_name_of_output_folder(folder_name=folder_name)
+
+    def browse_output_folder_via_manual_input(self):
+        folder_name = self.parent.ui.projections_lineEdit.text()
+        logging.info(f"select output folder: {folder_name}")
+        self.update_widgets_with_name_of_output_folder(folder_name=folder_name)
+
+    def update_widgets_with_name_of_output_folder(self, folder_name=""):
+        if len(folder_name) == 0:
+            return
+
+        show_status_message(parent=self.parent,
+                            message=f"{self.data_type} folder selected!",
+                            status=StatusMessageStatus.ready,
+                            duration_s=5)
+        self.list_ui['select lineEdit'][self.data_type].setStyleSheet(normal_style)
+        self.list_ui['select lineEdit'][self.data_type].setText(folder_name)
+        self.list_ui['select button'][self.data_type].setStyleSheet(normal_style)
 
     def update_widgets_with_name_of_folder(self, folder_name="./"):
         """
@@ -59,7 +87,7 @@ class ImportDataHandler:
                                 message=f"{self.data_type} folder does not exist!",
                                 status=StatusMessageStatus.error,
                                 duration_s=5)
-            logging.error(f"-> folder does not exist!")
+            logging.info(f"-> folder does not exist!")
             self.list_ui['select lineEdit'][self.data_type].setStyleSheet(error_style)
 
         else:
@@ -69,52 +97,50 @@ class ImportDataHandler:
                                 duration_s=5)
             self.list_ui['select lineEdit'][self.data_type].setStyleSheet(normal_style)
 
-            # more code here
+            list_of_files, list_of_files_extension = ImportDataHandler.retrieve_list_of_files(folder_name=folder_name)
 
-            self.activate_next_data_type()
+            if len(list_of_files_extension) > 1:
+                show_status_message(parent=self.parent,
+                                    message=f"More than 2 data format type in the same folder!",
+                                    status=StatusMessageStatus.error,
+                                    duration_s=5)
+                logging.info(f"-> Folder contains several data type format!")
+                logging.info(f"--> {list_of_files_extension}")
 
+            elif not list_of_files:
+                show_status_message(parent=self.parent,
+                                    message=f"Folder is empty",
+                                    status=StatusMessageStatus.error,
+                                    duration_s=5)
+                logging.info(f"-> Folder is empty!")
 
+            elif not ImportDataHandler.accepted_file_extension(list_of_files_extension[0]):
+                show_status_message(parent=self.parent,
+                                    message=f"Incorrect file format: {list_of_files_extension[0]}",
+                                    status=StatusMessageStatus.error,
+                                    duration_s=5)
+                logging.info(f"-> Wrong file extension")
+                logging.info(f"--> file extension found: {list_of_files_extension[0]}")
+                logging.info(f"--> list of file extension expected: {file_extension_accepted}")
 
+            else:
+                logging.info(f"--> number of files: {len(list_of_files)}")
+                logging.info(f"--> extension: {list_of_files_extension[0]}")
 
+                self.activate_next_data_type()
 
+    @staticmethod
+    def retrieve_list_of_files(folder_name="./"):
+        list_files = get_list_files(directory=folder_name, file_extension=["*.fits", "*.tiff", "*.tif"])
+        list_extension = get_list_file_extensions(list_filename=list_files)
+        return list_files, list_extension
 
-        # else:
-        #     # folder exists
-        #     file_extension = self.config['list_of_instruments'][self.parent.selected_instrument]["file_extension"]
-        #     list_files = get_list_files(directory=str(folder_name), file_extension=file_extension)
-        #     self.list_ui['first file comboBox'][data_type].clear()
-        #     self.list_ui['last file comboBox'][data_type].clear()
-        #
-        #     if len(list_files) > 0:
-        #         # we found files in the folder
-        #         self.parent.homepath = os.path.abspath(os.path.dirname(folder_name))
-        #         self.parent.list_files[data_type] = list_files
-        #         self._fill_list_of_files_combo_boxes(list_files=list_files)
-        #         self.list_ui['folder lineEdit'][data_type].setText(str(folder_name) + os.path.sep)
-        #         widgets_state = True
-        #         show_status_message(parent=self.parent,
-        #                             message="",
-        #                             status=StatusMessageStatus.ready)
-        #         logging.info(f"We found {len(list_files)} files!")
-        #     else:
-        #         # we did not find any files in the folder
-        #         widgets_state = False
-        #         show_status_message(parent=self.parent,
-        #                             message="No files with correct extension ({}) found!".format(file_extension),
-        #                             status=StatusMessageStatus.error,
-        #                             duration_s=5)
-        #         logging.error(f"No files with correct extension {file_extension} found!")
-        #
-        # if widgets_state:
-        #     # we retrieved a list of files
-        #     self.list_ui['folder browse'][data_type].setStyleSheet("")
-        #     self.list_ui['load pushButton'][data_type].setStyleSheet(self.parent.interact_me_style)
-        #
-        # self.list_ui['first file comboBox'][data_type].setEnabled(widgets_state)
-        # self.list_ui['last file comboBox'][data_type].setEnabled(widgets_state)
-        # self.list_ui['load pushButton'][data_type].setEnabled(widgets_state)
-        # self.list_ui['preview pushButton'][data_type].setEnabled(False)
-        # self.list_ui['preview pushButton'][data_type].setStyleSheet("")
+    @staticmethod
+    def accepted_file_extension(file_extension):
+        for _file in file_extension_accepted:
+            if _file in file_extension:
+                return True
+        return False
 
     def activate_next_data_type(self):
         list_data_type = [DataType.projections, DataType.ob, DataType.df, DataType.output]

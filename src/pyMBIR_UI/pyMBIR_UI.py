@@ -199,7 +199,6 @@ class PyMBIRUILauncher(QMainWindow):
                                      data_type=DataType.df)
         o_import.browse_via_filedialog()
 
-
     def df_text_field_returned(self):
         o_import = ImportDataHandler(parent=self,
                                      data_type=DataType.df)
@@ -211,13 +210,13 @@ class PyMBIRUILauncher(QMainWindow):
     def output_folder_select_clicked(self):
         o_import = ImportDataHandler(parent=self,
                                      data_type=DataType.output)
-        o_import.browse_via_filedialog()
+        o_import.browse_output_folder_via_filedialog()
 
 
     def output_folder_text_field_returned(self):
         o_import = ImportDataHandler(parent=self,
                                      data_type=DataType.output)
-        o_import.browse_via_manual_input()
+        o_import.browse_output_folder_via_manual_input()
 
     # # tab event handler
     # def main_tab_changed(self, new_tab_index):
