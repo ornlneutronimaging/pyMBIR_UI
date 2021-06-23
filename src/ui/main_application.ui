@@ -197,6 +197,13 @@
      <height>24</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionLog_2"/>
+   </widget>
+   <addaction name="menuHelp"/>
   </widget>
   <action name="actionSelect_new_instrument">
    <property name="enabled">
@@ -264,6 +271,11 @@
     <string>Ctrl+L</string>
    </property>
   </action>
+  <action name="actionLog_2">
+   <property name="text">
+    <string>Log</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>select_projections_pushButton</tabstop>
@@ -278,43 +290,178 @@
   <tabstop>tabWidget</tabstop>
  </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>select_projections_pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>projections_select_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>800</x>
+     <y>107</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>903</x>
+     <y>156</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>select_ob_pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>ob_select_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>823</x>
+     <y>134</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>901</x>
+     <y>191</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>select_df_pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>df_select_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>794</x>
+     <y>174</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>906</x>
+     <y>246</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>preview_pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>preview_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>534</x>
+     <y>218</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>903</x>
+     <y>325</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>select_output_folder_pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>output_folder_select_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>815</x>
+     <y>288</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>904</x>
+     <y>376</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>projections_lineEdit</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>projections_text_field_returned()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>634</x>
+     <y>104</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>902</x>
+     <y>115</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ob_lineEdit</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>ob_text_field_returned()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>648</x>
+     <y>136</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>903</x>
+     <y>225</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>df_lineEdit</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>df_text_field_returned()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>694</x>
+     <y>165</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>901</x>
+     <y>290</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>output_folder_lineEdit</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>output_folder_text_field_returned()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>564</x>
+     <y>287</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>902</x>
+     <y>420</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionLog_2</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>menu_log_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>454</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <slots>
-  <slot>select_new_instrument_menu_clicked()</slot>
-  <slot>sample_data_folder_return_pressed()</slot>
-  <slot>sample_data_browse_button_clicked()</slot>
-  <slot>sample_data_load_button_clicked()</slot>
-  <slot>sample_data_preview_button_clicked()</slot>
-  <slot>open_beam_folder_return_pressed()</slot>
-  <slot>open_beam_browse_button_clicked()</slot>
-  <slot>open_beam_load_button_clicked()</slot>
-  <slot>open_beam_preview_button_clicked()</slot>
-  <slot>dark_image_folder_return_pressed()</slot>
-  <slot>dark_image_browse_button_clicked()</slot>
-  <slot>dark_image_load_button_clicked()</slot>
-  <slot>dark_image_preview_button_clicked()</slot>
-  <slot>sample_data_first_file_changed()</slot>
-  <slot>sample_data_last_file_changed()</slot>
-  <slot>open_beam_first_file_changed()</slot>
-  <slot>open_beam_last_file_changed()</slot>
-  <slot>dark_image_first_file_changed()</slot>
-  <slot>dark_image_last_file_changed()</slot>
-  <slot>parameters_lock_clicked()</slot>
-  <slot>load_session_clicked()</slot>
-  <slot>save_session_clicked()</slot>
-  <slot>main_tab_changed()</slot>
-  <slot>parameters_reset_clicked()</slot>
-  <slot>parameters_save_clicked()</slot>
-  <slot>parameters_table_cell_changed()</slot>
-  <slot>help_about_menu_clicked()</slot>
-  <slot>pre_processing_widgets_changed()</slot>
-  <slot>select_roi_clicked()</slot>
-  <slot>gamma_filtering_help_clicked()</slot>
-  <slot>filter_data_to_use_radio_button_clicked()</slot>
-  <slot>use_normalization_roi_clicked()</slot>
-  <slot>log_button_clicked()</slot>
-  <slot>test_filters_button_clicked()</slot>
-  <slot>run_fitting_clicked()</slot>
-  <slot>fitting_algorithm_help_clicked()</slot>
+  <slot>projections_select_clicked()</slot>
+  <slot>ob_select_clicked()</slot>
+  <slot>df_select_clicked()</slot>
+  <slot>preview_clicked()</slot>
+  <slot>output_folder_select_clicked()</slot>
+  <slot>projections_text_field_returned()</slot>
+  <slot>ob_text_field_returned()</slot>
+  <slot>df_text_field_returned()</slot>
+  <slot>output_folder_text_field_returned()</slot>
+  <slot>menu_log_clicked()</slot>
  </slots>
 </ui>

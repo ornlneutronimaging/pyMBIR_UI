@@ -10,7 +10,7 @@ import warnings
 
 # from .select_instrument_launcher import SelectInstrumentLauncher
 # from .import_data_handler import ImportDataHandler
-# from .gui_initialization import GuiInitialization
+from .gui_initialization import GuiInitialization
 # from .parameters_tab_handler import ParametersTabHandler
 # from .event_handler import EventHandler
 # from .session_handler import SessionHandler
@@ -19,9 +19,9 @@ import warnings
 # from .filter_tab_handler import FilterTabHandler
 # from .load_previous_session_launcher import LoadPreviousSessionLauncher
 from .utilities.decorators import check_ui
-# from .utilities.get import Get
+from .utilities.get import Get
 # from .roi_handler import RoiHandler
-# from .log_launcher import LogLauncher
+from .log_launcher import LogLauncher
 # from .fitting import Fitting
 # from .utility_backend import multi_logger as ml
 
@@ -32,7 +32,8 @@ class PyMBIRUILauncher(QMainWindow):
     # automatic_config_file_name = None
     #
     # selected_instrument = None  # list of instrument can be found in config.json
-    # config = None  # dictionary created out of config.json
+    config = None  # dictionary created out of config.json
+
     # homepath = "./"
     #
     # interact_me_style = "background-color: lime"
@@ -65,13 +66,13 @@ class PyMBIRUILauncher(QMainWindow):
     #
     # # all infos from the UI  used to save the entire session, populates the parameters table
     # session_dict = {}
-    #
-    # # QDialog/QMainWindow ids
-    # preview_id = None
+
+    # QDialog/QMainWindow ids
+    preview_id = None
     # gamma_help_id = None
-    # log_id = None
+    log_id = None
     # algo_help_id = None
-    #
+    
     # # histogram of preview dialog
     # preview_histogram = None
     #
@@ -144,22 +145,51 @@ class PyMBIRUILauncher(QMainWindow):
         #                                         },
         #                 }
         # self.list_ui['filters']['gamma'][DataType.ob] = self.list_ui['filters']['gamma'][DataType.sample]
-        #
-        # o_get = Get(parent=self)
-        # o_init = GuiInitialization(parent=self)
-        # self.automatic_config_file_name = o_get.get_automatic_config_file_name()
-        # o_init.all()
-        #
-        # # configuration of config
-        # log_file_name = o_get.get_log_file_name()
-        # logging.basicConfig(filename=log_file_name,
-        #                     filemode='a',
-        #                     format='[%(levelname)s] - %(asctime)s - %(message)s',
-        #                     level=logging.INFO)
-        # logging.info("*** Starting a new session ***")
-        # logging.info(f" Version: {versioneer.get_version()}")
-        #
+
+        o_get = Get(parent=self)
+        o_init = GuiInitialization(parent=self)
+        o_init.all()
+
+        # configuration of config
+        log_file_name = o_get.get_log_file_name()
+        logging.basicConfig(filename=log_file_name,
+                            filemode='a',
+                            format='[%(levelname)s] - %(asctime)s - %(message)s',
+                            level=logging.INFO)
+        logging.info("*** Starting a new session ***")
+        logging.info(f" Version: {versioneer.get_version()}")
+
         # self.automatic_load_of_previous_session()
+
+    def menu_log_clicked(self):
+        LogLauncher(parent=self)
+
+    def projections_select_clicked(self):
+        pass
+
+    def projections_text_field_returned(self):
+        pass
+
+    def ob_select_clicked(self):
+        pass
+
+    def ob_text_field_returned(self):
+        pass
+
+    def df_select_clicked(self):
+        pass
+
+    def df_text_field_returned(self):
+        pass
+
+    def preview_clicked(self):
+        pass
+
+    def output_folder_select_clicked(self):
+        pass
+
+    def output_folder_text_field_returned(self):
+        pass
 
     # # tab event handler
     # def main_tab_changed(self, new_tab_index):

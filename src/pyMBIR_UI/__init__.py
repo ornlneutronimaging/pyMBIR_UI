@@ -21,3 +21,6 @@ refresh_image = os.path.join(root, "static/refresh.png")
 
 not_ok_cell_content_background = QtGui.QColor(255, 0, 0)
 ok_cell_content_background = QtGui.QColor(255, 255, 255)
+
+interact_me_style = "background-color: lime"
+do_not_interact_me_style = ""
