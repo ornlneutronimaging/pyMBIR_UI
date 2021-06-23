@@ -9,7 +9,7 @@ import warnings
 
 
 # from .select_instrument_launcher import SelectInstrumentLauncher
-# from .import_data_handler import ImportDataHandler
+from .import_data_handler import ImportDataHandler
 from .gui_initialization import GuiInitialization
 # from .parameters_tab_handler import ParametersTabHandler
 # from .event_handler import EventHandler
@@ -24,6 +24,7 @@ from .utilities.get import Get
 from .log_launcher import LogLauncher
 # from .fitting import Fitting
 # from .utility_backend import multi_logger as ml
+from . import DataType
 
 # warnings.filterwarnings('ignore')
 
@@ -33,9 +34,8 @@ class PyMBIRUILauncher(QMainWindow):
     #
     # selected_instrument = None  # list of instrument can be found in config.json
     config = None  # dictionary created out of config.json
+    homepath = "./"
 
-    # homepath = "./"
-    #
     # interact_me_style = "background-color: lime"
     #
     # list_files = {DataType.sample: None,
@@ -72,7 +72,7 @@ class PyMBIRUILauncher(QMainWindow):
     # gamma_help_id = None
     log_id = None
     # algo_help_id = None
-    
+
     # # histogram of preview dialog
     # preview_histogram = None
     #
@@ -104,6 +104,16 @@ class PyMBIRUILauncher(QMainWindow):
 
         self.ui = load_ui(ui_full_path, baseinstance=self)
         self.setWindowTitle("pyMBIR_UI")
+
+        self.list_ui = {'select button': {DataType.projections: self.ui.select_projections_pushButton,
+                                          DataType.ob: self.ui.select_ob_pushButton,
+                                          DataType.df: self.ui.select_df_pushButton,
+                                          DataType.output: self.ui.select_output_folder_pushButton},
+                        'select lineEdit': {DataType.projections: self.ui.projections_lineEdit,
+                                            DataType.ob: self.ui.ob_lineEdit,
+                                            DataType.df: self.ui.df_lineEdit,
+                                            DataType.output: self.ui.output_folder_lineEdit},
+                        }
 
         # self.list_ui = {'folder lineEdit'    : {DataType.sample: self.ui.sample_data_folder_lineEdit,
         #                                         DataType.ob    : self.ui.open_beam_folder_lineEdit,
@@ -165,31 +175,49 @@ class PyMBIRUILauncher(QMainWindow):
         LogLauncher(parent=self)
 
     def projections_select_clicked(self):
-        pass
+        o_import = ImportDataHandler(parent=self,
+                                     data_type=DataType.projections)
+        o_import.browse_via_filedialog()
 
     def projections_text_field_returned(self):
-        pass
+        o_import = ImportDataHandler(parent=self,
+                                     data_type=DataType.projections)
+        o_import.browse_via_manual_input()
 
     def ob_select_clicked(self):
-        pass
+        o_import = ImportDataHandler(parent=self,
+                                     data_type=DataType.ob)
+        o_import.browse_via_filedialog()
 
     def ob_text_field_returned(self):
-        pass
+        o_import = ImportDataHandler(parent=self,
+                                     data_type=DataType.ob)
+        o_import.browse_via_manual_input()
 
     def df_select_clicked(self):
-        pass
+        o_import = ImportDataHandler(parent=self,
+                                     data_type=DataType.df)
+        o_import.browse_via_filedialog()
+
 
     def df_text_field_returned(self):
-        pass
+        o_import = ImportDataHandler(parent=self,
+                                     data_type=DataType.df)
+        o_import.browse_via_manual_input()
 
     def preview_clicked(self):
         pass
 
     def output_folder_select_clicked(self):
-        pass
+        o_import = ImportDataHandler(parent=self,
+                                     data_type=DataType.output)
+        o_import.browse_via_filedialog()
+
 
     def output_folder_text_field_returned(self):
-        pass
+        o_import = ImportDataHandler(parent=self,
+                                     data_type=DataType.output)
+        o_import.browse_via_manual_input()
 
     # # tab event handler
     # def main_tab_changed(self, new_tab_index):

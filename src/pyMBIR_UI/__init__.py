@@ -23,4 +23,12 @@ not_ok_cell_content_background = QtGui.QColor(255, 0, 0)
 ok_cell_content_background = QtGui.QColor(255, 255, 255)
 
 interact_me_style = "background-color: lime"
-do_not_interact_me_style = ""
+error_style = "background-color: red"
+normal_style = ""
+
+
+class DataType:
+    projections = "projections"
+    df = "df"
+    ob = "ob"
+    output = "output"

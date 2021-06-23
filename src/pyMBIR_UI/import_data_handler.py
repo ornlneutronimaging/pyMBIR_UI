@@ -3,24 +3,23 @@ from qtpy import QtGui
 import os
 import logging
 
-from dataio import DataScan, DataType, NgiExperiment, DataImage
-
 from .status_message_config import show_status_message, StatusMessageStatus
 from .utilities.file_utilities import get_list_files
 from .filter_tab_handler import FilterTabHandler
+from . import DataType, normal_style, error_style, interact_me_style
 
 
 class ImportDataHandler:
     list_ui = None
 
-    def __init__(self, parent=None, data_type=DataType.sample):
+    def __init__(self, parent=None, data_type=DataType.projections):
         """
         Parameters:
-        data_type: DataType object (DataType.sample, DataType.ob or DataType.di)
+        data_type: DataType object (DataType.projections, ob or df)
         """
         self.parent = parent
         self.data_type = data_type
-        self.config = self.parent.config
+        # self.config = self.parent.config
         self.list_ui = self.parent.list_ui
 
     def browse_via_filedialog(self):
@@ -31,12 +30,130 @@ class ImportDataHandler:
                                                        caption='Select directory',
                                                        directory=self.parent.homepath)
         if len(folder_name) > 0:
-            self.update_widgets_with_list_of_files(folder_name=folder_name)
+            logging.info(f"browse {self.data_type} via file dialog: {folder_name}")
+            self.update_widgets_with_name_of_folder(folder_name=folder_name)
+        else:
+            logging.info(f"User cancel browsing for {self.data_type}")
 
     def browse_via_manual_input(self):
-        folder_name = str(self.list_ui['folder lineEdit'][self.data_type].text())
+        folder_name = self.parent.ui.projections_lineEdit.text()
         logging.info(f"browse {self.data_type} via manual input: {folder_name}")
-        self.update_widgets_with_list_of_files(folder_name=folder_name)
+        self.update_widgets_with_name_of_folder(folder_name=folder_name)
+
+    def update_widgets_with_name_of_folder(self, folder_name="./"):
+        """
+        this retrieve the list of files and then updated the widgets such as clear comboBox,
+        populate them with list of files, and enable
+        or not the widgets if files have been found or not.
+        """
+
+        if len(folder_name) == 0:
+            return
+
+        self.list_ui['select lineEdit'][self.data_type].setText(folder_name)
+        folder_name = os.path.abspath(folder_name)
+
+        if not os.path.exists(folder_name):
+            # folder does not exist
+            show_status_message(parent=self.parent,
+                                message=f"{self.data_type} folder does not exist!",
+                                status=StatusMessageStatus.error,
+                                duration_s=5)
+            logging.error(f"-> folder does not exist!")
+            self.list_ui['select lineEdit'][self.data_type].setStyleSheet(error_style)
+
+        else:
+            show_status_message(parent=self.parent,
+                                message=f"{self.data_type} folder selected!",
+                                status=StatusMessageStatus.ready,
+                                duration_s=5)
+            self.list_ui['select lineEdit'][self.data_type].setStyleSheet(normal_style)
+
+            # more code here
+
+            self.activate_next_data_type()
+
+
+
+
+
+
+        # else:
+        #     # folder exists
+        #     file_extension = self.config['list_of_instruments'][self.parent.selected_instrument]["file_extension"]
+        #     list_files = get_list_files(directory=str(folder_name), file_extension=file_extension)
+        #     self.list_ui['first file comboBox'][data_type].clear()
+        #     self.list_ui['last file comboBox'][data_type].clear()
+        #
+        #     if len(list_files) > 0:
+        #         # we found files in the folder
+        #         self.parent.homepath = os.path.abspath(os.path.dirname(folder_name))
+        #         self.parent.list_files[data_type] = list_files
+        #         self._fill_list_of_files_combo_boxes(list_files=list_files)
+        #         self.list_ui['folder lineEdit'][data_type].setText(str(folder_name) + os.path.sep)
+        #         widgets_state = True
+        #         show_status_message(parent=self.parent,
+        #                             message="",
+        #                             status=StatusMessageStatus.ready)
+        #         logging.info(f"We found {len(list_files)} files!")
+        #     else:
+        #         # we did not find any files in the folder
+        #         widgets_state = False
+        #         show_status_message(parent=self.parent,
+        #                             message="No files with correct extension ({}) found!".format(file_extension),
+        #                             status=StatusMessageStatus.error,
+        #                             duration_s=5)
+        #         logging.error(f"No files with correct extension {file_extension} found!")
+        #
+        # if widgets_state:
+        #     # we retrieved a list of files
+        #     self.list_ui['folder browse'][data_type].setStyleSheet("")
+        #     self.list_ui['load pushButton'][data_type].setStyleSheet(self.parent.interact_me_style)
+        #
+        # self.list_ui['first file comboBox'][data_type].setEnabled(widgets_state)
+        # self.list_ui['last file comboBox'][data_type].setEnabled(widgets_state)
+        # self.list_ui['load pushButton'][data_type].setEnabled(widgets_state)
+        # self.list_ui['preview pushButton'][data_type].setEnabled(False)
+        # self.list_ui['preview pushButton'][data_type].setStyleSheet("")
+
+    def activate_next_data_type(self):
+        list_data_type = [DataType.projections, DataType.ob, DataType.df, DataType.output]
+        index_data_type = list_data_type.index(self.data_type)
+        if index_data_type == len(list_data_type) - 1:
+            self.parent.ui.tabWidget.setTabEnabled(1, True)
+        else:
+            next_data_type = list_data_type[index_data_type+1]
+            self.list_ui['select button'][self.data_type].setStyleSheet(normal_style)
+            self.list_ui['select button'][next_data_type].setStyleSheet(interact_me_style)
+            self.list_ui['select button'][next_data_type].setEnabled(True)
+            self.list_ui['select lineEdit'][next_data_type].setEnabled(True)
+
+        if self.data_type == DataType.projections:
+            self.parent.ui.select_projections_pushButton.setStyleSheet(normal_style)
+            self.parent.ui.select_ob_pushButton.setStyleSheet(interact_me_style)
+            self.parent.ui.ob_lineEdit.setEnabled(True)
+            self.parent.ui.select_ob_pushButton.setEnabled(True)
+        elif self.data_type == DataType.ob:
+            self.parent.ui.select_ob_pushButton.setStyleSheet(normal_style)
+            self.parent.ui.select_df_pushButton.setStyleSheet(interact_me_style)
+            self.parent.ui.df_lineEdit.setEnabled(True)
+            self.parent.ui.select_df_pushButton.setEnabled(True)
+        elif self.data_type == DataType.df:
+            self.parent.ui.select_df_pushButton.setStyleSheet(normal_style)
+            self.parent.ui.select_output_folder_pushButton.setStyleSheet(interact_me_style)
+            self.parent.ui.output_folder_lineEdit.setEnabled(True)
+            self.parent.ui.select_output_folder_pushButton.setEnabled(True)
+
+
+
+
+
+
+
+
+
+
+
 
     def _fill_list_of_files_combo_boxes(self, list_files=None):
         data_type = self.data_type
@@ -51,69 +168,7 @@ class ImportDataHandler:
         self.list_ui['first file comboBox'][data_type].blockSignals(False)
         self.list_ui['last file comboBox'][data_type].blockSignals(False)
 
-    def update_widgets_with_list_of_files(self, folder_name="./"):
-        """
-        this retrieve the list of files and then updated the widgets such as clear comboBox,
-        populate them with list of files, and enable
-        or not the widgets if files have been found or not.
-        """
 
-        if len(folder_name) == 0:
-            return
-
-        folder_name = os.path.abspath(folder_name)
-        logging.info(f"Looking for {self.data_type} in {folder_name}")
-
-        data_type = self.data_type
-        if not os.path.exists(folder_name):
-            # folder does not exist
-            self.list_ui['first file comboBox'][data_type].clear()
-            self.list_ui['last file comboBox'][data_type].clear()
-            self.parent.list_files[data_type] = None
-            widgets_state = False
-            show_status_message(parent=self.parent,
-                                message="Folder does not exist!",
-                                status=StatusMessageStatus.error,
-                                duration_s=5)
-            logging.error(f"Folder does not exist!")
-
-        else:
-            # folder exists
-            file_extension = self.config['list_of_instruments'][self.parent.selected_instrument]["file_extension"]
-            list_files = get_list_files(directory=str(folder_name), file_extension=file_extension)
-            self.list_ui['first file comboBox'][data_type].clear()
-            self.list_ui['last file comboBox'][data_type].clear()
-
-            if len(list_files) > 0:
-                # we found files in the folder
-                self.parent.homepath = os.path.abspath(os.path.dirname(folder_name))
-                self.parent.list_files[data_type] = list_files
-                self._fill_list_of_files_combo_boxes(list_files=list_files)
-                self.list_ui['folder lineEdit'][data_type].setText(str(folder_name) + os.path.sep)
-                widgets_state = True
-                show_status_message(parent=self.parent,
-                                    message="",
-                                    status=StatusMessageStatus.ready)
-                logging.info(f"We found {len(list_files)} files!")
-            else:
-                # we did not find any files in the folder
-                widgets_state = False
-                show_status_message(parent=self.parent,
-                                    message="No files with correct extension ({}) found!".format(file_extension),
-                                    status=StatusMessageStatus.error,
-                                    duration_s=5)
-                logging.error(f"No files with correct extension {file_extension} found!")
-
-        if widgets_state:
-            # we retrieved a list of files
-            self.list_ui['folder browse'][data_type].setStyleSheet("")
-            self.list_ui['load pushButton'][data_type].setStyleSheet(self.parent.interact_me_style)
-
-        self.list_ui['first file comboBox'][data_type].setEnabled(widgets_state)
-        self.list_ui['last file comboBox'][data_type].setEnabled(widgets_state)
-        self.list_ui['load pushButton'][data_type].setEnabled(widgets_state)
-        self.list_ui['preview pushButton'][data_type].setEnabled(False)
-        self.list_ui['preview pushButton'][data_type].setStyleSheet("")
 
     def load(self):
         data_type = self.data_type
@@ -158,18 +213,7 @@ class ImportDataHandler:
             self.parent.preview_id.change_data_type(new_data_type=self.data_type)
             self.parent.preview_id.update_radiobuttons_state()
 
-    def activate_next_data_type(self):
-        list_data_type = [DataType.sample, DataType.ob, DataType.di, 'pre processing']
-        index_data_type = list_data_type.index(self.data_type)
-        if self.data_type == list_data_type[-1]:
-            raise ValueError("Need to add element to list!")
 
-        if index_data_type == len(list_data_type) - 2:
-            # last one
-            self.parent.ui.top_tabWidget.setTabEnabled(1, True)
-        else:
-            # other ones
-            self.parent.ui.import_data_tabs.setTabEnabled(index_data_type + 1, True)
 
     def get_list_of_files_to_load(self):
         """
