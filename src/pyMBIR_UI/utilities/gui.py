@@ -1,7 +1,5 @@
 import logging
 
-from dataio import DataType
-
 
 class Gui:
 
@@ -54,20 +52,20 @@ class Gui:
             can_we_enable_fitting_tab = self.can_we_enable_fitting_tab()
         self.parent.ui.top_tabWidget.setTabEnabled(3, can_we_enable_fitting_tab)
 
-    def _are_all_data_type_there(self):
-        if self.parent.working_list_files[DataType.sample] is None:
-            logging.warning("Missing sample data!")
-            return False
-
-        if self.parent.working_list_files[DataType.ob] is None:
-            logging.warning("Missing ob data!")
-            return False
-
-        if self.parent.working_list_files[DataType.di] is None:
-            logging.warning("Missing di data!")
-            return False
-
-        return True
+    # def _are_all_data_type_there(self):
+    #     if self.parent.working_list_files[DataType.sample] is None:
+    #         logging.warning("Missing sample data!")
+    #         return False
+    #
+    #     if self.parent.working_list_files[DataType.ob] is None:
+    #         logging.warning("Missing ob data!")
+    #         return False
+    #
+    #     if self.parent.working_list_files[DataType.di] is None:
+    #         logging.warning("Missing di data!")
+    #         return False
+    #
+    #     return True
 
     @classmethod
     def enable_those_widgets(list_widgets=None, enable_state=True):
