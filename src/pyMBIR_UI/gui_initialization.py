@@ -1,4 +1,5 @@
-from qtpy.QtWidgets import QProgressBar
+from qtpy.QtWidgets import QProgressBar, QVBoxLayout
+import pyqtgraph as pg
 
 from .config_handler import ConfigHandler
 from . import interact_me_style
@@ -17,6 +18,7 @@ class GuiInitialization:
         """initialize everything here"""
         self.widgets()
         self.statusbar()
+        self.pyqtgraph()
 
     def widgets(self):
         self.parent.ui.select_projections_pushButton.setStyleSheet(interact_me_style)
@@ -29,3 +31,11 @@ class GuiInitialization:
         self.parent.eventProgress.setMaximumSize(540, 100)
         self.parent.eventProgress.setVisible(False)
         self.parent.ui.statusbar.addPermanentWidget(self.parent.eventProgress)
+
+    def pyqtgraph(self):
+        self.parent.ui.crop_image_view = pg.ImageView(view=pg.PlotItem())
+        self.parent.ui.crop_image_view.ui.roiBtn.hide()
+        self.parent.ui.crop_image_view.ui.menuBtn.hide()
+        image_layout = QVBoxLayout()
+        image_layout.addWidget(self.parent.ui.crop_image_view)
+        self.parent.ui.crop_widget.setLayout(image_layout)

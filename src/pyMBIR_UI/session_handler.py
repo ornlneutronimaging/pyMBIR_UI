@@ -6,6 +6,7 @@ from .import_data_handler import ImportDataHandler
 from .status_message_config import StatusMessageStatus, show_status_message
 from .utilities.get import Get
 from . import DataType
+from .crop_handler import CropHandler
 
 
 class SessionHandler:
@@ -106,6 +107,9 @@ class SessionHandler:
             folder = _session['folder']
             list_ui['select lineEdit'][data_type].setText(folder)
             list_load_method[data_type]()
+
+        o_crop = CropHandler(parent=self.parent)
+        o_crop.initialize_view()
 
         show_status_message(parent=self.parent,
                             message=f"Loaded {self.config_file_name}",

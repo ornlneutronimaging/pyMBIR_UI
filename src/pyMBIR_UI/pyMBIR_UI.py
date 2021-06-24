@@ -25,6 +25,7 @@ from .log_launcher import LogLauncher
 # from .fitting import Fitting
 # from .utility_backend import multi_logger as ml
 from . import DataType
+from .crop_handler import CropHandler
 
 # warnings.filterwarnings('ignore')
 
@@ -48,9 +49,10 @@ class PyMBIRUILauncher(QMainWindow):
 
     # QDialog/QMainWindow ids
     preview_id = None
-    # gamma_help_id = None
     log_id = None
-    # algo_help_id = None
+
+    # pyqtgrpah
+    crop_image_view = None
 
     # histogram of preview dialog
     preview_histogram = None
@@ -167,6 +169,19 @@ class PyMBIRUILauncher(QMainWindow):
     def check_preview_button_status(self):
         o_preview = PreviewHandler(parent=self)
         o_preview.check_status_of_button()
+
+    # Reconstruction setup tab
+    def crop_file_index_moved(self, value):
+        pass
+
+    def crop_file_index_pressed(self):
+        pass
+
+    def crop_width_moved(self, value):
+        pass
+
+    def crop_width_pressed(self):
+        pass
 
     # leaving ui
     def closeEvent(self, c):

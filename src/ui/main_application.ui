@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>909</width>
-    <height>492</height>
+    <width>1041</width>
+    <height>815</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,7 +24,7 @@
        <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideMiddle</enum>
@@ -175,12 +175,201 @@
       </widget>
       <widget class="QWidget" name="tab_2">
        <attribute name="title">
-        <string>Reconstruction Geometry</string>
+        <string>Reconstruction Setup</string>
        </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="QToolBox" name="toolBox">
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="page">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>971</width>
+             <height>589</height>
+            </rect>
+           </property>
+           <attribute name="label">
+            <string>Crop</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_4">
+            <item>
+             <widget class="QWidget" name="crop_widget" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_2">
+              <item>
+               <widget class="QLabel" name="label_5">
+                <property name="text">
+                 <string>File Index</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSlider" name="crop_file_index_horizontalSlider">
+                <property name="orientation">
+                 <enum>Qt::Horizontal</enum>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QFrame" name="frame">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_5">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_3">
+                 <item>
+                  <widget class="QLabel" name="label_6">
+                   <property name="text">
+                    <string>Width</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSlider" name="crop_width_horizontalSlider">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_4">
+                 <item>
+                  <widget class="QLabel" name="label_7">
+                   <property name="maximumSize">
+                    <size>
+                     <width>100</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>From     Slice #</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="crop_from_slice_label">
+                   <property name="minimumSize">
+                    <size>
+                     <width>50</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>50</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>N/A</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_9">
+                   <property name="maximumSize">
+                    <size>
+                     <width>70</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>to Slice #</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="crop_to_slice_label">
+                   <property name="minimumSize">
+                    <size>
+                     <width>50</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>50</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="text">
+                    <string>N/A</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="page_2">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>1063</width>
+             <height>475</height>
+            </rect>
+           </property>
+           <attribute name="label">
+            <string>Tilt Correction</string>
+           </attribute>
+          </widget>
+          <widget class="QWidget" name="page_3">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>1063</width>
+             <height>475</height>
+            </rect>
+           </property>
+           <attribute name="label">
+            <string>Center of Rotation</string>
+           </attribute>
+          </widget>
+         </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
-        <string>Reconstruction Setup</string>
+        <string>Advanced Parameters</string>
        </attribute>
       </widget>
      </widget>
@@ -193,7 +382,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>909</width>
+     <width>1041</width>
      <height>24</height>
     </rect>
    </property>
@@ -322,8 +511,8 @@
    <slot>projections_select_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>800</x>
-     <y>107</y>
+     <x>990</x>
+     <y>120</y>
     </hint>
     <hint type="destinationlabel">
      <x>903</x>
@@ -338,8 +527,8 @@
    <slot>ob_select_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>823</x>
-     <y>134</y>
+     <x>990</x>
+     <y>155</y>
     </hint>
     <hint type="destinationlabel">
      <x>901</x>
@@ -354,8 +543,8 @@
    <slot>df_select_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>794</x>
-     <y>174</y>
+     <x>990</x>
+     <y>190</y>
     </hint>
     <hint type="destinationlabel">
      <x>906</x>
@@ -386,8 +575,8 @@
    <slot>output_folder_select_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>815</x>
-     <y>288</y>
+     <x>996</x>
+     <y>302</y>
     </hint>
     <hint type="destinationlabel">
      <x>904</x>
@@ -507,6 +696,70 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>crop_file_index_horizontalSlider</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>crop_file_index_moved()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>220</x>
+     <y>566</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>9</x>
+     <y>566</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>crop_file_index_horizontalSlider</sender>
+   <signal>sliderPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>crop_file_index_pressed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>243</x>
+     <y>569</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>6</x>
+     <y>610</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>crop_width_horizontalSlider</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>crop_width_moved()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>232</x>
+     <y>621</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>5</x>
+     <y>662</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>crop_width_horizontalSlider</sender>
+   <signal>sliderPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>crop_width_pressed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>139</x>
+     <y>622</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>5</x>
+     <y>705</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>projections_select_clicked()</slot>
@@ -521,5 +774,9 @@
   <slot>menu_log_clicked()</slot>
   <slot>load_session_clicked()</slot>
   <slot>save_session_clicked()</slot>
+  <slot>crop_file_index_moved()</slot>
+  <slot>crop_file_index_pressed()</slot>
+  <slot>crop_width_moved()</slot>
+  <slot>crop_width_pressed()</slot>
  </slots>
 </ui>
