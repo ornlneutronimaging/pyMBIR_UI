@@ -1,4 +1,4 @@
-from qtpy.QtWidgets import QDialog, QApplication
+from qtpy.QtWidgets import QDialog
 import os
 
 from . import load_ui
@@ -20,12 +20,11 @@ class LoadPreviousSessionLauncher(QDialog):
 
     def yes_clicked(self):
         self.close()
-
-        # o_session = SessionHandler(parent=self.parent)
-        # o_get = Get(parent=self.parent)
-        # full_config_file_name = o_get.get_automatic_config_file_name()
-        # o_session.load_from_file(config_file_name=full_config_file_name)
-        # o_session.load_to_ui()
+        o_session = SessionHandler(parent=self.parent)
+        o_get = Get(parent=self.parent)
+        full_config_file_name = o_get.get_automatic_config_file_name()
+        o_session.load_from_file(config_file_name=full_config_file_name)
+        o_session.load_to_ui()
 
     def no_clicked(self):
         self.close()

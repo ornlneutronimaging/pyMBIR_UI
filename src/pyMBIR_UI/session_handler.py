@@ -24,9 +24,7 @@ class SessionHandler:
 
         def retrieve_infos_from_import_data(data_type=DataType.projections):
             folder = str(list_ui['select lineEdit'][data_type].text())
-            list_files = self.parent.input['list files'][data_type]
-            return {'folder': folder,
-                    'list_files': list_files}
+            return {'folder': folder}
 
         # projections, ob, df
         session_dict[DataType.projections] = retrieve_infos_from_import_data(data_type=DataType.projections)
@@ -34,7 +32,7 @@ class SessionHandler:
         session_dict[DataType.df] = retrieve_infos_from_import_data(data_type=DataType.df)
 
         # output folder
-        session_dict[DataType.output] = str(list_ui['select lineEdit'][DataType.output].text())
+        session_dict[DataType.output] = {'folder': str(list_ui['select lineEdit'][DataType.output].text())}
 
         self.parent.session_dict = session_dict
 
@@ -95,80 +93,20 @@ class SessionHandler:
         session_dict = self.parent.session_dict
         list_ui = self.parent.list_ui
 
-        list_load_method = {DataType.sample: self.parent.sample_data_load_button_clicked,
-                            DataType.ob: self.parent.open_beam_load_button_clicked,
-                            DataType.di: self.parent.dark_image_load_button_clicked}
+        list_load_method = {DataType.projections: self.parent.projections_text_field_returned,
+                            DataType.ob: self.parent.ob_text_field_returned,
+                            DataType.df: self.parent.df_text_field_returned,
+                            DataType.output: None}
 
-        for data_type in self.parent.list_files.keys():
+        # input tab
+        for data_type in list_load_method.keys():
 
             _session = session_dict[data_type]
-            first_file_index = _session['first file index']
-            last_file_index = _session['last file index']
-            full_list = _session['full list']
             folder = _session['folder']
+            list_ui['select lineEdit'][data_type].setText(folder)
 
-            o_import = ImportDataHandler(parent=self.parent, data_type=data_type)
-            o_import.update_widgets_with_list_of_files(folder_name=folder)
-
-            list_ui['first file comboBox'][data_type].setCurrentIndex(first_file_index)
-            list_ui['last file comboBox'][data_type].setCurrentIndex(last_file_index)
-
-            # load data
-            if full_list:
-                list_load_method[data_type](None)
-                logging.info(f"Loading data: {data_type}")
-
-            # only for sample data type, update roi list of files
-            if data_type == DataType.sample:
-                self.parent.ui.pre_processing_sample_run_comboBox.clear()
-                self.parent.ui.pre_processing_sample_run_comboBox.addItems(full_list)
-
-        # general settings
-        general_settings = session_dict["general settings"]
-        self.parent.ui.number_of_scanned_periods_spinBox.setValue(general_settings["number of scanned periods"])
-        self.parent.selected_instrument = session_dict["default_instrument"]
-
-        # roi
-        self.parent.sample_roi_list = session_dict['sample region of interest ([y0,y1,x0,x1])']
-        self.parent.norm_roi_list = session_dict['norm region of interest ([y0,y1,x0,x1])']
-
-        full_period_true = general_settings["full period"]
-        if full_period_true:
-            self.parent.ui.full_period_true_radioButton.setChecked(True)
-        else:
-            self.parent.ui.full_period_false_radioButton.setChecked(True)
-        self.parent.ui.rotation_of_g0rz_doubleSpinBox.setValue(general_settings["rotation of g0rz"])
-        self.parent.ui.images_per_step_spinBox.setValue(general_settings["number of images per step"])
-
-        # filters tab
-        self.parent.ui.pre_processing_sample_ob_checkBox.setChecked(session_dict['sample/ob gamma filter'])
-        self.parent.ui.sample_ob_threshold1_spinBox.setValue(session_dict['sample/ob threshold 3x3'])
-        self.parent.ui.sample_ob_threshold2_spinBox.setValue(session_dict['sample/ob threshold 5x5'])
-        self.parent.ui.sample_ob_threshold3_spinBox.setValue(session_dict['sample/ob threshold 7x7'])
-        self.parent.ui.sample_ob_sigma_for_log_spinBox.setValue(session_dict['sample/ob sigma for LoG'])
-
-        self.parent.ui.pre_processing_di_checkBox.setChecked(session_dict['dc gamma filter'])
-        self.parent.ui.di_threshold1_spinBox.setValue(session_dict['dc threshold 3x3'])
-        self.parent.ui.di_threshold2_spinBox.setValue(session_dict['dc threshold 5x5'])
-        self.parent.ui.di_threshold3_spinBox.setValue(session_dict['dc threshold 7x7'])
-        self.parent.ui.di_sigma_for_log_spinBox.setValue(session_dict['dc sigma for LoG'])
-
-        self.parent.ui.pre_processing_binned_pixels_spinBox.setValue(session_dict['image binning size'])
-        self.parent.ui.pre_processing_image_binning_checkBox.setChecked(session_dict['image binning flag'])
-        self.parent.ui.pre_processing_outlier_threshold_spinBox.setValue(session_dict['outlier removal in ' \
-                                                                                        'epithermal dc'])
-        self.parent.ui.pre_processing_outlier_checkBox.setChecked(session_dict['outlier removal in epithermal dc flag'])
-
-        # fitting tab
-        # self.parent.ui.pre_processing_fitting_procedure_comboBox.clear()
-        # self.parent.ui.pre_processing_fitting_procedure_comboBox.addItems(session_dict['fit procedure list'])
-        self.parent.ui.pre_processing_fitting_procedure_comboBox.setCurrentIndex(
-                session_dict['fit procedure index selected'])
-
-        self.parent.pre_processing_widgets_changed()
-
-        # status of norm roi error message
-        self.parent.use_normalization_roi_clicked(True)
+            if not (data_type == DataType.output):
+                list_load_method[data_type]()
 
         show_status_message(parent=self.parent,
                             message=f"Loaded {self.config_file_name}",
