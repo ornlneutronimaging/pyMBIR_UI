@@ -176,7 +176,8 @@ class PyMBIRUILauncher(QMainWindow):
         o_crop.master_checkbox_clicked()
 
     def crop_file_index_moved(self, value):
-        pass
+        o_crop = CropHandler(parent=self)
+        o_crop.file_index_changed()
 
     def crop_file_index_pressed(self):
         pass

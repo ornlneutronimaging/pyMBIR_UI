@@ -13,11 +13,10 @@ class CropHandler:
         if list_image is None:
             return
 
-        first_image = list_image[0]
-        transpose_image = np.transpose(first_image)
-        self.parent.crop_image_view.setImage(transpose_image)
+        self.file_index_changed()
 
         # file index
+        first_image = list_image[0]
         nbr_files = len(self.parent.input['list files'][DataType.projections])
         self.parent.ui.crop_file_index_horizontalSlider.setMaximum(nbr_files-1)
         image_height, image_width = np.shape(first_image)
@@ -30,3 +29,10 @@ class CropHandler:
 
     def master_checkbox_clicked(self):
         self.parent.ui.crop_frame.setEnabled(self.parent.ui.cropping_checkBox.isChecked())
+
+    def file_index_changed(self):
+        file_index_selected = self.parent.ui.crop_file_index_horizontalSlider.value()
+        list_image = self.parent.input['data'][DataType.projections]
+        image = list_image[file_index_selected]
+        transpose_image = np.transpose(image)
+        self.parent.crop_image_view.setImage(transpose_image)
