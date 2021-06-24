@@ -50,18 +50,35 @@ class ImportDataHandler:
                                                        directory=self.parent.homepath)
         if len(folder_name) > 0:
             logging.info(f"select output folder: {folder_name}")
-            self.update_output_folder_widgets(folder_name=folder_name)
+            self.parent.ui.output_folder_lineEdit.setText(folder_name)
+            self.activate_next_data_type()
+            show_status_message(parent=self.parent,
+                                message=f"Output folder selected",
+                                status=StatusMessageStatus.ready,
+                                duration_s=5)
+            self.list_ui['select lineEdit'][self.data_type].setStyleSheet(normal_style)
         else:
             logging.info(f"User cancel browsing for {self.data_type}")
 
     def browse_output_folder_via_manual_input(self):
-        folder_name = self.parent.ui.projections_lineEdit.text()
-        logging.info(f"select output folder: {folder_name}")
-        self.update_output_folder_widgets(folder_name=folder_name)
-
-    def update_output_folder_widgets(self, folder_name=""):
+        folder_name = self.parent.ui.output_folder_lineEdit.text()
+        if os.path.exists(folder_name):
+            logging.info(f"select output folder: {folder_name}")
+            self.list_ui['select lineEdit'][self.data_type].setStyleSheet(normal_style)
+            self.activate_next_data_type()
+            show_status_message(parent=self.parent,
+                                message=f"Output folder selected",
+                                status=StatusMessageStatus.ready,
+                                duration_s=5)
+        else:
+            show_status_message(parent=self.parent,
+                                message=f"Folder does not exist! Create folder first.",
+                                status=StatusMessageStatus.error,
+                                duration_s=5)
+            logging.info(f"You need to create the folder {folder_name}!")
+            self.list_ui['select lineEdit'][self.data_type].setStyleSheet(error_style)
+            self.deactivate_next_data_type()
         self.parent.ui.output_folder_lineEdit.setText(folder_name)
-        self.activate_next_data_type()
 
     def update_widgets_with_name_of_output_folder(self, folder_name=""):
         if len(folder_name) == 0:
@@ -98,10 +115,10 @@ class ImportDataHandler:
             self.list_ui['select lineEdit'][self.data_type].setStyleSheet(error_style)
 
         else:
-            show_status_message(parent=self.parent,
-                                message=f"{self.data_type} folder selected!",
-                                status=StatusMessageStatus.ready,
-                                duration_s=5)
+            # show_status_message(parent=self.parent,
+            #                     message=f"{self.data_type} folder selected!",
+            #                     status=StatusMessageStatus.ready,
+            #                     duration_s=5)
             self.list_ui['select lineEdit'][self.data_type].setStyleSheet(normal_style)
 
             list_of_files, list_of_files_extension = ImportDataHandler.retrieve_list_of_files(folder_name=folder_name)
@@ -181,6 +198,38 @@ class ImportDataHandler:
             self.parent.ui.select_output_folder_pushButton.setStyleSheet(interact_me_style)
             self.parent.ui.output_folder_lineEdit.setEnabled(True)
             self.parent.ui.select_output_folder_pushButton.setEnabled(True)
+        elif self.data_type == DataType.output:
+            self.parent.ui.select_output_folder_pushButton.setStyleSheet(normal_style)
+
+    def deactivate_next_data_type(self):
+        list_data_type = [DataType.projections, DataType.ob, DataType.df, DataType.output]
+        index_data_type = list_data_type.index(self.data_type)
+        if index_data_type == len(list_data_type) - 1:
+            self.parent.ui.tabWidget.setTabEnabled(1, False)
+        else:
+            next_data_type = list_data_type[index_data_type+1]
+            self.list_ui['select button'][self.data_type].setStyleSheet(interact_me_style)
+            self.list_ui['select button'][next_data_type].setStyleSheet(normal_style)
+            self.list_ui['select button'][next_data_type].setEnabled(False)
+            self.list_ui['select lineEdit'][next_data_type].setEnabled(False)
+
+        if self.data_type == DataType.projections:
+            self.parent.ui.select_projections_pushButton.setStyleSheet(interact_me_style)
+            self.parent.ui.select_ob_pushButton.setStyleSheet(normal_style)
+            self.parent.ui.ob_lineEdit.setEnabled(False)
+            self.parent.ui.select_ob_pushButton.setEnabled(False)
+        elif self.data_type == DataType.ob:
+            self.parent.ui.select_ob_pushButton.setStyleSheet(interact_me_style)
+            self.parent.ui.select_df_pushButton.setStyleSheet(normal_style)
+            self.parent.ui.df_lineEdit.setEnabled(False)
+            self.parent.ui.select_df_pushButton.setEnabled(False)
+        elif self.data_type == DataType.df:
+            self.parent.ui.select_df_pushButton.setStyleSheet(interact_me_style)
+            self.parent.ui.select_output_folder_pushButton.setStyleSheet(normal_style)
+            self.parent.ui.output_folder_lineEdit.setEnabled(False)
+            self.parent.ui.select_output_folder_pushButton.setEnabled(False)
+        else:
+            self.parent.ui.select_output_folder_pushButton.setStyleSheet(interact_me_style)
 
     def loading_data(self, list_of_files=None):
         """

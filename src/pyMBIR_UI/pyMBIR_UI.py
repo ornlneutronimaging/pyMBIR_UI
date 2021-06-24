@@ -221,7 +221,6 @@ class PyMBIRUILauncher(QMainWindow):
                                      data_type=DataType.output)
         o_import.browse_output_folder_via_filedialog()
 
-
     def output_folder_text_field_returned(self):
         o_import = ImportDataHandler(parent=self,
                                      data_type=DataType.output)
