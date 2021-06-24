@@ -4,6 +4,7 @@ import os
 import logging
 from . import load_ui
 import versioneer
+import numpy as np
 import multiprocessing
 import warnings
 
@@ -53,6 +54,12 @@ class PyMBIRUILauncher(QMainWindow):
 
     # pyqtgrpah
     crop_image_view = None
+    crop_from_slice_item = None
+    crop_from_slice_label_item = None
+    crop_to_slice_item = None
+    crop_to_slice_label_item = None
+    crop_image_height = np.NaN
+    crop_image_width = np.NaN
 
     # histogram of preview dialog
     preview_histogram = None
@@ -187,6 +194,14 @@ class PyMBIRUILauncher(QMainWindow):
 
     def crop_width_pressed(self):
         pass
+
+    def crop_from_slice_changed(self):
+        o_crop = CropHandler(parent=self)
+        o_crop.crop_slice_moved()
+
+    def crop_to_slice_changed(self):
+        o_crop = CropHandler(parent=self)
+        o_crop.crop_slice_moved()
 
     # leaving ui
     def closeEvent(self, c):

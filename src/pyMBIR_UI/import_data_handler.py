@@ -199,6 +199,7 @@ class ImportDataHandler:
             self.parent.ui.tabWidget.setTabEnabled(1, new_state)
             o_crop = CropHandler(parent=self.parent)
             o_crop.initialize_crop()
+            o_crop.master_checkbox_clicked()
 
         else:
             next_data_type = list_data_type[index_data_type+1]
