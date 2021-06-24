@@ -38,12 +38,6 @@ class PreviewLauncher:
 
         self.parent.ui.preview_pushButton.setEnabled(False)
 
-        # o_import = ImportDataHandler(parent=self.parent,
-        #                              data_type=data_type)
-        # for _type, _ui in o_import.list_ui['preview pushButton'].items():
-        #     _ui.setEnabled(False)
-        #     _ui.setStyleSheet("")
-
 
 class Preview(QDialog):
 
@@ -55,7 +49,6 @@ class Preview(QDialog):
                     DataType.ob: None,
                     DataType.df: None,
                    }
-    data = {}
 
     data_type_slider_value = {DataType.projections: -1,
                               DataType.ob: -1,
@@ -81,6 +74,7 @@ class Preview(QDialog):
         self.update_slider()
         self.update_display_data()
         self.update_radiobuttons_state()
+        self.radiobuttons[DataType.projections].setChecked(True)
 
     def get_data_type(self):
         if self.radiobuttons[DataType.projections].isChecked():
@@ -127,7 +121,7 @@ class Preview(QDialog):
         if slider_value == -1:
             slider_value = 0
 
-        self.ui.slider.setMaximum(len(self.data[self.data_type])-1)
+        self.ui.slider.setMaximum(len(self.parent.input['list files'][self.data_type])-1)
         self.ui.slider.setValue(slider_value)
 
     def init_pyqtgraph(self):
@@ -139,13 +133,12 @@ class Preview(QDialog):
         self.ui.image_widget.setLayout(image_layout)
 
     def update_radiobuttons_state(self):
-        for _key, _ui in self.radiobuttons.items():
-            _ui.setChecked(False)
-        self.radiobuttons[self.data_type].setChecked(True)
-
-        for _data_type, _data_value in self.data.items():
-            _state = False if len(_data_value) == 0 else True
-            self.radiobuttons[_data_type].setEnabled(_state)
+        for data_type in [DataType.projections, DataType.ob, DataType.df]:
+            if self.parent.input['data'][data_type] is None:
+                status = False
+            else:
+                status = True
+            self.radiobuttons[data_type].setEnabled(status)
 
     def change_data_type(self, new_data_type=DataType.projections):
         self.data_type = new_data_type
@@ -168,15 +161,5 @@ class Preview(QDialog):
         self.update_display_data()
 
     def closeEvent(self, c):
-        # o_import = ImportDataHandler(parent=self.parent,
-        #                              data_type=self.data_type)
-        # for _type, _ui in o_import.list_ui['preview pushButton'].items():
-        #     _ui.setEnabled(True)
-        #     _data = self.data[_type]
-        #     if len(_data) > 0:
-        #         _ui.setStyleSheet(self.parent.interact_me_style)
-        #     else:
-        #         _ui.setStyleSheet("")
-
         self.parent.preview_id = None
         self.parent.ui.preview_pushButton.setEnabled(True)

@@ -463,6 +463,8 @@ class PyMBIRUILauncher(QMainWindow):
     #     o_fitting.run()
 
     def closeEvent(self, c):
+        if self.preview_id:
+            self.preview_id.close()
         self.close()
 
 

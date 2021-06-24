@@ -129,6 +129,8 @@ class ImportDataHandler:
                 logging.info(f"--> extension: {list_of_files_extension[0]}")
 
                 status = self.loading_data(list_of_files=list_of_files)
+                if self.parent.preview_id:
+                    self.parent.preview_id.update_radiobuttons_state()
 
                 self.activate_next_data_type()
                 self.parent.check_preview_button_status()
@@ -205,6 +207,9 @@ class ImportDataHandler:
         self.parent.eventProgress.setVisible(False)
 
         return True  # FIX ME, add a try  catch that return False if error is thrown
+
+
+
 
 
 
