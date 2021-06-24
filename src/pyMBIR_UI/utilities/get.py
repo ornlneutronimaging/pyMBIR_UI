@@ -22,6 +22,11 @@ class Get:
         index_selected = self.parent.ui.pre_processing_fitting_procedure_comboBox.currentIndex()
         return self.parent.ui.pre_processing_fitting_procedure_comboBox.itemData(index_selected)
 
+    def get_automatic_config_file_name(self):
+        config_file_name = self.parent.config['session_file_name']
+        full_config_file_name = Get.get_full_home_file_name(config_file_name)
+        return full_config_file_name
+
     @staticmethod
     def get_full_home_file_name(base_file_name):
         home_folder = expanduser("~")

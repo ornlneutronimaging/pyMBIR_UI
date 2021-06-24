@@ -1,12 +1,12 @@
-from dataio import DataType
 from qtpy.QtWidgets import QFileDialog, QApplication
 import json
-import numpy as np
 import logging
 
 from .import_data_handler import ImportDataHandler
 from .status_message_config import StatusMessageStatus, show_status_message
 from .utilities.get import Get
+from . import DataType
+
 
 class SessionHandler:
 
@@ -19,68 +19,22 @@ class SessionHandler:
     def save_from_ui(self):
         session_dict = {}
 
-        # import data tab
+        # import input tab data
         list_ui = self.parent.list_ui
 
-        def retrieve_infos_from_import_data(data_type=DataType.sample):
-            folder = str(list_ui['folder lineEdit'][data_type].text())
-            first_file = str(list_ui['first file comboBox'][data_type].currentText())
-            last_file = str(list_ui['last file comboBox'][data_type].currentText())
-            first_file_index = list_ui['first file comboBox'][data_type].currentIndex()
-            last_file_index = list_ui['last file comboBox'][data_type].currentIndex()
-
-            nbr_files = list_ui['first file comboBox'][data_type].count()
-            full_list_files = []
-            for _file_index in np.arange(nbr_files):
-                full_list_files.append(list_ui['first file comboBox'][data_type].itemText(_file_index))
-
+        def retrieve_infos_from_import_data(data_type=DataType.projections):
+            folder = str(list_ui['select lineEdit'][data_type].text())
+            list_files = self.parent.input['list files'][data_type]
             return {'folder': folder,
-                    'first file': first_file,
-                    'first file index': first_file_index,
-                    'last file': last_file,
-                    'last file index': last_file_index,
-                    'full list': full_list_files}
+                    'list_files': list_files}
 
-        # sample, ob and di
-        session_dict[DataType.sample] = retrieve_infos_from_import_data(data_type=DataType.sample)
+        # projections, ob, df
+        session_dict[DataType.projections] = retrieve_infos_from_import_data(data_type=DataType.projections)
         session_dict[DataType.ob] = retrieve_infos_from_import_data(data_type=DataType.ob)
-        session_dict[DataType.di] = retrieve_infos_from_import_data(data_type=DataType.di)
+        session_dict[DataType.df] = retrieve_infos_from_import_data(data_type=DataType.df)
 
-        # roi
-        session_dict['sample region of interest ([y0,y1,x0,x1])'] = self.parent.sample_roi_list
-        session_dict['norm region of interest ([y0,y1,x0,x1])'] = self.parent.norm_roi_list
-        session_dict['use norm region of interest'] = self.parent.ui.use_normalization_roi_checkBox.isChecked()
-
-        # filters tab
-        session_dict['sample/ob gamma filter'] = self.parent.ui.pre_processing_sample_ob_checkBox.isChecked()
-        session_dict['sample/ob threshold 3x3'] = self.parent.ui.sample_ob_threshold1_spinBox.value()
-        session_dict['sample/ob threshold 5x5'] = self.parent.ui.sample_ob_threshold2_spinBox.value()
-        session_dict['sample/ob threshold 7x7'] = self.parent.ui.sample_ob_threshold3_spinBox.value()
-        session_dict['sample/ob sigma for LoG'] = self.parent.ui.sample_ob_sigma_for_log_spinBox.value()
-        
-        session_dict['dc gamma filter'] = self.parent.ui.pre_processing_di_checkBox.isChecked()
-        session_dict['dc threshold 3x3'] = self.parent.ui.di_threshold1_spinBox.value()
-        session_dict['dc threshold 5x5'] = self.parent.ui.di_threshold2_spinBox.value()
-        session_dict['dc threshold 7x7'] = self.parent.ui.di_threshold3_spinBox.value()
-        session_dict['dc sigma for LoG'] = self.parent.ui.di_sigma_for_log_spinBox.value()
-
-        session_dict['image binning size'] = self.parent.ui.pre_processing_binned_pixels_spinBox.value()
-        session_dict['image binning flag'] = self.parent.ui.pre_processing_image_binning_checkBox.isChecked()
-        session_dict['outlier removal in epithermal dc'] = \
-            self.parent.ui.pre_processing_outlier_threshold_spinBox.value()
-        session_dict['outlier removal in epithermal dc flag'] = \
-            self.parent.ui.pre_processing_outlier_checkBox.isChecked()
-
-        # fitting tab
-        session_dict['fit procedure index selected'] = \
-            self.parent.ui.pre_processing_fitting_procedure_comboBox.currentIndex()
-        # combo_box = self.parent.ui.pre_processing_fitting_procedure_comboBox
-        # setattr(combo_box, "allItems", lambda: [combo_box.itemText(i) for i in range(combo_box.count())])
-        # # session_dict['fit procedure list'] = combo_box.allItems()
-
-        # general settings
-        session_dict["general settings"] = self._retrieve_general_settings()
-        session_dict["default_instrument"] = self.parent.selected_instrument
+        # output folder
+        session_dict[DataType.output] = str(list_ui['select lineEdit'][DataType.output].text())
 
         self.parent.session_dict = session_dict
 
