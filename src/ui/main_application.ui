@@ -203,6 +203,14 @@
     </property>
     <addaction name="actionLog_2"/>
    </widget>
+   <widget class="QMenu" name="menuSession">
+    <property name="title">
+     <string>Session</string>
+    </property>
+    <addaction name="actionLoadSession"/>
+    <addaction name="actionSaveSession"/>
+   </widget>
+   <addaction name="menuSession"/>
    <addaction name="menuHelp"/>
   </widget>
   <action name="actionSelect_new_instrument">
@@ -274,6 +282,22 @@
   <action name="actionLog_2">
    <property name="text">
     <string>Log</string>
+   </property>
+  </action>
+  <action name="actionLoadSession">
+   <property name="text">
+    <string>Open ...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionSaveSession">
+   <property name="text">
+    <string>Save ...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
    </property>
   </action>
  </widget>
@@ -451,6 +475,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionLoadSession</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>load_session_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>454</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSaveSession</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>save_session_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>454</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>projections_select_clicked()</slot>
@@ -463,5 +519,7 @@
   <slot>df_text_field_returned()</slot>
   <slot>output_folder_text_field_returned()</slot>
   <slot>menu_log_clicked()</slot>
+  <slot>load_session_clicked()</slot>
+  <slot>save_session_clicked()</slot>
  </slots>
 </ui>

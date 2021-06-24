@@ -61,6 +61,9 @@ class ImportDataHandler:
 
     def browse_output_folder_via_manual_input(self):
         folder_name = self.parent.ui.output_folder_lineEdit.text()
+        if folder_name == "":
+            return
+
         if os.path.exists(folder_name):
             logging.info(f"select output folder: {folder_name}")
             self.list_ui['select lineEdit'][self.data_type].setStyleSheet(normal_style)

@@ -107,6 +107,16 @@ class PyMBIRUILauncher(QMainWindow):
             load_session_ui.show()
 
     # menu
+    def load_session_clicked(self):
+        o_session = SessionHandler(parent=self)
+        o_session.load_from_file()
+        o_session.load_to_ui()
+
+    def save_session_clicked(self):
+        o_session = SessionHandler(parent=self)
+        o_session.save_from_ui()
+        o_session.save_to_file()
+
     def menu_log_clicked(self):
         LogLauncher(parent=self)
 

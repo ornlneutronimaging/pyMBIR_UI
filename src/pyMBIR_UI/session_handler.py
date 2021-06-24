@@ -76,7 +76,8 @@ class SessionHandler:
             self.config_file_name = config_file_name
             show_status_message(parent=self.parent,
                                 message=f"Loading {config_file_name} ...",
-                                status=StatusMessageStatus.ready)
+                                status=StatusMessageStatus.ready,
+                                duration_s=10)
 
             with open(config_file_name, "r") as read_file:
                 self.parent.session_dict = json.load(read_file)
