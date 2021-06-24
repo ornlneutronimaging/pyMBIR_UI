@@ -2,7 +2,8 @@ from qtpy.QtWidgets import QFileDialog
 from qtpy import QtGui
 import os
 import logging
-import glob
+
+from NeuNorm.normalization import Normalization
 
 from .status_message_config import show_status_message, StatusMessageStatus
 from .utilities.file_utilities import get_list_files, get_list_file_extensions
@@ -127,7 +128,10 @@ class ImportDataHandler:
                 logging.info(f"--> number of files: {len(list_of_files)}")
                 logging.info(f"--> extension: {list_of_files_extension[0]}")
 
+                status = self.loading_data(list_of_files=list_of_files)
+
                 self.activate_next_data_type()
+                self.parent.check_preview_button_status()
 
     @staticmethod
     def retrieve_list_of_files(folder_name="./"):
@@ -169,6 +173,38 @@ class ImportDataHandler:
             self.parent.ui.select_output_folder_pushButton.setStyleSheet(interact_me_style)
             self.parent.ui.output_folder_lineEdit.setEnabled(True)
             self.parent.ui.select_output_folder_pushButton.setEnabled(True)
+
+    def loading_data(self, list_of_files=None):
+        """
+        method that loads the data arrays
+
+        Return:
+            status of the loading (True or False)
+        """
+        # load_success = False
+        # data_type = self.data_type
+
+        nbr_files = len(list_of_files)
+
+        self.parent.eventProgress.setMaximum(nbr_files-1)
+        self.parent.eventProgress.setValue(0)
+        self.parent.eventProgress.setVisible(True)
+
+        dataimage_list = list()
+        for _index, _file in enumerate(list_of_files):
+            o_norm = Normalization()
+            o_norm.load(file=_file, notebook=False)
+            dataimage_list.append(o_norm.data['sample']['data'][0])
+
+            self.parent.eventProgress.setValue(_index+1)
+            QtGui.QGuiApplication.processEvents()
+
+        self.parent.input['data'][self.data_type] = dataimage_list
+        self.parent.input['list files'][self.data_type] = list_of_files
+
+        self.parent.eventProgress.setVisible(False)
+
+        return True  # FIX ME, add a try  catch that return False if error is thrown
 
 
 
@@ -256,41 +292,6 @@ class ImportDataHandler:
 
         return list_files[from_file_index: to_file_index + 1]
 
-    def loading_data(self):
-        """
-        method that loads the data arrays
-
-        Return:
-            status of the loading (True or False)
-        """
-        # load_success = False
-        # data_type = self.data_type
-
-        list_files_to_load = self.get_list_of_files_to_load()
-        nbr_files = len(list_files_to_load)
-
-        o_experiment = NgiExperiment() if self.parent.o_experiment is None else self.parent.o_experiment
-
-        self.parent.eventProgress.setVisible(True)
-        self.parent.eventProgress.setMaximum(nbr_files-1)
-        self.parent.eventProgress.setValue(0)
-
-        dataimage_list = list()
-        for _index, _file in enumerate(list_files_to_load):
-            o_dataimage = DataImage.from_file(_file, datatype=self.data_type)
-            dataimage_list.append(o_dataimage)
-            self.parent.eventProgress.setValue(_index+1)
-            QtGui.QGuiApplication.processEvents()
-
-        o_datascan = DataScan(dataimage_list=dataimage_list, datatype=self.data_type)
-        o_experiment.add_datascan(datascan=o_datascan)
-        if self.data_type == DataType.sample:
-            o_experiment.generate_stepping()
-        self.parent.o_experiment = o_experiment
-
-        self.parent.eventProgress.setVisible(False)
-
-        return True  # FIX ME, add a try  catch that return False if error is thrown
 
     def check_widgets_state(self):
         """

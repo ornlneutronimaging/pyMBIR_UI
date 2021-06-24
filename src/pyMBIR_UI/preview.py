@@ -4,14 +4,25 @@ from . import load_ui
 import pyqtgraph as pg
 import numpy as np
 
-from dataio import DataType
+from . import DataType
+from .import_data_handler import ImportDataHandler
 
-from angel.import_data_handler import ImportDataHandler
+
+class PreviewHandler:
+
+    def __init__(self, parent=None):
+        self.parent = parent
+
+    def check_status_of_button(self):
+        if self.parent.input['data'][DataType.projections] is None:
+            self.parent.ui.preview_pushButton.setEnabled(False)
+        else:
+            self.parent.ui.preview_pushButton.setEnabled(True)
 
 
 class PreviewLauncher:
 
-    def __init__(self, parent=None, data_type=DataType.sample):
+    def __init__(self, parent=None, data_type=DataType.projections):
         self.parent = parent
         self.data_type = data_type
 
@@ -25,11 +36,13 @@ class PreviewLauncher:
             self.parent.preview_id.activateWindow()
             self.parent.preview_id.setFocus()
 
-        o_import = ImportDataHandler(parent=self.parent,
-                                     data_type=data_type)
-        for _type, _ui in o_import.list_ui['preview pushButton'].items():
-            _ui.setEnabled(False)
-            _ui.setStyleSheet("")
+        self.parent.ui.preview_pushButton.setEnabled(False)
+
+        # o_import = ImportDataHandler(parent=self.parent,
+        #                              data_type=data_type)
+        # for _type, _ui in o_import.list_ui['preview pushButton'].items():
+        #     _ui.setEnabled(False)
+        #     _ui.setStyleSheet("")
 
 
 class Preview(QDialog):
@@ -38,18 +51,18 @@ class Preview(QDialog):
 
     histogram_level = None
 
-    radiobuttons = {DataType.sample: None,
+    radfobuttons = {DataType.projections: None,
                     DataType.ob: None,
-                    DataType.di: None,
+                    DataType.df: None,
                    }
     data = {}
 
-    data_type_slider_value = {DataType.sample: -1,
+    data_type_slider_value = {DataType.projections: -1,
                               DataType.ob: -1,
-                              DataType.di: -1,
+                              DataType.df: -1,
                               }
 
-    def __init__(self, parent=None, data_type=DataType.sample):
+    def __init__(self, parent=None, data_type=DataType.projections):
         self.parent = parent
         self.data_type = data_type
 
@@ -60,30 +73,22 @@ class Preview(QDialog):
         self.ui = load_ui(ui_full_path, baseinstance=self)
         self.setWindowTitle("Preview")
 
-        self.radiobuttons = {DataType.sample: self.ui.sample_radioButton,
+        self.radiobuttons = {DataType.projections: self.ui.sample_radioButton,
                              DataType.ob    : self.ui.ob_radioButton,
-                             DataType.di    : self.ui.di_radioButton}
-
-        self.init_data()
+                             DataType.df    : self.ui.di_radioButton}
 
         self.init_pyqtgraph()
         self.update_slider()
         self.update_display_data()
         self.update_radiobuttons_state()
 
-    def init_data(self):
-        o_experiment = self.parent.o_experiment
-        self.data = {DataType.sample: o_experiment.sample,
-                     DataType.ob: o_experiment.reference,
-                     DataType.di: o_experiment.offset}
-
     def get_data_type(self):
-        if self.radiobuttons[DataType.sample].isChecked():
-            return DataType.sample
+        if self.radiobuttons[DataType.projections].isChecked():
+            return DataType.projections
         elif self.radiobuttons[DataType.ob].isChecked():
             return DataType.ob
         else:
-            return DataType.di
+            return DataType.df
 
     def update_display_data(self):
         histogram_level = self.parent.preview_histogram
@@ -99,9 +104,9 @@ class Preview(QDialog):
         self.parent.preview_histogram = histogram_level
 
         slider_value = self.ui.slider.value()
-        data_image = self.data[self.data_type][slider_value]
+        data_image = self.parent.input['data'][self.data_type][slider_value]
         _data = data_image.data
-        _filename = data_image.get_filename()
+        _filename = os.path.basename(self.parent.input['list files'][self.data_type][slider_value])
         _image = np.transpose(_data)
         self.ui.image_view.setImage(_image)
         self.ui.filename_label.setText(_filename)
@@ -113,7 +118,7 @@ class Preview(QDialog):
         self.data_type_slider_value[self.data_type] = self.ui.slider.value()
 
     def update_slider(self):
-        list_files = [_image.get_filename for _image in self.data[self.data_type]]
+        list_files = self.parent.input['list files'][self.data_type]
         self.ui.slider.setMaximum(len(list_files)-1)
         self.ui.slider.setValue(0)
 
@@ -142,7 +147,7 @@ class Preview(QDialog):
             _state = False if len(_data_value) == 0 else True
             self.radiobuttons[_data_type].setEnabled(_state)
 
-    def change_data_type(self, new_data_type=DataType.sample):
+    def change_data_type(self, new_data_type=DataType.projections):
         self.data_type = new_data_type
         self.update_radiobuttons_state()
         self.update_slider_widgets()
@@ -163,15 +168,15 @@ class Preview(QDialog):
         self.update_display_data()
 
     def closeEvent(self, c):
-
-        o_import = ImportDataHandler(parent=self.parent,
-                                     data_type=self.data_type)
-        for _type, _ui in o_import.list_ui['preview pushButton'].items():
-            _ui.setEnabled(True)
-            _data = self.data[_type]
-            if len(_data) > 0:
-                _ui.setStyleSheet(self.parent.interact_me_style)
-            else:
-                _ui.setStyleSheet("")
+        # o_import = ImportDataHandler(parent=self.parent,
+        #                              data_type=self.data_type)
+        # for _type, _ui in o_import.list_ui['preview pushButton'].items():
+        #     _ui.setEnabled(True)
+        #     _data = self.data[_type]
+        #     if len(_data) > 0:
+        #         _ui.setStyleSheet(self.parent.interact_me_style)
+        #     else:
+        #         _ui.setStyleSheet("")
 
         self.parent.preview_id = None
+        self.parent.ui.preview_pushButton.setEnabled(True)

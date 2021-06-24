@@ -15,7 +15,7 @@ from .gui_initialization import GuiInitialization
 # from .event_handler import EventHandler
 # from .session_handler import SessionHandler
 # from .help_handler import HelpHandler
-# from .preview import PreviewLauncher
+from .preview import PreviewHandler, PreviewLauncher
 # from .filter_tab_handler import FilterTabHandler
 # from .load_previous_session_launcher import LoadPreviousSessionLauncher
 from .utilities.decorators import check_ui
@@ -73,8 +73,8 @@ class PyMBIRUILauncher(QMainWindow):
     log_id = None
     # algo_help_id = None
 
-    # # histogram of preview dialog
-    # preview_histogram = None
+    # histogram of preview dialog
+    preview_histogram = None
     #
     # # roi
     # sample_roi_list = None  # used to be called roi_list in old ui [y0, y1, x0, x1]
@@ -114,6 +114,15 @@ class PyMBIRUILauncher(QMainWindow):
                                             DataType.df: self.ui.df_lineEdit,
                                             DataType.output: self.ui.output_folder_lineEdit},
                         }
+
+        self.input = {'list files': {DataType.projections: None,
+                                    DataType.ob: None,
+                                    DataType.df: None,
+                                    },
+                      'data': {DataType.projections: None,
+                               DataType.ob: None,
+                               DataType.df: None},
+                      }
 
         # self.list_ui = {'folder lineEdit'    : {DataType.sample: self.ui.sample_data_folder_lineEdit,
         #                                         DataType.ob    : self.ui.open_beam_folder_lineEdit,
@@ -205,7 +214,7 @@ class PyMBIRUILauncher(QMainWindow):
         o_import.browse_via_manual_input()
 
     def preview_clicked(self):
-        pass
+        PreviewLauncher(parent=self)
 
     def output_folder_select_clicked(self):
         o_import = ImportDataHandler(parent=self,
@@ -217,6 +226,10 @@ class PyMBIRUILauncher(QMainWindow):
         o_import = ImportDataHandler(parent=self,
                                      data_type=DataType.output)
         o_import.browse_output_folder_via_manual_input()
+
+    def check_preview_button_status(self):
+        o_preview = PreviewHandler(parent=self)
+        o_preview.check_status_of_button()
 
     # # tab event handler
     # def main_tab_changed(self, new_tab_index):
