@@ -171,6 +171,10 @@ class PyMBIRUILauncher(QMainWindow):
         o_preview.check_status_of_button()
 
     # Reconstruction setup tab
+    def crop_checkBox_clicked(self):
+        o_crop = CropHandler(parent=self)
+        o_crop.master_checkbox_clicked()
+
     def crop_file_index_moved(self, value):
         pass
 

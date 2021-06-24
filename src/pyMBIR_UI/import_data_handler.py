@@ -8,6 +8,7 @@ from NeuNorm.normalization import Normalization
 from .status_message_config import show_status_message, StatusMessageStatus
 from .utilities.file_utilities import get_list_files, get_list_file_extensions
 from . import DataType, normal_style, error_style, interact_me_style, file_extension_accepted
+from .crop_handler import CropHandler
 
 
 class ImportDataHandler:
@@ -194,7 +195,11 @@ class ImportDataHandler:
         list_data_type = [DataType.projections, DataType.ob, DataType.df, DataType.output]
         index_data_type = list_data_type.index(self.data_type)
         if index_data_type == len(list_data_type) - 1:
+            # activate reconstitution setup tab
             self.parent.ui.tabWidget.setTabEnabled(1, new_state)
+            o_crop = CropHandler(parent=self.parent)
+            o_crop.initialize_crop()
+
         else:
             next_data_type = list_data_type[index_data_type+1]
             self.list_ui['select button'][self.data_type].setStyleSheet(previous_style)

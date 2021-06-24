@@ -109,7 +109,7 @@ class SessionHandler:
             list_load_method[data_type]()
 
         o_crop = CropHandler(parent=self.parent)
-        o_crop.initialize_view()
+        o_crop.initialize_crop()
 
         show_status_message(parent=self.parent,
                             message=f"Loaded {self.config_file_name}",
