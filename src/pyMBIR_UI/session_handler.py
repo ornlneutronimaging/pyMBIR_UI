@@ -96,7 +96,7 @@ class SessionHandler:
         list_load_method = {DataType.projections: self.parent.projections_text_field_returned,
                             DataType.ob: self.parent.ob_text_field_returned,
                             DataType.df: self.parent.df_text_field_returned,
-                            DataType.output: None}
+                            DataType.output: self.parent.output_folder_text_field_returned}
 
         # input tab
         for data_type in list_load_method.keys():
@@ -104,9 +104,7 @@ class SessionHandler:
             _session = session_dict[data_type]
             folder = _session['folder']
             list_ui['select lineEdit'][data_type].setText(folder)
-
-            if not (data_type == DataType.output):
-                list_load_method[data_type]()
+            list_load_method[data_type]()
 
         show_status_message(parent=self.parent,
                             message=f"Loaded {self.config_file_name}",
