@@ -24,6 +24,7 @@ class ImportDataHandler:
         # self.config = self.parent.config
         self.list_ui = self.parent.list_ui
 
+    # projections, ob and df
     def browse_via_filedialog(self):
         """
         retrieve the full list of files found in the defined location
@@ -37,25 +38,30 @@ class ImportDataHandler:
         else:
             logging.info(f"User cancel browsing for {self.data_type}")
 
+    def browse_via_manual_input(self):
+        folder_name = self.list_ui['select lineEdit'][self.data_type].text()
+        logging.info(f"browse {self.data_type} via manual input: {folder_name}")
+        self.update_widgets_with_name_of_folder(folder_name=folder_name)
+
+    # output folder
     def browse_output_folder_via_filedialog(self):
         folder_name = QFileDialog.getExistingDirectory(self.parent,
                                                        caption='Select directory',
                                                        directory=self.parent.homepath)
         if len(folder_name) > 0:
             logging.info(f"select output folder: {folder_name}")
-            self.update_widgets_with_name_of_folder(folder_name=folder_name)
+            self.update_output_folder_widgets(folder_name=folder_name)
         else:
             logging.info(f"User cancel browsing for {self.data_type}")
-
-    def browse_via_manual_input(self):
-        folder_name = self.list_ui['select lineEdit'][self.data_type].text()
-        logging.info(f"browse {self.data_type} via manual input: {folder_name}")
-        self.update_widgets_with_name_of_output_folder(folder_name=folder_name)
 
     def browse_output_folder_via_manual_input(self):
         folder_name = self.parent.ui.projections_lineEdit.text()
         logging.info(f"select output folder: {folder_name}")
-        self.update_widgets_with_name_of_output_folder(folder_name=folder_name)
+        self.update_output_folder_widgets(folder_name=folder_name)
+
+    def update_output_folder_widgets(self, folder_name=""):
+        self.parent.ui.output_folder_lineEdit.setText(folder_name)
+        self.activate_next_data_type()
 
     def update_widgets_with_name_of_output_folder(self, folder_name=""):
         if len(folder_name) == 0:
