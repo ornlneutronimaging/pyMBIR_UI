@@ -64,6 +64,9 @@ class PyMBIRUILauncher(QMainWindow):
     crop_image_height = np.NaN
     crop_image_width = np.NaN
 
+    crop_top_region_item = None
+    crop_bottom_region_item = None
+
     # histogram of preview dialog
     preview_histogram = None
 
