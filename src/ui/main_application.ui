@@ -24,7 +24,7 @@
        <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideMiddle</enum>
@@ -407,7 +407,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QSlider" name="tilt_correctoni_file_index_horizontalSlider">
+               <widget class="QSlider" name="tilt_correction_file_index_horizontalSlider">
                 <property name="orientation">
                  <enum>Qt::Horizontal</enum>
                 </property>
@@ -953,6 +953,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tilt_correction_file_index_horizontalSlider</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tilt_correction_file_index_moved()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>167</x>
+     <y>604</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>7</x>
+     <y>644</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tilt_correction_file_index_horizontalSlider</sender>
+   <signal>sliderPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tilt_correction_file_index_pressed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>934</x>
+     <y>591</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1035</x>
+     <y>647</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>projections_select_clicked()</slot>
@@ -973,5 +1005,7 @@
   <slot>crop_width_pressed()</slot>
   <slot>crop_checkBox_clicked()</slot>
   <slot>tilt_correction_checkBox_clicked()</slot>
+  <slot>tilt_correction_file_index_moved()</slot>
+  <slot>tilt_correction_file_index_pressed()</slot>
  </slots>
 </ui>

@@ -13,10 +13,18 @@ class TiltHandler:
         if list_image is None:
             return
 
+        # file index
+        first_image = list_image[0]
+        nbr_files = len(self.parent.input['list files'][DataType.projections])
+        self.parent.ui.tilt_correction_file_index_horizontalSlider.setMaximum(nbr_files-1)
+        image_height, image_width = np.shape(first_image)
+        self.parent.tilt_correction_image_height = image_height
+        self.parent.tilt_correction_image_width = image_width
+
         self.file_index_changed()
 
     def file_index_changed(self):
-        file_index_selected = self.parent.ui.tilt_correctoni_file_index_horizontalSlider.value()
+        file_index_selected = self.parent.ui.tilt_correction_file_index_horizontalSlider.value()
         list_image = self.parent.input['data'][DataType.projections]
         image = list_image[file_index_selected]
         transpose_image = np.transpose(image)

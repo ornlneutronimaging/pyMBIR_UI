@@ -18,8 +18,6 @@ class CropHandler:
         if list_image is None:
             return
 
-        self.file_index_changed()
-
         # file index
         first_image = list_image[0]
         nbr_files = len(self.parent.input['list files'][DataType.projections])
@@ -27,6 +25,8 @@ class CropHandler:
         image_height, image_width = np.shape(first_image)
         self.parent.crop_image_height = image_height
         self.parent.crop_image_width = image_width
+
+        self.file_index_changed()
 
         # width
         self.parent.ui.crop_width_horizontalSlider.setMaximum(np.int(image_width/2))

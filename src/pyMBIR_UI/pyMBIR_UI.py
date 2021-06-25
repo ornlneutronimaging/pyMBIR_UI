@@ -223,6 +223,14 @@ class PyMBIRUILauncher(QMainWindow):
         o_tilt = TiltHandler(parent=self)
         o_tilt.master_checkBox_clicked()
 
+    def tilt_correction_file_index_moved(self, value):
+        o_tilt = TiltHandler(parent=self)
+        o_tilt.file_index_changed()
+
+    def tilt_correction_file_index_pressed(self):
+        o_tilt = TiltHandler(parent=self)
+        o_tilt.file_index_changed()
+
     # leaving ui
     def closeEvent(self, c):
         o_session = SessionHandler(parent=self)
