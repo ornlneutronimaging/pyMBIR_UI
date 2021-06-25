@@ -1,6 +1,7 @@
 from qtpy.QtWidgets import QFileDialog, QApplication
 import json
 import logging
+import numpy as np
 
 from .import_data_handler import ImportDataHandler
 from .status_message_config import StatusMessageStatus, show_status_message
@@ -34,6 +35,19 @@ class SessionHandler:
 
         # output folder
         session_dict[DataType.output] = {'folder': str(list_ui['select lineEdit'][DataType.output].text())}
+
+        # crop tab
+        crop_state = self.parent.ui.cropping_checkBox.isChecked()
+        crop_width = self.parent.ui.crop_width_horizontalSlider.value()
+        crop_from_slice = np.int(self.parent.ui.crop_from_slice_label.text())
+        crop_to_slice = np.int(self.parent.ui.crop_to_slice_label.text())
+        file_index = self.parent.ui.crop_file_index_horizontalSlider.value()
+        crop_dict ={'state': crop_state,
+                    'width': crop_width,
+                    'from slice': crop_from_slice,
+                    'to slice': crop_to_slice,
+                    'file index': file_index}
+        session_dict['crop'] = crop_dict
 
         self.parent.session_dict = session_dict
 
@@ -102,7 +116,6 @@ class SessionHandler:
 
         # input tab
         for data_type in list_load_method.keys():
-
             _session = session_dict[data_type]
             folder = _session['folder']
             list_ui['select lineEdit'][data_type].setText(folder)
