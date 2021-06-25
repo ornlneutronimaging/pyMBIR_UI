@@ -27,6 +27,7 @@ from .log_launcher import LogLauncher
 # from .utility_backend import multi_logger as ml
 from . import DataType
 from .crop_handler import CropHandler
+from .tilt_handler import TiltHandler
 
 # warnings.filterwarnings('ignore')
 
@@ -54,6 +55,7 @@ class PyMBIRUILauncher(QMainWindow):
 
     # pyqtgrpah
     crop_image_view = None
+    tilt_correction_image_view = None
 
     # infinite line and their labels
     crop_from_slice_item = None
@@ -186,6 +188,8 @@ class PyMBIRUILauncher(QMainWindow):
         o_preview.check_status_of_button()
 
     # Reconstruction setup tab
+
+    # crop
     def crop_checkBox_clicked(self):
         o_crop = CropHandler(parent=self)
         o_crop.master_checkbox_clicked()
@@ -213,6 +217,11 @@ class PyMBIRUILauncher(QMainWindow):
     def crop_to_slice_changed(self):
         o_crop = CropHandler(parent=self)
         o_crop.crop_slice_moved()
+
+    # tilt correction
+    def tilt_correction_checkBox_clicked(self):
+        o_tilt = TiltHandler(parent=self)
+        o_tilt.master_checkBox_clicked()
 
     # leaving ui
     def closeEvent(self, c):

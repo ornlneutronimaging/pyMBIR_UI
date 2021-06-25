@@ -1,5 +1,5 @@
 import numpy as np
-from qtpy import QtGui, QtCore
+from qtpy import QtGui
 import pyqtgraph as pg
 
 from . import DataType
@@ -179,7 +179,6 @@ class CropHandler:
                                                                       brush=brush,
                                                                       bounds=[0, self.parent.crop_image_height])
             self.parent.ui.crop_image_view.addItem(self.parent.crop_bottom_region_item)
-
 
     def width_changed(self):
         width_value = self.parent.ui.crop_width_horizontalSlider.value()
