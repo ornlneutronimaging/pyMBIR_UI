@@ -64,9 +64,9 @@ class CropHandler:
 
         _pen = QtGui.QPen()
         _pen.setColor(QtGui.QColor(255, 0, 0))
-        _pen.setWidth(0.01)
+        _pen.setWidth(0.03)
 
-        self.parent.crop_from_slice_item = pg.InfiniteLine([0, 0],
+        self.parent.crop_from_slice_item = pg.InfiniteLine([0, from_slice],
                                                            pen=_pen,
                                                            angle=0,
                                                            span=(0, 1),

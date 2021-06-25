@@ -54,10 +54,13 @@ class PyMBIRUILauncher(QMainWindow):
 
     # pyqtgrpah
     crop_image_view = None
+
+    # infinite line and their labels
     crop_from_slice_item = None
     crop_from_slice_label_item = None
     crop_to_slice_item = None
     crop_to_slice_label_item = None
+
     crop_image_height = np.NaN
     crop_image_width = np.NaN
 
