@@ -7,6 +7,9 @@ from . import DataType
 
 class CropHandler:
 
+    pen = pg.mkColor((150, 0, 0, 150))
+    brush = pg.mkBrush(pen)
+
     def __init__(self, parent=None):
         self.parent = parent
 
@@ -35,33 +38,31 @@ class CropHandler:
         self.parent.ui.crop_from_slice_label.setText("1")
         self.parent.ui.crop_to_slice_label.setText(str(image_height))
 
-        pen = pg.mkColor((150, 0, 0, 150))
-        brush = pg.mkBrush(pen)
         self.parent.crop_top_region_item = pg.LinearRegionItem(values=(0, 0),
                                                                orientation='horizontal',
                                                                movable=False,
-                                                               brush=brush,
+                                                               brush=self.brush,
                                                                bounds=[0, image_height])
         self.parent.ui.crop_image_view.addItem(self.parent.crop_top_region_item)
 
         self.parent.crop_bottom_region_item = pg.LinearRegionItem(values=(image_height, image_height),
                                                                   orientation='horizontal',
                                                                   movable=False,
-                                                                  brush=brush,
+                                                                  brush=self.brush,
                                                                   bounds=[0, image_height])
         self.parent.ui.crop_image_view.addItem(self.parent.crop_bottom_region_item)
 
         self.parent.crop_left_region_item = pg.LinearRegionItem(values=(0, 0),
                                                                 orientation='vertical',
                                                                 movable=False,
-                                                                brush=brush,
+                                                                brush=self.brush,
                                                                 bounds=[0, image_width])
         self.parent.ui.crop_image_view.addItem(self.parent.crop_left_region_item)
 
         self.parent.crop_right_region_item = pg.LinearRegionItem(values=(image_width, image_width),
                                                                  orientation='vertical',
                                                                  movable=False,
-                                                                 brush=brush,
+                                                                 brush=self.brush,
                                                                  bounds=[0, image_width])
         self.parent.ui.crop_image_view.addItem(self.parent.crop_right_region_item)
 
@@ -108,27 +109,8 @@ class CropHandler:
         _hover_pen.setColor(QtGui.QColor(255, 255, 255))
         _hover_pen.setWidth(50)
 
-        if self.parent.crop_top_region_item is None:
-            pen = pg.mkColor((150, 0, 0, 150))
-            brush = pg.mkBrush(pen)
-            from_slice_item = self.parent.crop_from_slice_item
-            from_value = np.int(from_slice_item.value()) + 1
-            self.parent.crop_top_region_item = pg.LinearRegionItem(values=(0, from_value),
-                                                                   orientation='horizontal',
-                                                                   movable=False,
-                                                                   brush=brush,
-                                                                   bounds=[0, self.parent.crop_image_height])
-            self.parent.ui.crop_image_view.addItem(self.parent.crop_top_region_item)
-
-            to_slice_item = self.parent.crop_to_slice_item
-            to_value = np.int(to_slice_item.value()) + 1
-            self.parent.crop_bottom_region_item = pg.LinearRegionItem(values=(to_value,
-                                                                              self.parent.crop_image_height),
-                                                                      orientation='horizontal',
-                                                                      movable=False,
-                                                                      brush=brush,
-                                                                      bounds=[0, self.parent.crop_image_height])
-            self.parent.ui.crop_image_view.addItem(self.parent.crop_bottom_region_item)
+        image_height = self.parent.crop_image_height
+        image_width = self.parent.crop_image_width
 
         self.parent.crop_from_slice_item = pg.InfiniteLine(from_slice,
                                                            pen=_pen,
@@ -157,6 +139,46 @@ class CropHandler:
         self.parent.ui.crop_image_view.addItem(self.parent.crop_to_slice_label_item)
         self.parent.ui.crop_image_view.addItem(self.parent.crop_to_slice_item)
         self.parent.crop_to_slice_item.sigPositionChanged.connect(self.parent.crop_from_slice_changed)
+
+        width_value = self.parent.ui.crop_width_horizontalSlider.value()
+        max_value = self.parent.ui.crop_width_horizontalSlider.maximum()
+        self.parent.crop_left_region_item = pg.LinearRegionItem(values=[0, max_value - width_value],
+                                                                orientation='vertical',
+                                                                movable=False,
+                                                                brush=self.brush,
+                                                                bounds=[0, image_width])
+        self.parent.ui.crop_image_view.addItem(self.parent.crop_left_region_item)
+
+        self.parent.crop_right_region_item = pg.LinearRegionItem(values=[self.parent.crop_image_width -
+                                                                         (max_value - width_value),
+                                                                         self.parent.crop_image_width],
+                                                                 orientation='vertical',
+                                                                 movable=False,
+                                                                 brush=self.brush,
+                                                                 bounds=[0, image_width])
+        self.parent.ui.crop_image_view.addItem(self.parent.crop_right_region_item)
+
+        if self.parent.crop_top_region_item is None:
+            pen = pg.mkColor((150, 0, 0, 150))
+            brush = pg.mkBrush(pen)
+            from_slice_item = self.parent.crop_from_slice_item
+            from_value = np.int(from_slice_item.value()) + 1
+            self.parent.crop_top_region_item = pg.LinearRegionItem(values=(0, from_value),
+                                                                   orientation='horizontal',
+                                                                   movable=False,
+                                                                   brush=brush,
+                                                                   bounds=[0, self.parent.crop_image_height])
+            self.parent.ui.crop_image_view.addItem(self.parent.crop_top_region_item)
+
+            to_slice_item = self.parent.crop_to_slice_item
+            to_value = np.int(to_slice_item.value()) + 1
+            self.parent.crop_bottom_region_item = pg.LinearRegionItem(values=(to_value,
+                                                                              self.parent.crop_image_height),
+                                                                      orientation='horizontal',
+                                                                      movable=False,
+                                                                      brush=brush,
+                                                                      bounds=[0, self.parent.crop_image_height])
+            self.parent.ui.crop_image_view.addItem(self.parent.crop_bottom_region_item)
 
 
     def width_changed(self):
