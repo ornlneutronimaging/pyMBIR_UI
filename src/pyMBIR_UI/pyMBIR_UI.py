@@ -66,6 +66,8 @@ class PyMBIRUILauncher(QMainWindow):
 
     crop_top_region_item = None
     crop_bottom_region_item = None
+    crop_left_region_item = None
+    crop_right_region_item = None
 
     # histogram of preview dialog
     preview_histogram = None
@@ -193,13 +195,16 @@ class PyMBIRUILauncher(QMainWindow):
         o_crop.file_index_changed()
 
     def crop_file_index_pressed(self):
-        pass
+        o_crop = CropHandler(parent=self)
+        o_crop.file_index_changed()
 
     def crop_width_moved(self, value):
-        pass
+        o_crop = CropHandler(parent=self)
+        o_crop.width_changed()
 
     def crop_width_pressed(self):
-        pass
+        o_crop = CropHandler(parent=self)
+        o_crop.width_changed()
 
     def crop_from_slice_changed(self):
         o_crop = CropHandler(parent=self)

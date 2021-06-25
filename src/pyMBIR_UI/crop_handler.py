@@ -26,10 +26,10 @@ class CropHandler:
         self.parent.crop_image_width = image_width
 
         # width
-        self.parent.ui.crop_width_horizontalSlider.setMaximum(image_width)
-        self.parent.ui.crop_width_horizontalSlider.setValue(image_width)
-        self.parent.ui.crop_width_label.setText(str(image_width))
-        self.parent.ui.crop_width_horizontalSlider.setMinimum(20)
+        self.parent.ui.crop_width_horizontalSlider.setMaximum(np.int(image_width/2))
+        self.parent.ui.crop_width_horizontalSlider.setValue(np.int(image_width/2))
+        self.parent.ui.crop_width_label.setText(str(np.int(image_width/2)))
+        self.parent.ui.crop_width_horizontalSlider.setMinimum(10)
 
         # height
         self.parent.ui.crop_from_slice_label.setText("1")
@@ -51,6 +51,20 @@ class CropHandler:
                                                                   bounds=[0, image_height])
         self.parent.ui.crop_image_view.addItem(self.parent.crop_bottom_region_item)
 
+        self.parent.crop_left_region_item = pg.LinearRegionItem(values=(0, 0),
+                                                                orientation='vertical',
+                                                                movable=False,
+                                                                brush=brush,
+                                                                bounds=[0, image_width])
+        self.parent.ui.crop_image_view.addItem(self.parent.crop_left_region_item)
+
+        self.parent.crop_right_region_item = pg.LinearRegionItem(values=(image_width, image_width),
+                                                                 orientation='vertical',
+                                                                 movable=False,
+                                                                 brush=brush,
+                                                                 bounds=[0, image_width])
+        self.parent.ui.crop_image_view.addItem(self.parent.crop_right_region_item)
+
     def master_checkbox_clicked(self):
         self.parent.ui.crop_frame.setEnabled(self.parent.ui.cropping_checkBox.isChecked())
 
@@ -70,6 +84,10 @@ class CropHandler:
                 self.parent.crop_top_region_item = None
                 self.parent.ui.crop_image_view.removeItem(self.parent.crop_bottom_region_item)
                 self.parent.crop_bottom_region_item = None
+                self.parent.ui.crop_image_view.removeItem(self.parent.crop_left_region_item)
+                self.parent.crop_left_region_item = None
+                self.parent.ui.crop_image_view.removeItem(self.parent.crop_right_region_item)
+                self.parent.crop_right_region_item = None
 
     def file_index_changed(self):
         file_index_selected = self.parent.ui.crop_file_index_horizontalSlider.value()
@@ -83,36 +101,14 @@ class CropHandler:
         to_slice = np.int(str(self.parent.ui.crop_to_slice_label.text()))
 
         _pen = QtGui.QPen()
-        _pen.setColor(QtGui.QColor(255, 0, 0))
-        _pen.setWidth(0.03)
+        _pen.setColor(QtGui.QColor(0, 255, 255))
+        _pen.setWidth(50)
 
-        self.parent.crop_from_slice_item = pg.InfiniteLine([0, from_slice],
-                                                           pen=_pen,
-                                                           angle=0,
-                                                           span=(0, 1),
-                                                           movable=True,
-                                                           bounds=[0, self.parent.crop_image_height-1])
-        self.parent.crop_from_slice_label_item = pg.TextItem(text=f"{from_slice}",
-                                                             anchor=(0, 1))
-        self.parent.crop_from_slice_label_item.setPos(self.parent.crop_image_width, from_slice)
-        self.parent.ui.crop_image_view.addItem(self.parent.crop_from_slice_label_item)
-        self.parent.ui.crop_image_view.addItem(self.parent.crop_from_slice_item)
-        self.parent.crop_from_slice_item.sigPositionChanged.connect(self.parent.crop_from_slice_changed)
+        _hover_pen = QtGui.QPen()
+        _hover_pen.setColor(QtGui.QColor(255, 255, 255))
+        _hover_pen.setWidth(50)
 
-        self.parent.crop_to_slice_item = pg.InfiniteLine([0, to_slice],
-                                                         pen=_pen,
-                                                         angle=0,
-                                                         span=(0, 1),
-                                                         movable=True,
-                                                         bounds=[0, self.parent.crop_image_height-1])
-        self.parent.crop_to_slice_label_item = pg.TextItem(text=f"{to_slice}",
-                                                           anchor=(0, 1))
-        self.parent.crop_to_slice_label_item.setPos(self.parent.crop_image_width, to_slice)
-        self.parent.ui.crop_image_view.addItem(self.parent.crop_to_slice_label_item)
-        self.parent.ui.crop_image_view.addItem(self.parent.crop_to_slice_item)
-        self.parent.crop_to_slice_item.sigPositionChanged.connect(self.parent.crop_from_slice_changed)
-
-        if self.parent.crop_top_region_item == None:
+        if self.parent.crop_top_region_item is None:
             pen = pg.mkColor((150, 0, 0, 150))
             brush = pg.mkBrush(pen)
             from_slice_item = self.parent.crop_from_slice_item
@@ -133,6 +129,43 @@ class CropHandler:
                                                                       brush=brush,
                                                                       bounds=[0, self.parent.crop_image_height])
             self.parent.ui.crop_image_view.addItem(self.parent.crop_bottom_region_item)
+
+        self.parent.crop_from_slice_item = pg.InfiniteLine(from_slice,
+                                                           pen=_pen,
+                                                           hoverPen=_hover_pen,
+                                                           angle=0,
+                                                           # span=(0, 1),
+                                                           movable=True,
+                                                           bounds=[0, self.parent.crop_image_height-1])
+        self.parent.crop_from_slice_label_item = pg.TextItem(text=f"{from_slice}",
+                                                             anchor=(0, 1))
+        self.parent.crop_from_slice_label_item.setPos(self.parent.crop_image_width, from_slice)
+        self.parent.ui.crop_image_view.addItem(self.parent.crop_from_slice_label_item)
+        self.parent.ui.crop_image_view.addItem(self.parent.crop_from_slice_item)
+        self.parent.crop_from_slice_item.sigPositionChanged.connect(self.parent.crop_from_slice_changed)
+
+        self.parent.crop_to_slice_item = pg.InfiniteLine([0, to_slice],
+                                                         pen=_pen,
+                                                         hoverPen=_hover_pen,
+                                                         angle=0,
+                                                         span=(0, 1),
+                                                         movable=True,
+                                                         bounds=[0, self.parent.crop_image_height-1])
+        self.parent.crop_to_slice_label_item = pg.TextItem(text=f"{to_slice}",
+                                                           anchor=(0, 1))
+        self.parent.crop_to_slice_label_item.setPos(self.parent.crop_image_width, to_slice)
+        self.parent.ui.crop_image_view.addItem(self.parent.crop_to_slice_label_item)
+        self.parent.ui.crop_image_view.addItem(self.parent.crop_to_slice_item)
+        self.parent.crop_to_slice_item.sigPositionChanged.connect(self.parent.crop_from_slice_changed)
+
+
+    def width_changed(self):
+        width_value = self.parent.ui.crop_width_horizontalSlider.value()
+        max_value = self.parent.ui.crop_width_horizontalSlider.maximum()
+
+        self.parent.crop_left_region_item.setRegion([0, max_value - width_value])
+        self.parent.crop_right_region_item.setRegion([self.parent.crop_image_width - (max_value - width_value),
+                                                      self.parent.crop_image_width])
 
     def crop_slice_moved(self):
         if self.parent.crop_to_slice_label_item:
