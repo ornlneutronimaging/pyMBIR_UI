@@ -23,7 +23,7 @@ class CenterOfRotation:
         o_gui.block_signal_handler(block=False, ui=self.parent.ui.center_of_rotation_0_degrees_comboBox)
         o_gui.block_signal_handler(block=False, ui=self.parent.ui.center_of_rotation_180_degrees_comboBox)
 
-        self.parent.ui.center_of_rotation_spinBox.setMaximum(self.parent.crop_image_width)
+        self.parent.ui.center_of_rotation_user_defined_spinBox.setMaximum(self.parent.crop_image_width)
 
         self.display_images()
         self.calculate_center_of_rotation()
@@ -54,20 +54,38 @@ class CenterOfRotation:
             index = self.parent.ui.center_of_rotation_180_degrees_comboBox.currentIndex()
         return self.parent.input['data'][DataType.projections][index]
 
-    def calculate_center_of_rotation(self):
-        image_0_degree = self._get_image_from_angle(degree=0)
-        image_180_degree = self._get_image_from_angle(degree=180)
+    def update_widgets(self):
+        state_user_defined = self.parent.ui.user_defined_algorithm_radioButton.isChecked()
+        self.parent.ui.center_of_rotation_user_defined_spinBox.setVisible(state_user_defined)
+        self.parent.ui.center_of_rotation_calculated_label.setVisible(not state_user_defined)
 
-        value = rotation.find_center_pc(image_0_degree,
-                                        image_180_degree)
-        self.parent.ui.center_of_rotation_spinBox.setValue(np.int(value))
+    def calculate_center_of_rotation(self):
+        if self.parent.ui.tomopy_algorithm_radioButton.isChecked():
+            image_0_degree = self._get_image_from_angle(degree=0)
+            image_180_degree = self._get_image_from_angle(degree=180)
+
+            value = rotation.find_center_pc(image_0_degree,
+                                            image_180_degree)
+            self.parent.ui.center_of_rotation_calculated_label.setText(str(np.int(value)))
+
+    def get_center_of_rotation(self):
+        if self.parent.ui.tomopy_algorithm_radioButton.isChecked():
+            value = np.int(str(self.parent.ui.center_of_rotation_calculated_label.text()))
+        elif self.parent.ui.user_defined_algorithm_radioButton.isChecked():
+            value = self.parent.ui.center_of_rotation_user_defined_spinBox.value()
+        else:
+            raise ValueError("not supported yet!")
+        return value
 
     def display_center_of_rotation(self):
+        if self.parent.center_of_rotation_item:
+            self.parent.ui.center_of_rotation_image_view.removeItem(self.parent.center_of_rotation_item)
+
         _pen = QtGui.QPen()
         _pen.setColor(QtGui.QColor(255, 0, 0))
-        _pen.setWidth(20)
+        _pen.setWidth(10)
 
-        center_of_rotation_value = np.int(self.parent.ui.center_of_rotation_spinBox.value())
+        center_of_rotation_value = self.get_center_of_rotation()
         self.parent.center_of_rotation_item = pg.InfiniteLine(center_of_rotation_value,
                                                               pen=_pen,
                                                               angle=90,

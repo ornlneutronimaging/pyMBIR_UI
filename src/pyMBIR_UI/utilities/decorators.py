@@ -1,5 +1,8 @@
 import functools
 from .gui import Gui
+from qtpy.QtWidgets import QApplication
+from qtpy import QtGui
+from qtpy import QtCore
 import logging
 
 

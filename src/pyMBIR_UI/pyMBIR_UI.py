@@ -1,4 +1,5 @@
 from qtpy.QtWidgets import QMainWindow, QApplication
+from qtpy import QtCore
 import sys
 import os
 import logging
@@ -233,6 +234,16 @@ class PyMBIRUILauncher(QMainWindow):
         o_center = CenterOfRotation(parent=self)
         o_center.display_images()
         o_center.calculate_center_of_rotation()
+
+    def center_of_rotation_algorithm_clicked(self):
+        QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
+        QApplication.processEvents()
+        o_center = CenterOfRotation(parent=self)
+        o_center.update_widgets()
+        o_center.calculate_center_of_rotation()
+        o_center.display_center_of_rotation()
+        QApplication.restoreOverrideCursor()
+        QApplication.processEvents()
 
     # tilt correction
     def tilt_correction_checkBox_clicked(self):

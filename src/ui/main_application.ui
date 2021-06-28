@@ -466,22 +466,22 @@
                <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_9">
                  <item>
-                  <widget class="QRadioButton" name="radioButton">
+                  <widget class="QRadioButton" name="user_defined_algorithm_radioButton">
+                   <property name="enabled">
+                    <bool>true</bool>
+                   </property>
+                   <property name="text">
+                    <string>User Defined</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QRadioButton" name="tomopy_algorithm_radioButton">
                    <property name="text">
                     <string>Tomopy</string>
                    </property>
                    <property name="checked">
                     <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QRadioButton" name="radioButton_2">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="text">
-                    <string>N/A</string>
                    </property>
                   </widget>
                  </item>
@@ -510,7 +510,14 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="center_of_rotation_spinBox"/>
+                  <widget class="QSpinBox" name="center_of_rotation_user_defined_spinBox"/>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="center_of_rotation_calculated_label">
+                   <property name="text">
+                    <string>N/A</string>
+                   </property>
+                  </widget>
                  </item>
                  <item>
                   <spacer name="horizontalSpacer_4">
@@ -1185,6 +1192,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>user_defined_algorithm_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>center_of_rotation_algorithm_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>123</x>
+     <y>694</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>6</x>
+     <y>753</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tomopy_algorithm_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>center_of_rotation_algorithm_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>198</x>
+     <y>691</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>8</x>
+     <y>795</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>projections_select_clicked()</slot>
@@ -1209,5 +1248,6 @@
   <slot>tilt_correction_file_index_pressed()</slot>
   <slot>center_of_rotation_checkBox_clicked()</slot>
   <slot>center_of_rotation_file_index_changed()</slot>
+  <slot>center_of_rotation_algorithm_clicked()</slot>
  </slots>
 </ui>
