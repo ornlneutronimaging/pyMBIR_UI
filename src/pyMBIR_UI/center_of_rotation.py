@@ -39,6 +39,12 @@ class CenterOfRotation:
         for _ui in list_ui:
             _ui.setEnabled(status)
 
+        if status:
+            self.display_center_of_rotation()
+        else:
+            if self.parent.center_of_rotation_item:
+                self.parent.ui.center_of_rotation_image_view.removeItem(self.parent.center_of_rotation_item)
+
     def display_images(self):
         image_0_degree = self._get_image_from_angle(degree=0)
         image_180_degree = self._get_image_from_angle(degree=180)
