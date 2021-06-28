@@ -793,7 +793,7 @@
     <string>Log</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+L</string>
+    <string/>
    </property>
   </action>
   <action name="actionLoadSession">
@@ -1227,6 +1227,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>center_of_rotation_user_defined_spinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>center_of_rotation_user_value_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>228</x>
+     <y>728</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>8</x>
+     <y>701</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>projections_select_clicked()</slot>
@@ -1252,5 +1268,6 @@
   <slot>center_of_rotation_checkBox_clicked()</slot>
   <slot>center_of_rotation_file_index_changed()</slot>
   <slot>center_of_rotation_algorithm_clicked()</slot>
+  <slot>center_of_rotation_user_value_changed()</slot>
  </slots>
 </ui>

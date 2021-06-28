@@ -245,6 +245,11 @@ class PyMBIRUILauncher(QMainWindow):
         QApplication.restoreOverrideCursor()
         QApplication.processEvents()
 
+    def center_of_rotation_user_value_changed(self, value):
+        o_center = CenterOfRotation(parent=self)
+        o_center.calculate_center_of_rotation()
+        o_center.display_center_of_rotation()
+
     # tilt correction
     def tilt_correction_checkBox_clicked(self):
         o_tilt = TiltHandler(parent=self)

@@ -29,6 +29,8 @@ class CenterOfRotation:
         self.display_images()
         self.calculate_center_of_rotation()
         self.display_center_of_rotation()
+        self.update_widgets()
+        self.master_checkbox_clicked()
 
     def master_checkbox_clicked(self):
         status = self.parent.ui.master_checkBox.isChecked()
