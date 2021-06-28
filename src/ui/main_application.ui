@@ -1153,6 +1153,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>center_of_rotation_0_degrees_comboBox</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>center_of_rotation_file_index_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>314</x>
+     <y>605</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1064</x>
+     <y>633</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>center_of_rotation_180_degrees_comboBox</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>center_of_rotation_file_index_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>644</x>
+     <y>640</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1065</x>
+     <y>699</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>projections_select_clicked()</slot>
@@ -1176,5 +1208,6 @@
   <slot>tilt_correction_file_index_moved()</slot>
   <slot>tilt_correction_file_index_pressed()</slot>
   <slot>center_of_rotation_checkBox_clicked()</slot>
+  <slot>center_of_rotation_file_index_changed()</slot>
  </slots>
 </ui>

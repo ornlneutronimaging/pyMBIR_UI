@@ -227,6 +227,10 @@ class PyMBIRUILauncher(QMainWindow):
         o_center = CenterOfRotation(parent=self)
         o_center.master_checkbox_clicked()
 
+    def center_of_rotation_file_index_changed(self, value):
+        o_center = CenterOfRotation(parent=self)
+        o_center.display_images()
+
     # tilt correction
     def tilt_correction_checkBox_clicked(self):
         o_tilt = TiltHandler(parent=self)
