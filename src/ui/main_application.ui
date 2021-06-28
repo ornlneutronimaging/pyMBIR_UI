@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1041</width>
-    <height>815</height>
+    <width>1069</width>
+    <height>857</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,7 +24,7 @@
        <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideMiddle</enum>
@@ -181,15 +181,15 @@
         <item>
          <widget class="QToolBox" name="toolBox">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page">
            <property name="geometry">
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>971</width>
-             <height>589</height>
+             <width>999</width>
+             <height>631</height>
             </rect>
            </property>
            <attribute name="label">
@@ -367,13 +367,178 @@
             </item>
            </layout>
           </widget>
+          <widget class="QWidget" name="page_3">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>999</width>
+             <height>631</height>
+            </rect>
+           </property>
+           <attribute name="label">
+            <string>Center of Rotation</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_9">
+            <item>
+             <widget class="QCheckBox" name="master_checkBox">
+              <property name="text">
+               <string>Center of rotation</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QWidget" name="center_of_rotation_widget" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <layout class="QGridLayout" name="gridLayout_2">
+              <item row="0" column="0">
+               <widget class="QLabel" name="center_of_rotation_0_degree_label">
+                <property name="minimumSize">
+                 <size>
+                  <width>100</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>150</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Image at 0 degree</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QComboBox" name="center_of_rotation_0_degrees_comboBox"/>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="center_of_rotation_180_degree_label">
+                <property name="minimumSize">
+                 <size>
+                  <width>100</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>150</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Image at 180 degree</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QComboBox" name="center_of_rotation_180_degrees_comboBox"/>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <widget class="QFrame" name="center_of_rotation_frame">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_10">
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_9">
+                 <item>
+                  <widget class="QRadioButton" name="radioButton">
+                   <property name="text">
+                    <string>Tomopy</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QRadioButton" name="radioButton_2">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>N/A</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_5">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_8">
+                 <item>
+                  <widget class="QLabel" name="label_12">
+                   <property name="text">
+                    <string>Center of rotation value</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="spinBox"/>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_4">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                </layout>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
           <widget class="QWidget" name="page_2">
            <property name="geometry">
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>971</width>
-             <height>589</height>
+             <width>999</width>
+             <height>631</height>
             </rect>
            </property>
            <attribute name="label">
@@ -511,19 +676,6 @@
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="page_3">
-           <property name="geometry">
-            <rect>
-             <x>0</x>
-             <y>0</y>
-             <width>1063</width>
-             <height>475</height>
-            </rect>
-           </property>
-           <attribute name="label">
-            <string>Center of Rotation</string>
-           </attribute>
-          </widget>
          </widget>
         </item>
        </layout>
@@ -543,7 +695,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1041</width>
+     <width>1069</width>
      <height>24</height>
     </rect>
    </property>
@@ -580,7 +732,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>../../../../.designer/backup/icons/document-save.png</normaloff>../../../../.designer/backup/icons/document-save.png</iconset>
+     <normaloff>../../../../../../.designer/backup/icons/document-save.png</normaloff>../../../../../../.designer/backup/icons/document-save.png</iconset>
    </property>
    <property name="text">
     <string>Save ...</string>
@@ -595,7 +747,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>../../../../.designer/backup/icons/document-open.png</normaloff>../../../../.designer/backup/icons/document-open.png</iconset>
+     <normaloff>../../../../../../.designer/backup/icons/document-open.png</normaloff>../../../../../../.designer/backup/icons/document-open.png</iconset>
    </property>
    <property name="text">
     <string>Load ...</string>
@@ -612,7 +764,7 @@
   <action name="actionAbout">
    <property name="icon">
     <iconset>
-     <normaloff>../../../../.designer/backup/icons/about.png</normaloff>../../../../.designer/backup/icons/about.png</iconset>
+     <normaloff>../../../../../../.designer/backup/icons/about.png</normaloff>../../../../../../.designer/backup/icons/about.png</iconset>
    </property>
    <property name="text">
     <string>About</string>
@@ -864,8 +1016,8 @@
    <slot>crop_file_index_moved()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>220</x>
-     <y>566</y>
+     <x>298</x>
+     <y>621</y>
     </hint>
     <hint type="destinationlabel">
      <x>9</x>
@@ -880,8 +1032,8 @@
    <slot>crop_file_index_pressed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>243</x>
-     <y>569</y>
+     <x>321</x>
+     <y>621</y>
     </hint>
     <hint type="destinationlabel">
      <x>6</x>
@@ -896,8 +1048,8 @@
    <slot>crop_width_moved()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>232</x>
-     <y>621</y>
+     <x>301</x>
+     <y>674</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -912,8 +1064,8 @@
    <slot>crop_width_pressed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>139</x>
-     <y>622</y>
+     <x>208</x>
+     <y>674</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -944,8 +1096,8 @@
    <slot>tilt_correction_checkBox_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>81</x>
-     <y>156</y>
+     <x>95</x>
+     <y>198</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -960,8 +1112,8 @@
    <slot>tilt_correction_file_index_moved()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>167</x>
-     <y>604</y>
+     <x>245</x>
+     <y>687</y>
     </hint>
     <hint type="destinationlabel">
      <x>7</x>
@@ -976,12 +1128,28 @@
    <slot>tilt_correction_file_index_pressed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>934</x>
-     <y>591</y>
+     <x>1012</x>
+     <y>687</y>
     </hint>
     <hint type="destinationlabel">
      <x>1035</x>
      <y>647</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>master_checkBox</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>center_of_rotation_checkBox_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>83</x>
+     <y>156</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>11</x>
+     <y>233</y>
     </hint>
    </hints>
   </connection>
@@ -1007,5 +1175,6 @@
   <slot>tilt_correction_checkBox_clicked()</slot>
   <slot>tilt_correction_file_index_moved()</slot>
   <slot>tilt_correction_file_index_pressed()</slot>
+  <slot>center_of_rotation_checkBox_clicked()</slot>
  </slots>
 </ui>

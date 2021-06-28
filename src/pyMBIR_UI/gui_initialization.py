@@ -34,13 +34,21 @@ class GuiInitialization:
 
     def pyqtgraph(self):
 
-        #crop
+        # crop
         self.parent.ui.crop_image_view = pg.ImageView(view=pg.PlotItem())
         self.parent.ui.crop_image_view.ui.roiBtn.hide()
         self.parent.ui.crop_image_view.ui.menuBtn.hide()
         image_layout = QVBoxLayout()
         image_layout.addWidget(self.parent.ui.crop_image_view)
         self.parent.ui.crop_widget.setLayout(image_layout)
+
+        # center of rotation
+        self.parent.ui.center_of_rotation_image_view = pg.ImageView(view=pg.PlotItem())
+        self.parent.ui.center_of_rotation_image_view.ui.roiBtn.hide()
+        self.parent.ui.center_of_rotation_image_view.ui.menuBtn.hide()
+        image_layout = QVBoxLayout()
+        image_layout.addWidget(self.parent.ui.center_of_rotation_image_view)
+        self.parent.ui.center_of_rotation_widget.setLayout(image_layout)
 
         # tilt correction
         self.parent.ui.tilt_correction_image_view = pg.ImageView(view=pg.PlotItem())

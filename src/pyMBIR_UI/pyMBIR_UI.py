@@ -28,6 +28,7 @@ from .log_launcher import LogLauncher
 from . import DataType
 from .crop_handler import CropHandler
 from .tilt_handler import TiltHandler
+from .center_of_rotation import CenterOfRotation
 
 # warnings.filterwarnings('ignore')
 
@@ -55,6 +56,7 @@ class PyMBIRUILauncher(QMainWindow):
 
     # pyqtgrpah
     crop_image_view = None
+    center_of_rotation_image_view = None
     tilt_correction_image_view = None
 
     # infinite line and their labels
@@ -70,6 +72,8 @@ class PyMBIRUILauncher(QMainWindow):
     crop_bottom_region_item = None
     crop_left_region_item = None
     crop_right_region_item = None
+
+    # center of rotation
 
     # histogram of preview dialog
     preview_histogram = None
@@ -217,6 +221,11 @@ class PyMBIRUILauncher(QMainWindow):
     def crop_to_slice_changed(self):
         o_crop = CropHandler(parent=self)
         o_crop.crop_slice_moved()
+
+    # center of rotation
+    def center_of_rotation_checkBox_clicked(self):
+        o_center = CenterOfRotation(parent=self)
+        o_center.master_checkbox_clicked()
 
     # tilt correction
     def tilt_correction_checkBox_clicked(self):

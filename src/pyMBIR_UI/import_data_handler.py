@@ -9,6 +9,7 @@ from .status_message_config import show_status_message, StatusMessageStatus
 from .utilities.file_utilities import get_list_files, get_list_file_extensions
 from . import DataType, normal_style, error_style, interact_me_style, file_extension_accepted
 from .crop_handler import CropHandler
+from .center_of_rotation import CenterOfRotation
 from .tilt_handler import TiltHandler
 
 
@@ -201,6 +202,9 @@ class ImportDataHandler:
             o_crop = CropHandler(parent=self.parent)
             o_crop.initialize_crop()
             o_crop.master_checkbox_clicked()
+
+            o_center = CenterOfRotation(parent=self.parent)
+            o_center.initialization()
 
             o_tilt = TiltHandler(parent=self.parent)
             o_tilt.initialize_tilt_correction()

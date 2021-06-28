@@ -13,6 +13,6 @@ setup(name='pyMBIR_UI',
       package_dir={'': 'src'},
       scripts=["scripts/pyMBIR_UI"],
       # Requirements are handled by conda
-      install_requires=['qtpy', 'pyqtgraph'],
+      install_requires=['qtpy', 'pyqtgraph', 'pillow'],
       extras_require=dict(tests=['pytest']),
       zip_safe=False)

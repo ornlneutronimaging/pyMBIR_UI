@@ -1,2 +1,7 @@
 name: pyMBIR_UI
+channels:
+  - defaults
+  - conda-forge
 dependencies:
+  - tomopy
+  - pillow
