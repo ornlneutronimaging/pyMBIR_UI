@@ -123,6 +123,12 @@ class SessionHandler:
 
         o_crop = CropHandler(parent=self.parent)
         o_crop.initialize_crop()
+        self.parent.ui.crop_file_index_horizontalSlider.setValue(self.parent.session_dict['crop']['file index'])
+        crop_width = self.parent.session_dict['crop']['width']
+        self.parent.ui.crop_width_horizontalSlider.setValue(crop_width)
+        self.parent.ui.crop_width_label.setText(str(2*crop_width))
+        self.parent.ui.crop_width_horizontalSlider.setMinimum(10)
+        o_crop.width_changed()
 
         show_status_message(parent=self.parent,
                             message=f"Loaded {self.config_file_name}",

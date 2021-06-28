@@ -26,14 +26,12 @@ class CropHandler:
         self.parent.crop_image_height = image_height
         self.parent.crop_image_width = image_width
 
-        self.parent.ui.crop_file_index_horizontalSlider.setValue(self.parent.session_dict['crop']['file index'])
+        # self.parent.ui.crop_file_index_horizontalSlider.setValue(self.parent.session_dict['crop']['file index'])
         self.file_index_changed()
 
         # width
         self.parent.ui.crop_width_horizontalSlider.setMaximum(np.int(image_width/2))
-        crop_width = self.parent.session_dict['crop']['width']
-        self.parent.ui.crop_width_horizontalSlider.setValue(crop_width)
-        self.parent.ui.crop_width_label.setText(str(2*crop_width))
+        self.parent.ui.crop_width_horizontalSlider.setValue(self.parent.ui.crop_width_horizontalSlider.maximum())
         self.parent.ui.crop_width_horizontalSlider.setMinimum(10)
 
         # height
