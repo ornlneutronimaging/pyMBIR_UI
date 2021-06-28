@@ -2,6 +2,7 @@ import numpy as np
 from qtpy import QtGui
 import pyqtgraph as pg
 from tomopy.recon import rotation
+import logging
 
 from . import DataType
 from .utilities.gui import Gui
@@ -40,8 +41,10 @@ class CenterOfRotation:
             _ui.setEnabled(status)
 
         if status:
+            logging.info("Center of rotation mode: ON")
             self.display_center_of_rotation()
         else:
+            logging.info("Center of rotation mode: OFF")
             if self.parent.center_of_rotation_item:
                 self.parent.ui.center_of_rotation_image_view.removeItem(self.parent.center_of_rotation_item)
 
@@ -77,10 +80,13 @@ class CenterOfRotation:
     def get_center_of_rotation(self):
         if self.parent.ui.tomopy_algorithm_radioButton.isChecked():
             value = np.int(str(self.parent.ui.center_of_rotation_calculated_label.text()))
+            logging.info("Center of rotation calculated via tomopy (find_center_pc)")
         elif self.parent.ui.user_defined_algorithm_radioButton.isChecked():
             value = self.parent.ui.center_of_rotation_user_defined_spinBox.value()
+            logging.info("Center of rotation defined by user")
         else:
             raise ValueError("not supported yet!")
+        logging.info(f"-> value: {value}")
         return value
 
     def display_center_of_rotation(self):

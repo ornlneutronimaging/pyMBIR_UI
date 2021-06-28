@@ -792,6 +792,9 @@
    <property name="text">
     <string>Log</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
+   </property>
   </action>
   <action name="actionLoadSession">
    <property name="text">
