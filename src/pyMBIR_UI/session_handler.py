@@ -67,56 +67,6 @@ class SessionHandler:
 
         self.parent.session_dict = session_dict
 
-    def save_to_file(self, config_file_name=None):
-
-        if config_file_name is None:
-            config_file_name = QFileDialog.getSaveFileName(self.parent,
-                                                           caption="Select session file name ...",
-                                                           directory=self.parent.homepath,
-                                                           filter="session (*.json)",
-                                                           initialFilter="session")
-
-            QApplication.processEvents()
-            config_file_name = config_file_name[0]
-
-        if config_file_name:
-            output_file_name = config_file_name
-            session_dict = self.parent.session_dict
-            with open(output_file_name, 'w') as json_file:
-                json.dump(session_dict, json_file)
-
-            show_status_message(parent=self.parent,
-                                message=f"Session saved in {config_file_name}",
-                                status=StatusMessageStatus.ready,
-                                duration_s=10)
-            logging.info(f"Saving configuration into {config_file_name}")
-
-    def load_from_file(self, config_file_name=None):
-
-        if config_file_name is None:
-            config_file_name = QFileDialog.getOpenFileName(self.parent,
-                                                           directory=self.parent.homepath,
-                                                           caption="Select session file ...",
-                                                           filter="session (*.json)",
-                                                           initialFilter="session")
-            QApplication.processEvents()
-            config_file_name = config_file_name[0]
-
-        if config_file_name:
-            config_file_name = config_file_name
-            self.config_file_name = config_file_name
-            show_status_message(parent=self.parent,
-                                message=f"Loading {config_file_name} ...",
-                                status=StatusMessageStatus.ready,
-                                duration_s=10)
-
-            with open(config_file_name, "r") as read_file:
-                self.parent.session_dict = json.load(read_file)
-            logging.info(f"Loaded from {config_file_name}")
-
-        else:
-            self.load_successful = False
-
     def load_to_ui(self):
 
         if not self.load_successful:
@@ -146,6 +96,9 @@ class SessionHandler:
         self.parent.ui.crop_width_horizontalSlider.setMinimum(10)
         o_crop.width_changed()
 
+        o_center = CenterOfRotation(parent=self.parent)
+        o_center.initialize_from_session()
+
         show_status_message(parent=self.parent,
                             message=f"Loaded {self.config_file_name}",
                             status=StatusMessageStatus.ready,
@@ -166,3 +119,54 @@ class SessionHandler:
         o_get = Get(parent=self.parent)
         full_config_file_name = o_get.get_automatic_config_file_name()
         self.save_to_file(config_file_name=full_config_file_name)
+
+    def save_to_file(self, config_file_name=None):
+
+        if config_file_name is None:
+            config_file_name = QFileDialog.getSaveFileName(self.parent,
+                                                           caption="Select session file name ...",
+                                                           directory=self.parent.homepath,
+                                                           filter="session (*.json)",
+                                                           initialFilter="session")
+
+            QApplication.processEvents()
+            config_file_name = config_file_name[0]
+
+        if config_file_name:
+            output_file_name = config_file_name
+            session_dict = self.parent.session_dict
+            with open(output_file_name, 'w') as json_file:
+                json.dump(session_dict, json_file)
+
+            show_status_message(parent=self.parent,
+                                message=f"Session saved in {config_file_name}",
+                                status=StatusMessageStatus.ready,
+                                duration_s=10)
+            logging.info(f"Saving configuration into {config_file_name}")
+
+
+    def load_from_file(self, config_file_name=None):
+
+        if config_file_name is None:
+            config_file_name = QFileDialog.getOpenFileName(self.parent,
+                                                           directory=self.parent.homepath,
+                                                           caption="Select session file ...",
+                                                           filter="session (*.json)",
+                                                           initialFilter="session")
+            QApplication.processEvents()
+            config_file_name = config_file_name[0]
+
+        if config_file_name:
+            config_file_name = config_file_name
+            self.config_file_name = config_file_name
+            show_status_message(parent=self.parent,
+                                message=f"Loading {config_file_name} ...",
+                                status=StatusMessageStatus.ready,
+                                duration_s=10)
+
+            with open(config_file_name, "r") as read_file:
+                self.parent.session_dict = json.load(read_file)
+            logging.info(f"Loaded from {config_file_name}")
+
+        else:
+            self.load_successful = False

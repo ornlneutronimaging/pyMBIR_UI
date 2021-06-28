@@ -18,6 +18,19 @@ class CenterOfRotation:
     def __init__(self, parent=None):
         self.parent = parent
 
+    def initialize_from_session(self):
+        session = self.parent.session_dict['center rotation']
+        self.parent.ui.master_center_of_rotation_checkBox.setChecked(session['state'])
+        self.parent.ui.center_of_rotation_0_degrees_comboBox.setCurrentIndex(session['image 0 file index'])
+        self.parent.ui.center_of_rotation_180_degrees_comboBox.setCurrentIndex(session['image 180 file index'])
+        self.set_algorithm(algorithm=session['algorithm selected'])
+        self.parent.ui.center_of_rotation_user_defined_spinBox.setValue(session['user value'])
+        self.display_images()
+        self.calculate_center_of_rotation()
+        self.display_center_of_rotation()
+        self.update_widgets()
+        self.master_checkbox_clicked()
+
     def initialization(self):
         list_of_files = self.parent.input['list files'][DataType.projections]
 
@@ -117,3 +130,9 @@ class CenterOfRotation:
             return Algorithm.user
         else:
             raise NotImplementedError("Algorithm not implemented yet!")
+
+    def set_algorithm(self, algorithm=Algorithm.tomopy):
+        if algorithm == Algorithm.tomopy:
+            self.parent.ui.tomopy_algorithm_radioButton.setChecked(True)
+        elif algorithm == Algorithm.user:
+            self.parent.ui.user_defined_algorithm_radioButton.setChecked(True)
