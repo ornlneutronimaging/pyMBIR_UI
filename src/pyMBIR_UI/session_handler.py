@@ -8,6 +8,8 @@ from .status_message_config import StatusMessageStatus, show_status_message
 from .utilities.get import Get
 from . import DataType
 from .crop_handler import CropHandler
+from .center_of_rotation import CenterOfRotation
+from .center_of_rotation import Algorithm as CenterOfRotationAlgorithm
 
 
 class SessionHandler:
@@ -42,12 +44,26 @@ class SessionHandler:
         crop_from_slice = np.int(self.parent.ui.crop_from_slice_label.text())
         crop_to_slice = np.int(self.parent.ui.crop_to_slice_label.text())
         file_index = self.parent.ui.crop_file_index_horizontalSlider.value()
-        crop_dict ={'state': crop_state,
-                    'width': crop_width,
-                    'from slice': crop_from_slice,
-                    'to slice': crop_to_slice,
-                    'file index': file_index}
+        crop_dict = {'state': crop_state,
+                     'width': crop_width,
+                     'from slice': crop_from_slice,
+                     'to slice': crop_to_slice,
+                     'file index': file_index}
         session_dict['crop'] = crop_dict
+
+        # center of rotation
+        o_center = CenterOfRotation(parent=self.parent)
+        center_of_rotation_state = self.parent.ui.master_center_of_rotation_checkBox.isChecked()
+        image_0_file_index = self.parent.ui.center_of_rotation_0_degrees_comboBox.currentIndex()
+        image_180_file_index = self.parent.ui.center_of_rotation_180_degrees_comboBox.currentIndex()
+        algorithm_selected = o_center.get_algorithm_selected()
+        user_value = self.parent.ui.center_of_rotation_user_defined_spinBox.value()
+        center_rotation_dict = {'state': center_of_rotation_state,
+                                'image 0 file index': image_0_file_index,
+                                'image 180 file index': image_180_file_index,
+                                'algorithm selected': algorithm_selected,
+                                'user value': user_value}
+        session_dict['center rotation'] = center_rotation_dict
 
         self.parent.session_dict = session_dict
 

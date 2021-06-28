@@ -8,6 +8,11 @@ from . import DataType
 from .utilities.gui import Gui
 
 
+class Algorithm:
+    tomopy = 'tomopy'
+    user = 'user defined'
+
+
 class CenterOfRotation:
 
     def __init__(self, parent=None):
@@ -33,7 +38,7 @@ class CenterOfRotation:
         self.master_checkbox_clicked()
 
     def master_checkbox_clicked(self):
-        status = self.parent.ui.master_checkBox.isChecked()
+        status = self.parent.ui.master_center_of_rotation_checkBox.isChecked()
         list_ui = [self.parent.ui.center_of_rotation_frame,
                    self.parent.ui.center_of_rotation_0_degree_label,
                    self.parent.ui.center_of_rotation_0_degrees_comboBox,
@@ -80,14 +85,13 @@ class CenterOfRotation:
             self.parent.ui.center_of_rotation_calculated_label.setText(str(np.int(value)))
 
     def get_center_of_rotation(self):
-        if self.parent.ui.tomopy_algorithm_radioButton.isChecked():
+        algorithm_selected = self.get_algorithm_selected()
+        if algorithm_selected == Algorithm.tomopy:
             value = np.int(str(self.parent.ui.center_of_rotation_calculated_label.text()))
             logging.info("Center of rotation calculated via tomopy (find_center_pc)")
-        elif self.parent.ui.user_defined_algorithm_radioButton.isChecked():
+        elif algorithm_selected == Algorithm.user:
             value = self.parent.ui.center_of_rotation_user_defined_spinBox.value()
             logging.info("Center of rotation defined by user")
-        else:
-            raise ValueError("not supported yet!")
         logging.info(f"-> value: {value}")
         return value
 
@@ -105,3 +109,11 @@ class CenterOfRotation:
                                                               angle=90,
                                                               movable=False)
         self.parent.ui.center_of_rotation_image_view.addItem(self.parent.center_of_rotation_item)
+
+    def get_algorithm_selected(self):
+        if self.parent.ui.tomopy_algorithm_radioButton.isChecked():
+            return Algorithm.tomopy
+        elif self.parent.ui.user_defined_algorithm_radioButton.isChecked():
+            return Algorithm.user
+        else:
+            raise NotImplementedError("Algorithm not implemented yet!")

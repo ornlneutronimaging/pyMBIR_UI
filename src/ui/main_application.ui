@@ -381,7 +381,7 @@
            </attribute>
            <layout class="QVBoxLayout" name="verticalLayout_9">
             <item>
-             <widget class="QCheckBox" name="master_checkBox">
+             <widget class="QCheckBox" name="master_center_of_rotation_checkBox">
               <property name="text">
                <string>Center of rotation</string>
               </property>
@@ -1148,7 +1148,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>master_checkBox</sender>
+   <sender>master_center_of_rotation_checkBox</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
    <slot>center_of_rotation_checkBox_clicked()</slot>
