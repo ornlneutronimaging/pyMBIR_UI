@@ -71,3 +71,6 @@ class Gui:
     def enable_those_widgets(list_widgets=None, enable_state=True):
         for _ui in list_widgets:
             _ui.setEnabled(enable_state)
+
+    def block_signal_handler(self, block=True, ui=None):
+        ui.blockSignals(block)

@@ -510,7 +510,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="spinBox"/>
+                  <widget class="QSpinBox" name="center_of_rotation_spinBox"/>
                  </item>
                  <item>
                   <spacer name="horizontalSpacer_4">

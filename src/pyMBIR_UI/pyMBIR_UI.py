@@ -65,6 +65,7 @@ class PyMBIRUILauncher(QMainWindow):
     crop_to_slice_item = None
     crop_to_slice_label_item = None
 
+    # full image width and height
     crop_image_height = np.NaN
     crop_image_width = np.NaN
 
@@ -74,6 +75,7 @@ class PyMBIRUILauncher(QMainWindow):
     crop_right_region_item = None
 
     # center of rotation
+    center_of_rotation_item = None
 
     # histogram of preview dialog
     preview_histogram = None
@@ -230,6 +232,7 @@ class PyMBIRUILauncher(QMainWindow):
     def center_of_rotation_file_index_changed(self, value):
         o_center = CenterOfRotation(parent=self)
         o_center.display_images()
+        o_center.calculate_center_of_rotation()
 
     # tilt correction
     def tilt_correction_checkBox_clicked(self):
