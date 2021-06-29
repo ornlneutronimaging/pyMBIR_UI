@@ -6,9 +6,6 @@ import logging
 from . import load_ui
 import versioneer
 import numpy as np
-import multiprocessing
-import warnings
-
 
 # from .select_instrument_launcher import SelectInstrumentLauncher
 from .import_data_handler import ImportDataHandler

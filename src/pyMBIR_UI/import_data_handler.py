@@ -207,8 +207,8 @@ class ImportDataHandler:
             o_crop.initialize_crop()
             o_crop.master_checkbox_clicked()
 
-            # o_center = CenterOfRotation(parent=self.parent)
-            # o_center.initialization()
+            o_center = CenterOfRotation(parent=self.parent)
+            o_center.initialization()
 
             # o_tilt = TiltHandler(parent=self.parent)
             # o_tilt.initialize_tilt_correction()

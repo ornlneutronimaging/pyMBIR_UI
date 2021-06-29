@@ -1,12 +1,13 @@
 import numpy as np
-from qtpy import QtGui
+from qtpy import QtGui, QtCore
+from qtpy.QtWidgets import QApplication
 import pyqtgraph as pg
 from tomopy.recon import rotation
 import logging
-from pathlib import PurePath
 
 from . import DataType
 from .utilities.gui import Gui
+from .loader import Loader
 
 
 class Algorithm:
@@ -75,7 +76,6 @@ class CenterOfRotation:
     def display_images(self):
         image_0_degree = self._get_image_from_angle(degree=0)
         image_180_degree = self._get_image_from_angle(degree=180)
-
         final_image = 0.5*image_0_degree + 0.5*image_180_degree
         transpose_image = np.transpose(final_image)
         self.parent.center_of_rotation_image_view.setImage(transpose_image)
@@ -85,10 +85,9 @@ class CenterOfRotation:
             index = self.parent.ui.center_of_rotation_0_degrees_comboBox.currentIndex()
         elif degree == 180:
             index = self.parent.ui.center_of_rotation_180_degrees_comboBox.currentIndex()
-
-
-
-        return self.parent.input['data'][DataType.projections][index]
+        o_loader = Loader(parent=self.parent)
+        image = o_loader.retrieve_data(file_index=index)
+        return image
 
     def update_widgets(self):
         state_user_defined = self.parent.ui.user_defined_algorithm_radioButton.isChecked()
@@ -96,6 +95,10 @@ class CenterOfRotation:
         self.parent.ui.center_of_rotation_calculated_label.setVisible(not state_user_defined)
 
     def calculate_center_of_rotation(self):
+
+        QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
+        QApplication.processEvents()
+
         if self.parent.ui.tomopy_algorithm_radioButton.isChecked():
             image_0_degree = self._get_image_from_angle(degree=0)
             image_180_degree = self._get_image_from_angle(degree=180)
@@ -103,6 +106,9 @@ class CenterOfRotation:
             value = rotation.find_center_pc(image_0_degree,
                                             image_180_degree)
             self.parent.ui.center_of_rotation_calculated_label.setText(str(np.int(value)))
+
+        QApplication.restoreOverrideCursor()
+        QApplication.processEvents()
 
     def get_center_of_rotation(self):
         algorithm_selected = self.get_algorithm_selected()
