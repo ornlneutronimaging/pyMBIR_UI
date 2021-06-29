@@ -5,7 +5,7 @@ import pyqtgraph as pg
 import numpy as np
 
 from . import DataType
-from .import_data_handler import ImportDataHandler
+from .loader import Loader
 
 
 class PreviewHandler:
@@ -98,8 +98,13 @@ class Preview(QDialog):
         self.parent.preview_histogram = histogram_level
 
         slider_value = self.ui.slider.value()
-        data_image = self.parent.input['data'][self.data_type][slider_value]
-        _data = data_image.data
+
+        o_loader = Loader(parent=self.parent,
+                          data_type=self.data_type)
+        _data = o_loader.retrieve_data(file_index=slider_value)
+
+        # data_image = self.parent.input['data'][self.data_type][slider_value]
+        # _data = data_image.data
         _filename = os.path.basename(self.parent.input['list files'][self.data_type][slider_value])
         _image = np.transpose(_data)
         self.ui.image_view.setImage(_image)

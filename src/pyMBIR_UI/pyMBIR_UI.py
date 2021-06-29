@@ -102,9 +102,13 @@ class PyMBIRUILauncher(QMainWindow):
                         }
 
         self.input = {'list files': {DataType.projections: None,
-                                    DataType.ob: None,
-                                    DataType.df: None,
-                                    },
+                                     DataType.ob: None,
+                                     DataType.df: None,
+                                     },
+                      'full list files': {DataType.projections: None,
+                                          DataType.ob: None,
+                                          DataType.df: None,
+                                          },
                       'data': {DataType.projections: None,
                                DataType.ob: None,
                                DataType.df: None},

@@ -1,7 +1,9 @@
 from qtpy.QtWidgets import QFileDialog
 from qtpy import QtGui
 import os
+import numpy as np
 import logging
+import copy
 
 from NeuNorm.normalization import Normalization
 
@@ -11,6 +13,7 @@ from . import DataType, normal_style, error_style, interact_me_style, file_exten
 from .crop_handler import CropHandler
 from .center_of_rotation import CenterOfRotation
 from .tilt_handler import TiltHandler
+from .loader import Loader
 
 
 class ImportDataHandler:
@@ -23,7 +26,6 @@ class ImportDataHandler:
         """
         self.parent = parent
         self.data_type = data_type
-        # self.config = self.parent.config
         self.list_ui = self.parent.list_ui
 
     # projections, ob and df
@@ -120,13 +122,9 @@ class ImportDataHandler:
             self.list_ui['select lineEdit'][self.data_type].setStyleSheet(error_style)
 
         else:
-            # show_status_message(parent=self.parent,
-            #                     message=f"{self.data_type} folder selected!",
-            #                     status=StatusMessageStatus.ready,
-            #                     duration_s=5)
             self.list_ui['select lineEdit'][self.data_type].setStyleSheet(normal_style)
 
-            list_of_files, list_of_files_extension = ImportDataHandler.retrieve_list_of_files(folder_name=folder_name)
+            list_of_files, list_of_files_extension = self.retrieve_list_of_files(folder_name=folder_name)
 
             if len(list_of_files_extension) > 1:
                 show_status_message(parent=self.parent,
@@ -156,15 +154,21 @@ class ImportDataHandler:
                 logging.info(f"--> number of files: {len(list_of_files)}")
                 logging.info(f"--> extension: {list_of_files_extension[0]}")
 
-                status = self.loading_data(list_of_files=list_of_files)
+                data_image_list = [[] for _ in list_of_files]
+                self.parent.input['data'][self.data_type] = data_image_list
+                self.parent.input['list files'][self.data_type] = list_of_files
+
+                o_loader = Loader(parent=self.parent,
+                                  data_type=self.data_type)
+                o_loader.load_data(file_index=0)
+
                 if self.parent.preview_id:
                     self.parent.preview_id.update_radiobuttons_state()
 
                 self.activate_next_data_type()
                 self.parent.check_preview_button_status()
 
-    @staticmethod
-    def retrieve_list_of_files(folder_name="./"):
+    def retrieve_list_of_files(self, folder_name="./"):
         list_files = get_list_files(directory=folder_name, file_extension=["*.fits", "*.tiff", "*.tif"])
         list_extension = get_list_file_extensions(list_filename=list_files)
         return list_files, list_extension
@@ -203,12 +207,12 @@ class ImportDataHandler:
             o_crop.initialize_crop()
             o_crop.master_checkbox_clicked()
 
-            o_center = CenterOfRotation(parent=self.parent)
-            o_center.initialization()
-
-            o_tilt = TiltHandler(parent=self.parent)
-            o_tilt.initialize_tilt_correction()
-            o_tilt.master_checkBox_clicked()
+            # o_center = CenterOfRotation(parent=self.parent)
+            # o_center.initialization()
+            #
+            # o_tilt = TiltHandler(parent=self.parent)
+            # o_tilt.initialize_tilt_correction()
+            # o_tilt.master_checkBox_clicked()
 
         else:
             next_data_type = list_data_type[index_data_type+1]
@@ -235,9 +239,9 @@ class ImportDataHandler:
         elif self.data_type == DataType.output:
             self.parent.ui.select_output_folder_pushButton.setStyleSheet(previous_style)
 
-    def loading_data(self, list_of_files=None):
+    def loading_data(self, index=0):
         """
-        method that loads the data arrays
+        method that only load the index specified
 
         Return:
             status of the loading (True or False)
@@ -245,24 +249,12 @@ class ImportDataHandler:
         # load_success = False
         # data_type = self.data_type
 
-        nbr_files = len(list_of_files)
+        list_of_files  = self.parent.input['list files'][self.data_type]
+        file_to_load = list_of_files[index]
 
-        self.parent.eventProgress.setMaximum(nbr_files-1)
-        self.parent.eventProgress.setValue(0)
-        self.parent.eventProgress.setVisible(True)
+        o_norm = Normalization()
+        o_norm.load(file=file_to_load, notebook=False)
 
-        dataimage_list = list()
-        for _index, _file in enumerate(list_of_files):
-            o_norm = Normalization()
-            o_norm.load(file=_file, notebook=False)
-            dataimage_list.append(o_norm.data['sample']['data'][0])
-
-            self.parent.eventProgress.setValue(_index+1)
-            QtGui.QGuiApplication.processEvents()
-
-        self.parent.input['data'][self.data_type] = dataimage_list
-        self.parent.input['list files'][self.data_type] = list_of_files
-
-        self.parent.eventProgress.setVisible(False)
+        self.parent.input['data'][self.data_type][index] = o_norm.data['sample']['data'][0]
 
         return True  # FIX ME, add a try  catch that return False if error is thrown

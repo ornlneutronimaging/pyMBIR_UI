@@ -3,6 +3,7 @@ from qtpy import QtGui
 import pyqtgraph as pg
 from tomopy.recon import rotation
 import logging
+from pathlib import PurePath
 
 from . import DataType
 from .utilities.gui import Gui
@@ -41,6 +42,9 @@ class CenterOfRotation:
         self.parent.ui.center_of_rotation_180_degrees_comboBox.addItems(list_of_files)
         o_gui.block_signal_handler(block=False, ui=self.parent.ui.center_of_rotation_0_degrees_comboBox)
         o_gui.block_signal_handler(block=False, ui=self.parent.ui.center_of_rotation_180_degrees_comboBox)
+
+        index_of_180_degree_image = self.get_file_index_of_180_degree_image()
+        self.parent.ui.center_of_rotation_180_degrees_comboBox.setCurrentIndex(index_of_180_degree_image)
 
         self.parent.ui.center_of_rotation_user_defined_spinBox.setMaximum(self.parent.crop_image_width)
 
@@ -81,6 +85,9 @@ class CenterOfRotation:
             index = self.parent.ui.center_of_rotation_0_degrees_comboBox.currentIndex()
         elif degree == 180:
             index = self.parent.ui.center_of_rotation_180_degrees_comboBox.currentIndex()
+
+
+
         return self.parent.input['data'][DataType.projections][index]
 
     def update_widgets(self):
@@ -136,3 +143,26 @@ class CenterOfRotation:
             self.parent.ui.tomopy_algorithm_radioButton.setChecked(True)
         elif algorithm == Algorithm.user:
             self.parent.ui.user_defined_algorithm_radioButton.setChecked(True)
+
+    def get_file_index_of_180_degree_image(self):
+        """
+        using the fact that the file name is based on the following structure, this method will return
+        the file that is as close as possible to the angle 180
+        structure_of_file:  ####_angleBeforeComma_angleAfterComma_fileIndex.ext
+        """
+        # list_of_files = self.parent.input['list files'][DataType.projections]
+        # list_angles = []
+        # for _file in list_of_files:
+        #     basename = str(PurePath(PurePath(_file).name).stem)
+        #     split_basename = basename.split("_")
+        #     deg_before_comma = split_basename[-3]
+        #     deg_after_comma = split_basename[-2]
+        #     full_deg_value = f"{deg_before_comma}.{deg_after_comma}"
+        #     list_angles.append(np.float(full_deg_value))
+        #
+        # offset_with_180degrees = np.abs(np.array(list_angles) - 180.0)
+        # min_value = np.min(offset_with_180degrees)
+        # index_of_min_value = np.where(offset_with_180degrees == min_value)
+        #
+        # return index_of_min_value[0]
+        return 0
