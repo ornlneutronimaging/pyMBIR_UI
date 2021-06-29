@@ -9,6 +9,7 @@ dependencies:
   - numpy
   - scipy
   - qtpy=1.9*
+  - tomopy
   - pip
   - pip:
       - pyqtgraph
