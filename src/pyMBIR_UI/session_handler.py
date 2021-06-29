@@ -95,6 +95,7 @@ class SessionHandler:
         self.parent.ui.crop_width_label.setText(str(2*crop_width))
         self.parent.ui.crop_width_horizontalSlider.setMinimum(10)
         o_crop.width_changed()
+        o_crop.file_index_changed()
 
         # o_center = CenterOfRotation(parent=self.parent)
         # o_center.initialize_from_session()

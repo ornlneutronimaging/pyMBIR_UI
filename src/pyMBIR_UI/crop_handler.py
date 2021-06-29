@@ -1,8 +1,10 @@
 import numpy as np
 from qtpy import QtGui
 import pyqtgraph as pg
+import logging
 
 from . import DataType
+from .loader import Loader
 
 
 class CropHandler:
@@ -92,8 +94,8 @@ class CropHandler:
 
     def file_index_changed(self):
         file_index_selected = self.parent.ui.crop_file_index_horizontalSlider.value()
-        list_image = self.parent.input['data'][DataType.projections]
-        image = list_image[file_index_selected]
+        o_loader = Loader(parent=self.parent)
+        image = o_loader.retrieve_data(file_index=file_index_selected)
         transpose_image = np.transpose(image)
         self.parent.crop_image_view.setImage(transpose_image)
 

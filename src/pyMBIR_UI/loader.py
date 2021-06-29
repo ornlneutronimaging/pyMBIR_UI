@@ -14,11 +14,8 @@ class Loader:
         Method that returns the data at the specified file index. If not in memory yet,
         it will load it and then return it
         """
-        # load_success = False
-        # data_type = self.data_type
-
         list_of_data = self.parent.input['data'][self.data_type]
-        if not (list_of_data[file_index] == []):
+        if not (list_of_data[file_index] is None):
             return list_of_data[file_index]
 
         self.load_data(file_index=file_index)

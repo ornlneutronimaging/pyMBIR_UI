@@ -181,7 +181,7 @@
         <item>
          <widget class="QToolBox" name="toolBox">
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="page">
            <property name="geometry">
@@ -189,7 +189,7 @@
              <x>0</x>
              <y>0</y>
              <width>999</width>
-             <height>631</height>
+             <height>627</height>
             </rect>
            </property>
            <attribute name="label">
@@ -373,7 +373,7 @@
              <x>0</x>
              <y>0</y>
              <width>999</width>
-             <height>631</height>
+             <height>627</height>
             </rect>
            </property>
            <attribute name="label">
@@ -544,8 +544,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>999</width>
-             <height>631</height>
+             <width>368</width>
+             <height>191</height>
             </rect>
            </property>
            <attribute name="label">
@@ -703,7 +703,7 @@
      <x>0</x>
      <y>0</y>
      <width>1069</width>
-     <height>24</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp">
@@ -834,8 +834,8 @@
    <slot>projections_select_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>990</x>
-     <y>120</y>
+     <x>134</x>
+     <y>83</y>
     </hint>
     <hint type="destinationlabel">
      <x>903</x>
@@ -850,8 +850,8 @@
    <slot>ob_select_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>990</x>
-     <y>155</y>
+     <x>134</x>
+     <y>83</y>
     </hint>
     <hint type="destinationlabel">
      <x>901</x>
@@ -866,8 +866,8 @@
    <slot>df_select_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>990</x>
-     <y>190</y>
+     <x>134</x>
+     <y>83</y>
     </hint>
     <hint type="destinationlabel">
      <x>906</x>
@@ -882,8 +882,8 @@
    <slot>preview_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>534</x>
-     <y>218</y>
+     <x>134</x>
+     <y>83</y>
     </hint>
     <hint type="destinationlabel">
      <x>903</x>
@@ -898,8 +898,8 @@
    <slot>output_folder_select_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>996</x>
-     <y>302</y>
+     <x>134</x>
+     <y>90</y>
     </hint>
     <hint type="destinationlabel">
      <x>904</x>
@@ -914,8 +914,8 @@
    <slot>projections_text_field_returned()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>634</x>
-     <y>104</y>
+     <x>134</x>
+     <y>83</y>
     </hint>
     <hint type="destinationlabel">
      <x>902</x>
@@ -930,8 +930,8 @@
    <slot>ob_text_field_returned()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>648</x>
-     <y>136</y>
+     <x>134</x>
+     <y>83</y>
     </hint>
     <hint type="destinationlabel">
      <x>903</x>
@@ -946,8 +946,8 @@
    <slot>df_text_field_returned()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>694</x>
-     <y>165</y>
+     <x>134</x>
+     <y>83</y>
     </hint>
     <hint type="destinationlabel">
      <x>901</x>
@@ -962,8 +962,8 @@
    <slot>output_folder_text_field_returned()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>564</x>
-     <y>287</y>
+     <x>134</x>
+     <y>90</y>
     </hint>
     <hint type="destinationlabel">
      <x>902</x>
@@ -1026,8 +1026,8 @@
    <slot>crop_file_index_moved()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>298</x>
-     <y>621</y>
+     <x>210</x>
+     <y>615</y>
     </hint>
     <hint type="destinationlabel">
      <x>9</x>
@@ -1037,13 +1037,13 @@
   </connection>
   <connection>
    <sender>crop_file_index_horizontalSlider</sender>
-   <signal>sliderPressed()</signal>
+   <signal>valueChanged(int)</signal>
    <receiver>MainWindow</receiver>
    <slot>crop_file_index_pressed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>321</x>
-     <y>621</y>
+     <x>210</x>
+     <y>615</y>
     </hint>
     <hint type="destinationlabel">
      <x>6</x>
@@ -1058,8 +1058,8 @@
    <slot>crop_width_moved()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>301</x>
-     <y>674</y>
+     <x>201</x>
+     <y>668</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -1074,8 +1074,8 @@
    <slot>crop_width_pressed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>208</x>
-     <y>674</y>
+     <x>201</x>
+     <y>668</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -1090,8 +1090,8 @@
    <slot>crop_checkBox_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>89</x>
-     <y>121</y>
+     <x>103</x>
+     <y>128</y>
     </hint>
     <hint type="destinationlabel">
      <x>7</x>
@@ -1106,8 +1106,8 @@
    <slot>tilt_correction_checkBox_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>95</x>
-     <y>198</y>
+     <x>109</x>
+     <y>94</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -1122,8 +1122,8 @@
    <slot>tilt_correction_file_index_moved()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>245</x>
-     <y>687</y>
+     <x>146</x>
+     <y>590</y>
     </hint>
     <hint type="destinationlabel">
      <x>7</x>
@@ -1138,8 +1138,8 @@
    <slot>tilt_correction_file_index_pressed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1012</x>
-     <y>687</y>
+     <x>146</x>
+     <y>590</y>
     </hint>
     <hint type="destinationlabel">
      <x>1035</x>
@@ -1269,5 +1269,6 @@
   <slot>center_of_rotation_file_index_changed()</slot>
   <slot>center_of_rotation_algorithm_clicked()</slot>
   <slot>center_of_rotation_user_value_changed()</slot>
+  <slot>slot1()</slot>
  </slots>
 </ui>

@@ -154,7 +154,7 @@ class ImportDataHandler:
                 logging.info(f"--> number of files: {len(list_of_files)}")
                 logging.info(f"--> extension: {list_of_files_extension[0]}")
 
-                data_image_list = [[] for _ in list_of_files]
+                data_image_list = [None for _ in list_of_files]
                 self.parent.input['data'][self.data_type] = data_image_list
                 self.parent.input['list files'][self.data_type] = list_of_files
 
@@ -209,7 +209,7 @@ class ImportDataHandler:
 
             # o_center = CenterOfRotation(parent=self.parent)
             # o_center.initialization()
-            #
+
             # o_tilt = TiltHandler(parent=self.parent)
             # o_tilt.initialize_tilt_correction()
             # o_tilt.master_checkBox_clicked()
