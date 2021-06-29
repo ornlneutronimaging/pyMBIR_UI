@@ -1,6 +1,7 @@
 import numpy as np
 
 from . import DataType
+from .loader import Loader
 
 
 class TiltHandler:
@@ -25,8 +26,8 @@ class TiltHandler:
 
     def file_index_changed(self):
         file_index_selected = self.parent.ui.tilt_correction_file_index_horizontalSlider.value()
-        list_image = self.parent.input['data'][DataType.projections]
-        image = list_image[file_index_selected]
+        o_loader = Loader(parent=self.parent)
+        image = o_loader.retrieve_data(file_index=file_index_selected)
         transpose_image = np.transpose(image)
         self.parent.tilt_correction_image_view.setImage(transpose_image)
 

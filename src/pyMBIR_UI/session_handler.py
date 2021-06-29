@@ -97,8 +97,8 @@ class SessionHandler:
         o_crop.width_changed()
         o_crop.file_index_changed()
 
-        # o_center = CenterOfRotation(parent=self.parent)
-        # o_center.initialize_from_session()
+        o_center = CenterOfRotation(parent=self.parent)
+        o_center.initialize_from_session()
 
         show_status_message(parent=self.parent,
                             message=f"Loaded {self.config_file_name}",

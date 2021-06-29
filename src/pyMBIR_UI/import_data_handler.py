@@ -210,9 +210,9 @@ class ImportDataHandler:
             o_center = CenterOfRotation(parent=self.parent)
             o_center.initialization()
 
-            # o_tilt = TiltHandler(parent=self.parent)
-            # o_tilt.initialize_tilt_correction()
-            # o_tilt.master_checkBox_clicked()
+            o_tilt = TiltHandler(parent=self.parent)
+            o_tilt.initialize_tilt_correction()
+            o_tilt.master_checkBox_clicked()
 
         else:
             next_data_type = list_data_type[index_data_type+1]
