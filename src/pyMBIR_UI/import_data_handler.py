@@ -166,6 +166,9 @@ class ImportDataHandler:
                 if self.parent.preview_id:
                     self.parent.preview_id.update_radiobuttons_state()
 
+                show_status_message(parent=self.parent,
+                                    message="",
+                                    status=StatusMessageStatus.ready)
                 self.activate_next_data_type()
                 self.parent.check_preview_button_status()
 
