@@ -102,9 +102,6 @@ class Preview(QDialog):
         o_loader = Loader(parent=self.parent,
                           data_type=self.data_type)
         _data = o_loader.retrieve_data(file_index=slider_value)
-
-        # data_image = self.parent.input['data'][self.data_type][slider_value]
-        # _data = data_image.data
         _filename = os.path.basename(self.parent.input['list files'][self.data_type][slider_value])
         _image = np.transpose(_data)
         self.ui.image_view.setImage(_image)
@@ -167,4 +164,5 @@ class Preview(QDialog):
 
     def closeEvent(self, c):
         self.parent.preview_id = None
+        self.parent.preview_histogram = None
         self.parent.ui.preview_pushButton.setEnabled(True)

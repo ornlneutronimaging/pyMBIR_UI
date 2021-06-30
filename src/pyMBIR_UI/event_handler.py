@@ -1,9 +1,8 @@
-import numpy as np
+import logging
 
-from .parameters_tab_handler import ParametersTabHandler
-from .filter_tab_handler import FilterTabHandler
-from .session_handler import SessionHandler
-from .utilities.gui import Gui
+from . import DataType
+from .utilities.get import Get
+from .gui_initialization import GuiInitialization
 
 
 class EventHandler:
@@ -11,19 +10,22 @@ class EventHandler:
     def __init__(self, parent=None):
         self.parent = parent
 
-    def main_tab_changed(self, new_tab_index):
-        o_para = ParametersTabHandler(parent=self.parent)
-        if new_tab_index == 1:  # filters
-            o_filter = FilterTabHandler(parent=self.parent)
-            o_filter.update_tab_content()
+    def full_reset_clicked(self):
+        self.parent.input = {'list files'     : {DataType.projections: None,
+                                                 DataType.ob         : None,
+                                                 DataType.df         : None,
+                                                 },
+                             'full list files': {DataType.projections: None,
+                                                 DataType.ob         : None,
+                                                 DataType.df         : None,
+                                                 },
+                             'data'           : {DataType.projections: None,
+                                                 DataType.ob         : None,
+                                                 DataType.df         : None},
+                             }
 
-        elif new_tab_index == 2:  # Parameters
-            o_session = SessionHandler(parent=self.parent)
-            o_session.save_from_ui()
-            o_para.refresh_content()
-            self.parent.tab_index_was = 2
+        o_get = Get(parent=self.parent)
+        o_init = GuiInitialization(parent=self.parent)
+        o_init.full_reset()
 
-    def check_fitting_tab_status(self):
-        o_gui = Gui(parent=self.parent)
-        tab_status = o_gui.can_we_enable_fitting_tab()
-        self.parent.ui.top_tabWidget.setTabEnabled(3, tab_status)
+        logging.info("Full reset of application!")

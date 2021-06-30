@@ -20,6 +20,30 @@ class GuiInitialization:
         self.statusbar()
         self.pyqtgraph()
 
+    def full_reset(self):
+        self.widgets()
+
+        self.parent.ui.crop_image_view.clear()
+        self.parent.ui.center_of_rotation_image_view.clear()
+        self.parent.ui.tilt_correction_image_view.clear()
+        self.parent.ui.projections_lineEdit.setText("")
+
+        self.parent.ui.ob_lineEdit.setText("")
+        self.parent.ui.ob_lineEdit.setEnabled(False)
+        self.parent.ui.select_ob_pushButton.setEnabled(False)
+
+        self.parent.ui.df_lineEdit.setText("")
+        self.parent.ui.df_lineEdit.setEnabled(False)
+        self.parent.ui.select_df_pushButton.setEnabled(False)
+
+        self.parent.ui.preview_pushButton.setEnabled(False)
+
+        self.parent.ui.output_folder_lineEdit.setText("")
+        self.parent.ui.output_folder_lineEdit.setEnabled(False)
+        self.parent.ui.select_output_folder_pushButton.setEnabled(False)
+
+        self.parent.preview_histogram = None
+
     def widgets(self):
         self.parent.ui.select_projections_pushButton.setStyleSheet(interact_me_style)
         self.parent.ui.tabWidget.setTabEnabled(1, False)

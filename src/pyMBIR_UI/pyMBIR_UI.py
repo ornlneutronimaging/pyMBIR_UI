@@ -11,7 +11,7 @@ import numpy as np
 from .import_data_handler import ImportDataHandler
 from .gui_initialization import GuiInitialization
 # from .parameters_tab_handler import ParametersTabHandler
-# from .event_handler import EventHandler
+from .event_handler import EventHandler
 from .session_handler import SessionHandler
 # from .help_handler import HelpHandler
 from .preview import PreviewHandler, PreviewLauncher
@@ -143,6 +143,10 @@ class PyMBIRUILauncher(QMainWindow):
         o_session = SessionHandler(parent=self)
         o_session.save_from_ui()
         o_session.save_to_file()
+
+    def full_reset_clicked(self):
+        o_event = EventHandler(parent=self)
+        o_event.full_reset_clicked()
 
     def menu_log_clicked(self):
         LogLauncher(parent=self)
