@@ -201,9 +201,8 @@ class ImportDataHandler:
 
         list_data_type = [DataType.projections, DataType.ob, DataType.df, DataType.output]
         index_data_type = list_data_type.index(self.data_type)
-        if index_data_type == len(list_data_type) - 1:
-            # activate reconstitution setup tab
-            self.parent.ui.tabWidget.setTabEnabled(1, new_state)
+
+        if index_data_type == 0:
             o_crop = CropHandler(parent=self.parent)
             o_crop.initialize_crop()
             o_crop.master_checkbox_clicked()
@@ -214,6 +213,10 @@ class ImportDataHandler:
             o_tilt = TiltHandler(parent=self.parent)
             o_tilt.initialize_tilt_correction()
             o_tilt.master_checkBox_clicked()
+
+        if index_data_type == len(list_data_type) - 1:
+            # activate reconstitution setup tab
+            self.parent.ui.tabWidget.setTabEnabled(1, new_state)
 
         else:
             next_data_type = list_data_type[index_data_type+1]

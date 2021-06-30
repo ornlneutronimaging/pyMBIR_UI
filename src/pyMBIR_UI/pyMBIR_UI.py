@@ -210,7 +210,7 @@ class PyMBIRUILauncher(QMainWindow):
         o_crop = CropHandler(parent=self)
         o_crop.file_index_changed()
 
-    def crop_file_index_pressed(self, value):
+    def crop_file_index_pressed(self):
         o_crop = CropHandler(parent=self)
         o_crop.file_index_changed()
 
