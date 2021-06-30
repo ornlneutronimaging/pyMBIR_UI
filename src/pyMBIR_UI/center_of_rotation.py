@@ -4,6 +4,7 @@ from qtpy.QtWidgets import QApplication
 import pyqtgraph as pg
 from tomopy.recon import rotation
 import logging
+from pathlib import PurePath
 
 from . import DataType
 from .utilities.gui import Gui
@@ -156,19 +157,18 @@ class CenterOfRotation:
         the file that is as close as possible to the angle 180
         structure_of_file:  ####_angleBeforeComma_angleAfterComma_fileIndex.ext
         """
-        # list_of_files = self.parent.input['list files'][DataType.projections]
-        # list_angles = []
-        # for _file in list_of_files:
-        #     basename = str(PurePath(PurePath(_file).name).stem)
-        #     split_basename = basename.split("_")
-        #     deg_before_comma = split_basename[-3]
-        #     deg_after_comma = split_basename[-2]
-        #     full_deg_value = f"{deg_before_comma}.{deg_after_comma}"
-        #     list_angles.append(np.float(full_deg_value))
-        #
-        # offset_with_180degrees = np.abs(np.array(list_angles) - 180.0)
-        # min_value = np.min(offset_with_180degrees)
-        # index_of_min_value = np.where(offset_with_180degrees == min_value)
-        #
-        # return index_of_min_value[0]
-        return 0
+        list_of_files = self.parent.input['list files'][DataType.projections]
+        list_angles = []
+        for _file in list_of_files:
+            basename = str(PurePath(PurePath(_file).name).stem)
+            split_basename = basename.split("_")
+            deg_before_comma = split_basename[-3]
+            deg_after_comma = split_basename[-2]
+            full_deg_value = f"{deg_before_comma}.{deg_after_comma}"
+            list_angles.append(np.float(full_deg_value))
+
+        offset_with_180degrees = np.abs(np.array(list_angles) - 180.0)
+        min_value = np.min(offset_with_180degrees)
+        index_of_min_value = np.where(offset_with_180degrees == min_value)
+
+        return index_of_min_value[0]
