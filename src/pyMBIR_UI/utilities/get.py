@@ -1,7 +1,7 @@
 from os.path import expanduser
 import os
 
-from .file_utilities import get_short_filename
+from .. import TiltAlgorithm
 
 
 class Get:
@@ -26,6 +26,16 @@ class Get:
         config_file_name = self.parent.config['session_file_name']
         full_config_file_name = Get.get_full_home_file_name(config_file_name)
         return full_config_file_name
+
+    def tilt_algorithm_selected(self):
+        if self.parent.ui.tilt_correction_direct_minimization_radioButton.isChecked():
+            return TiltAlgorithm.direct_minimization
+        elif self.parent.ui.tilt_correction_phase_correlation_radioButton.isChecked():
+            return TiltAlgorithm.phase_correlation
+        elif self.parent.ui.tilt_correction_use_center_radioButton.isChecked():
+            return TiltAlgorithm.use_center
+        else:
+            NotImplementedError("Tilt algorithm not implemented!")
 
     @staticmethod
     def get_full_home_file_name(base_file_name):

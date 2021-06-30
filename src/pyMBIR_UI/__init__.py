@@ -34,3 +34,9 @@ class DataType:
     df = "df"
     ob = "ob"
     output = "output"
+
+
+class TiltAlgorithm:
+    direct_minimization = "direct minimization"
+    phase_correlation = "phase correlation"
+    use_center = "use center"

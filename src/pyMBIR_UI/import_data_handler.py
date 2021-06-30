@@ -213,6 +213,7 @@ class ImportDataHandler:
             o_tilt = TiltHandler(parent=self.parent)
             o_tilt.initialize_tilt_correction()
             o_tilt.master_checkBox_clicked()
+            o_tilt.correction_algorithm_changed()
 
         if index_data_type == len(list_data_type) - 1:
             # activate reconstitution setup tab

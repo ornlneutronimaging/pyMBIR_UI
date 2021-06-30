@@ -2,6 +2,9 @@ import numpy as np
 
 from . import DataType
 from .loader import Loader
+from .utilities.get import Get
+from . import TiltAlgorithm
+from .tilt.direct_minimization import DirectMinimization
 
 
 class TiltHandler:
@@ -34,3 +37,23 @@ class TiltHandler:
     def master_checkBox_clicked(self):
         master_value = self.parent.ui.tilt_correction_checkBox.isChecked()
         self.parent.ui.tilt_correction_frame.setEnabled(master_value)
+
+    def correction_algorithm_changed(self):
+        o_get = Get(parent=self.parent)
+        algo_selected = o_get.tilt_algorithm_selected()
+        if algo_selected == TiltAlgorithm.direct_minimization:
+            self.direct_minimization()
+        elif algo_selected == TiltAlgorithm.phase_correlation:
+            self.phase_correlation()
+        elif algo_selected == TiltAlgorithm.use_center:
+            self.use_center()
+
+    def direct_minimization(self):
+        o_direct = DirectMinimization()
+        tilt_value = o_direct.run()
+
+    def phase_correlation(self):
+        pass
+
+    def use_center(self):
+        pass

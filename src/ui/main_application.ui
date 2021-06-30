@@ -181,7 +181,7 @@
         <item>
          <widget class="QToolBox" name="toolBox">
           <property name="currentIndex">
-           <number>1</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="page">
            <property name="geometry">
@@ -609,12 +609,22 @@
                   </widget>
                  </item>
                  <item>
+                  <widget class="QRadioButton" name="tilt_correction_direct_minimization_radioButton">
+                   <property name="text">
+                    <string>direct minimization</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
                   <widget class="QRadioButton" name="tilt_correction_phase_correlation_radioButton">
                    <property name="text">
                     <string>Phase Correlation</string>
                    </property>
                    <property name="checked">
-                    <bool>true</bool>
+                    <bool>false</bool>
                    </property>
                   </widget>
                  </item>
@@ -1241,7 +1251,7 @@
    <slot>center_of_rotation_user_value_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>304</x>
+     <x>246</x>
      <y>728</y>
     </hint>
     <hint type="destinationlabel">
@@ -1263,6 +1273,54 @@
     <hint type="destinationlabel">
      <x>534</x>
      <y>428</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tilt_correction_direct_minimization_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tilt_correction_algorithm_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>206</x>
+     <y>732</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>8</x>
+     <y>747</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tilt_correction_phase_correlation_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tilt_correction_algorithm_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>336</x>
+     <y>732</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>282</x>
+     <y>826</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tilt_correction_use_center_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tilt_correction_algorithm_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>465</x>
+     <y>725</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1063</x>
+     <y>746</y>
     </hint>
    </hints>
   </connection>
@@ -1293,5 +1351,6 @@
   <slot>center_of_rotation_algorithm_clicked()</slot>
   <slot>center_of_rotation_user_value_changed()</slot>
   <slot>full_reset_clicked()</slot>
+  <slot>tilt_correction_algorithm_changed()</slot>
  </slots>
 </ui>
