@@ -1,7 +1,6 @@
 import logging
 
 from . import DataType
-from .utilities.get import Get
 from .gui_initialization import GuiInitialization
 
 
@@ -24,7 +23,6 @@ class EventHandler:
                                                  DataType.df         : None},
                              }
 
-        o_get = Get(parent=self.parent)
         o_init = GuiInitialization(parent=self.parent)
         o_init.full_reset()
 

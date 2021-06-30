@@ -85,6 +85,7 @@ class ImportDataHandler:
             logging.info(f"You need to create the folder {folder_name}!")
             self.list_ui['select lineEdit'][self.data_type].setStyleSheet(error_style)
             self.deactivate_next_data_type()
+
         self.parent.ui.output_folder_lineEdit.setText(folder_name)
 
     def update_widgets_with_name_of_output_folder(self, folder_name=""):
@@ -216,6 +217,12 @@ class ImportDataHandler:
 
         else:
             next_data_type = list_data_type[index_data_type+1]
+
+            # no need to check widgets as we already loaded some data for this data type
+            if not (next_data_type == DataType.output):
+                if not (self.parent.input['data'][next_data_type] is None):
+                    return
+
             self.list_ui['select button'][self.data_type].setStyleSheet(previous_style)
             self.list_ui['select button'][next_data_type].setStyleSheet(new_style)
             self.list_ui['select button'][next_data_type].setEnabled(new_state)
