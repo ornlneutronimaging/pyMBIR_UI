@@ -57,7 +57,7 @@ class SessionHandler:
         image_0_file_index = self.parent.ui.center_of_rotation_0_degrees_comboBox.currentIndex()
         image_180_file_index = self.parent.ui.center_of_rotation_180_degrees_comboBox.currentIndex()
         algorithm_selected = o_center.get_algorithm_selected()
-        user_value = self.parent.ui.center_of_rotation_user_defined_spinBox.value()
+        user_value = self.parent.ui.center_of_rotation_user_defined_doubleSpinBox.value()
         center_rotation_dict = {'state': center_of_rotation_state,
                                 'image 0 file index': image_0_file_index,
                                 'image 180 file index': image_180_file_index,

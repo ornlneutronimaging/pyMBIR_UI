@@ -24,7 +24,7 @@
        <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideMiddle</enum>
@@ -181,7 +181,7 @@
         <item>
          <widget class="QToolBox" name="toolBox">
           <property name="currentIndex">
-           <number>0</number>
+           <number>1</number>
           </property>
           <widget class="QWidget" name="page">
            <property name="geometry">
@@ -510,7 +510,7 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QSpinBox" name="center_of_rotation_user_defined_spinBox"/>
+                  <widget class="QDoubleSpinBox" name="center_of_rotation_user_defined_doubleSpinBox"/>
                  </item>
                  <item>
                   <widget class="QLabel" name="center_of_rotation_calculated_label">
@@ -1235,13 +1235,13 @@
    </hints>
   </connection>
   <connection>
-   <sender>center_of_rotation_user_defined_spinBox</sender>
-   <signal>valueChanged(int)</signal>
+   <sender>center_of_rotation_user_defined_doubleSpinBox</sender>
+   <signal>valueChanged(double)</signal>
    <receiver>MainWindow</receiver>
    <slot>center_of_rotation_user_value_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>228</x>
+     <x>304</x>
      <y>728</y>
     </hint>
     <hint type="destinationlabel">

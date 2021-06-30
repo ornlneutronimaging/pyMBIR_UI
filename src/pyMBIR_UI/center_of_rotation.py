@@ -27,7 +27,7 @@ class CenterOfRotation:
         self.parent.ui.center_of_rotation_0_degrees_comboBox.setCurrentIndex(session['image 0 file index'])
         self.parent.ui.center_of_rotation_180_degrees_comboBox.setCurrentIndex(session['image 180 file index'])
         self.set_algorithm(algorithm=session['algorithm selected'])
-        self.parent.ui.center_of_rotation_user_defined_spinBox.setValue(session['user value'])
+        self.parent.ui.center_of_rotation_user_defined_doubleSpinBox.setValue(session['user value'])
         self.display_images()
         self.calculate_center_of_rotation()
         self.display_center_of_rotation()
@@ -48,7 +48,7 @@ class CenterOfRotation:
         index_of_180_degree_image = self.get_file_index_of_180_degree_image()
         self.parent.ui.center_of_rotation_180_degrees_comboBox.setCurrentIndex(index_of_180_degree_image)
 
-        self.parent.ui.center_of_rotation_user_defined_spinBox.setMaximum(self.parent.crop_image_width)
+        self.parent.ui.center_of_rotation_user_defined_doubleSpinBox.setMaximum(self.parent.crop_image_width)
 
         self.display_images()
         self.calculate_center_of_rotation()
@@ -92,7 +92,7 @@ class CenterOfRotation:
 
     def update_widgets(self):
         state_user_defined = self.parent.ui.user_defined_algorithm_radioButton.isChecked()
-        self.parent.ui.center_of_rotation_user_defined_spinBox.setVisible(state_user_defined)
+        self.parent.ui.center_of_rotation_user_defined_doubleSpinBox.setVisible(state_user_defined)
         self.parent.ui.center_of_rotation_calculated_label.setVisible(not state_user_defined)
 
     def calculate_center_of_rotation(self):
@@ -114,10 +114,10 @@ class CenterOfRotation:
     def get_center_of_rotation(self):
         algorithm_selected = self.get_algorithm_selected()
         if algorithm_selected == Algorithm.tomopy:
-            value = np.int(str(self.parent.ui.center_of_rotation_calculated_label.text()))
+            value = np.float(str(self.parent.ui.center_of_rotation_calculated_label.text()))
             logging.info("Center of rotation calculated via tomopy (find_center_pc)")
         elif algorithm_selected == Algorithm.user:
-            value = self.parent.ui.center_of_rotation_user_defined_spinBox.value()
+            value = self.parent.ui.center_of_rotation_user_defined_doubleSpinBox.value()
             logging.info("Center of rotation defined by user")
         logging.info(f"-> value: {value}")
         return value
