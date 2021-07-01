@@ -17,6 +17,8 @@ class Setup0180DegreeHandler(QDialog):
     index_of_0_degree_image_when_entering_ui = None
     index_of_180_degree_image_when_entering_ui = None
 
+    preview_histogram = None
+
     def __init__(self, parent=None):
         self.parent = parent
         super(Setup0180DegreeHandler, self).__init__(parent)
@@ -65,6 +67,18 @@ class Setup0180DegreeHandler(QDialog):
         self.index_of_180_degree_image_when_entering_ui = self.parent.tilt_correction_index_dict['180_degree']
 
     def update_display(self):
+        histogram_level = self.preview_histogram
+        _res_view = self.ui.image_view.getView()
+        _res_view_box = _res_view.getViewBox()
+        _state = _res_view_box.getState()
+
+        first_update = False
+        if histogram_level is None:
+            first_update = True
+        histo_widget = self.ui.image_view.getHistogramWidget()
+        histogram_level = histo_widget.getLevels()
+        self.preview_histogram = histogram_level
+
         index_of_180_degree_image = self.parent.tilt_correction_index_dict['180_degree']
         index_of_0_degree_image = self.parent.tilt_correction_index_dict['0_degree']
 
@@ -78,6 +92,10 @@ class Setup0180DegreeHandler(QDialog):
                       (100 - transparency_image_180_coefficient) * image_of_0_degree
         image = np.transpose(final_image)
         self.ui.image_view.setImage(image)
+
+        _res_view_box.setState(_state)
+        if not first_update:
+            histo_widget.setLevels(histogram_level[0], histogram_level[1])
 
     def slider_clicked(self):
         self.update_display()
@@ -110,4 +128,3 @@ class Setup0180DegreeHandler(QDialog):
 
     def closeEvent(self, e):
         pass
-    
