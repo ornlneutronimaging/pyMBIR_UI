@@ -22,7 +22,7 @@ from .utilities.get import Get
 from .log_launcher import LogLauncher
 # from .fitting import Fitting
 # from .utility_backend import multi_logger as ml
-from . import DataType
+from . import DataType, TiltAlgorithm
 from pyMBIR_UI.crop.crop_handler import CropHandler
 from pyMBIR_UI.tilt.tilt_handler import TiltHandler
 from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
@@ -77,6 +77,9 @@ class PyMBIRUILauncher(QMainWindow):
     # tilt correction
     tilt_correction_index_dict = {'0_degree': -1,
                                   '180_degree': -1}
+    tilt_calculation = {TiltAlgorithm.phase_correlation: None,
+                        TiltAlgorithm.direct_minimization: None,
+                        TiltAlgorithm.use_center: None}
 
     # histogram of preview dialog
     preview_histogram = None
@@ -278,6 +281,10 @@ class PyMBIRUILauncher(QMainWindow):
     def tilt_correction_set_up_images_at_0_and_180_degrees_pushed(self):
         o_tilt = TiltHandler(parent=self)
         o_tilt.set_up_images_at_0_and_180_degrees()
+
+    def tilt_refresh_calculation_clicked(self):
+        o_tilt = TiltHandler(parent=self)
+        o_tilt.refresh_calculation()
 
     # leaving ui
     def closeEvent(self, c):

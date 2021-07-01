@@ -5,7 +5,7 @@ import numpy as np
 
 from .status_message_config import StatusMessageStatus, show_status_message
 from .utilities.get import Get
-from . import DataType
+from . import DataType, TiltAlgorithm
 from pyMBIR_UI.crop.crop_handler import CropHandler
 from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
 from pyMBIR_UI.tilt.tilt_handler import TiltHandler
@@ -71,11 +71,15 @@ class SessionHandler:
         index_of_180_degree_image = self.parent.tilt_correction_index_dict['180_degree']
         index_of_0_degree_image = self.parent.tilt_correction_index_dict['0_degree']
         tilt_algorithm = o_tilt.get_algorithm_selected()
+        tilt_calculation = self.parent.tilt_calculation
         tilt_dict = {'state': tilt_correction_state,
                      'file index': tilt_correction_file_index,
                      'algorithm selected': tilt_algorithm,
                      'image 0 file index': index_of_0_degree_image,
-                     'image 180 file index': index_of_180_degree_image}
+                     'image 180 file index': index_of_180_degree_image,
+                     TiltAlgorithm.phase_correlation: tilt_calculation[TiltAlgorithm.phase_correlation],
+                     TiltAlgorithm.direct_minimization: tilt_calculation[TiltAlgorithm.direct_minimization],
+                     TiltAlgorithm.use_center: tilt_calculation[TiltAlgorithm.use_center]}
         session_dict['tilt'] = tilt_dict
 
         self.parent.session_dict = session_dict

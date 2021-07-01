@@ -121,6 +121,10 @@ class Setup0180DegreeHandler(QDialog):
         logging.info(f"-> index of 0 degree: {image_0_degree_index}")
         logging.info(f"-> index of 180 degrees: {image_180_degree_index}")
 
+        if (not (image_180_degree_index == self.index_of_180_degree_image_when_entering_ui)) and \
+           (not (image_0_degree_index == self.index_of_0_degree_image_when_entering_ui)):
+            self.parent.ui.tilt_refresh_calculation_pushButton.setEnabled(True)
+
         self.close()
 
     def reject(self):

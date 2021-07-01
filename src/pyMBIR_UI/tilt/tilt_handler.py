@@ -42,6 +42,11 @@ class TiltHandler:
         self.parent.tilt_correction_index_dict['0_degree'] = session['image 0 file index']
         self.set_algorithm(algorithm=session['algorithm selected'])
 
+        tilt_calculation = {TiltAlgorithm.phase_correlation: session[TiltAlgorithm.phase_correlation],
+                            TiltAlgorithm.direct_minimization: session[TiltAlgorithm.direct_minimization],
+                            TiltAlgorithm.use_center: session[TiltAlgorithm.use_center]}
+        self.parent.tilt_calculation = tilt_calculation
+
         self.file_index_changed()
         self.master_checkBox_clicked()
 
@@ -57,6 +62,14 @@ class TiltHandler:
         self.parent.ui.tilt_correction_frame.setEnabled(master_value)
 
     def correction_algorithm_changed(self):
+        tilt_calculation = self.parent.tilt_calculation
+        o_get = Get(parent=self.parent)
+        algo_selected = o_get.tilt_algorithm_selected()
+        tilt_value = tilt_calculation[algo_selected]
+        self.parent.ui.tilt_correcton_value_label.setText("{:.2f}".format(tilt_value))
+        self.parent.ui.tilt_refresh_calculation_pushButton.setEnabled(True)
+
+    def refresh_calculation(self):
         o_get = Get(parent=self.parent)
         algo_selected = o_get.tilt_algorithm_selected()
         tilt_value = np.NaN
@@ -66,11 +79,13 @@ class TiltHandler:
             tilt_value = self.phase_correlation()
         elif algo_selected == TiltAlgorithm.use_center:
             tilt_value = self.use_center()
-        self.parent.ui.tilt_correcton_value_label.setText(str(tilt_value))
+        self.parent.tilt_calculation[algo_selected] = tilt_value
+        self.correction_algorithm_changed()
+        self.parent.ui.tilt_refresh_calculation_pushButton.setEnabled(False)
 
     def direct_minimization(self):
-        o_direct = DirectMinimization()
-        tilt_value = o_direct.run()
+        o_direct = DirectMinimization(parent=self.parent)
+        tilt_value = o_direct.compute()
         return tilt_value
 
     def phase_correlation(self):
@@ -82,16 +97,6 @@ class TiltHandler:
     def set_up_images_at_0_and_180_degrees(self):
         o_setup = Setup0180DegreeHandler(parent=self.parent)
         o_setup.show()
-
-    def get_algorithm_selected(self):
-        if self.parent.ui.tilt_correction_direct_minimization_radioButton.isChecked():
-            return TiltAlgorithm.direct_minimization
-        elif self.parent.ui.tilt_correction_phase_correlation_radioButton.isChecked():
-            return TiltAlgorithm.phase_correlation
-        elif self.parent.ui.tilt_correction_use_center_radioButton.isChecked():
-            return TiltAlgorithm.use_center
-        else:
-            raise NotImplementedError("algorithm not implemented!")
 
     def set_algorithm(self, algorithm=TiltAlgorithm.direct_minimization):
         if algorithm == TiltAlgorithm.direct_minimization:

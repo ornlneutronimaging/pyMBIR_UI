@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1069</width>
-    <height>857</height>
+    <width>1196</width>
+    <height>866</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -544,8 +544,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>999</width>
-             <height>631</height>
+             <width>1126</width>
+             <height>640</height>
             </rect>
            </property>
            <attribute name="label">
@@ -600,6 +600,13 @@
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_8">
                <item>
+                <widget class="QPushButton" name="tilt_correction_setup_0_and_180degrees_images_pushButton">
+                 <property name="text">
+                  <string>Set up Images at 0degree and 180degrees ...</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
                 <layout class="QHBoxLayout" name="horizontalLayout_7">
                  <item>
                   <widget class="QLabel" name="label_14">
@@ -649,9 +656,9 @@
                   </spacer>
                  </item>
                  <item>
-                  <widget class="QPushButton" name="tilt_correction_setup_0_and_180degrees_images_pushButton">
+                  <widget class="QPushButton" name="tilt_refresh_calculation_pushButton">
                    <property name="text">
-                    <string>Set up Images at 0degree and 180degrees ...</string>
+                    <string>Refresh calculation</string>
                    </property>
                   </widget>
                  </item>
@@ -719,7 +726,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1069</width>
+     <width>1196</width>
      <height>24</height>
     </rect>
    </property>
@@ -858,7 +865,7 @@
    <slot>projections_select_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>990</x>
+     <x>1117</x>
      <y>120</y>
     </hint>
     <hint type="destinationlabel">
@@ -874,7 +881,7 @@
    <slot>ob_select_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>990</x>
+     <x>1117</x>
      <y>155</y>
     </hint>
     <hint type="destinationlabel">
@@ -890,7 +897,7 @@
    <slot>df_select_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>990</x>
+     <x>1117</x>
      <y>190</y>
     </hint>
     <hint type="destinationlabel">
@@ -922,7 +929,7 @@
    <slot>output_folder_select_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>996</x>
+     <x>1123</x>
      <y>302</y>
     </hint>
     <hint type="destinationlabel">
@@ -1147,7 +1154,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>245</x>
-     <y>681</y>
+     <y>656</y>
     </hint>
     <hint type="destinationlabel">
      <x>7</x>
@@ -1163,7 +1170,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>1012</x>
-     <y>681</y>
+     <y>656</y>
     </hint>
     <hint type="destinationlabel">
      <x>1035</x>
@@ -1323,7 +1330,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>465</x>
-     <y>725</y>
+     <y>734</y>
     </hint>
     <hint type="destinationlabel">
      <x>1063</x>
@@ -1338,12 +1345,28 @@
    <slot>tilt_correction_set_up_images_at_0_and_180_degrees_pushed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>805</x>
-     <y>720</y>
+     <x>165</x>
+     <y>691</y>
     </hint>
     <hint type="destinationlabel">
      <x>1063</x>
      <y>585</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tilt_refresh_calculation_pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tilt_refresh_calculation_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1021</x>
+     <y>738</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1187</x>
+     <y>813</y>
     </hint>
    </hints>
   </connection>
@@ -1376,5 +1399,6 @@
   <slot>full_reset_clicked()</slot>
   <slot>tilt_correction_algorithm_changed()</slot>
   <slot>tilt_correction_set_up_images_at_0_and_180_degrees_pushed()</slot>
+  <slot>tilt_refresh_calculation_clicked()</slot>
  </slots>
 </ui>
