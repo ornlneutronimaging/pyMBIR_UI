@@ -1,17 +1,14 @@
 from qtpy.QtWidgets import QFileDialog
-from qtpy import QtGui
 import os
-import numpy as np
 import logging
-import copy
 
 from NeuNorm.normalization import Normalization
 
 from .status_message_config import show_status_message, StatusMessageStatus
 from .utilities.file_utilities import get_list_files, get_list_file_extensions
 from . import DataType, normal_style, error_style, interact_me_style, file_extension_accepted
-from .crop_handler import CropHandler
-from .center_of_rotation import CenterOfRotation
+from pyMBIR_UI.crop.crop_handler import CropHandler
+from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
 from .tilt_handler import TiltHandler
 from .loader import Loader
 

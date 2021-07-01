@@ -648,6 +648,13 @@
                    </property>
                   </spacer>
                  </item>
+                 <item>
+                  <widget class="QPushButton" name="tilt_correction_setup_0_and_180degrees_images_pushButton">
+                   <property name="text">
+                    <string>Set up Images at 0degree and 180degrees ...</string>
+                   </property>
+                  </widget>
+                 </item>
                 </layout>
                </item>
                <item>
@@ -1140,7 +1147,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>245</x>
-     <y>687</y>
+     <y>681</y>
     </hint>
     <hint type="destinationlabel">
      <x>7</x>
@@ -1156,7 +1163,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>1012</x>
-     <y>687</y>
+     <y>681</y>
     </hint>
     <hint type="destinationlabel">
      <x>1035</x>
@@ -1324,6 +1331,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tilt_correction_setup_0_and_180degrees_images_pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tilt_correction_set_up_images_at_0_and_180_degrees_pushed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>805</x>
+     <y>720</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1063</x>
+     <y>585</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>projections_select_clicked()</slot>
@@ -1352,5 +1375,6 @@
   <slot>center_of_rotation_user_value_changed()</slot>
   <slot>full_reset_clicked()</slot>
   <slot>tilt_correction_algorithm_changed()</slot>
+  <slot>tilt_correction_set_up_images_at_0_and_180_degrees_pushed()</slot>
  </slots>
 </ui>

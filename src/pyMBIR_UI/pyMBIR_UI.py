@@ -17,16 +17,15 @@ from .session_handler import SessionHandler
 from .preview import PreviewHandler, PreviewLauncher
 # from .filter_tab_handler import FilterTabHandler
 from .load_previous_session_launcher import LoadPreviousSessionLauncher
-from .utilities.decorators import check_ui
 from .utilities.get import Get
 # from .roi_handler import RoiHandler
 from .log_launcher import LogLauncher
 # from .fitting import Fitting
 # from .utility_backend import multi_logger as ml
 from . import DataType
-from .crop_handler import CropHandler
+from pyMBIR_UI.crop.crop_handler import CropHandler
 from .tilt_handler import TiltHandler
-from .center_of_rotation import CenterOfRotation
+from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
 
 # warnings.filterwarnings('ignore')
 
@@ -271,6 +270,10 @@ class PyMBIRUILauncher(QMainWindow):
     def tilt_correction_algorithm_changed(self):
         o_tilt = TiltHandler(parent=self)
         o_tilt.correction_algorithm_changed()
+
+    def tilt_correction_set_up_images_at_0_and_180_degrees_pushed(self):
+        o_tilt = TiltHandler(parent=self)
+        o_tilt.set_up_images_at_0_and_180_degrees()
 
     # leaving ui
     def closeEvent(self, c):

@@ -41,19 +41,25 @@ class TiltHandler:
     def correction_algorithm_changed(self):
         o_get = Get(parent=self.parent)
         algo_selected = o_get.tilt_algorithm_selected()
+        tilt_value = np.NaN
         if algo_selected == TiltAlgorithm.direct_minimization:
-            self.direct_minimization()
+            tilt_value = self.direct_minimization()
         elif algo_selected == TiltAlgorithm.phase_correlation:
-            self.phase_correlation()
+            tilt_value = self.phase_correlation()
         elif algo_selected == TiltAlgorithm.use_center:
-            self.use_center()
+            tilt_value = self.use_center()
+        self.parent.ui.tilt_correcton_value_label.setText(str(tilt_value))
 
     def direct_minimization(self):
         o_direct = DirectMinimization()
         tilt_value = o_direct.run()
+        return tilt_value
 
     def phase_correlation(self):
-        pass
+        return np.NaN
 
     def use_center(self):
+        return np.NaN
+
+    def set_up_images_at_0_and_180_degrees(self):
         pass
