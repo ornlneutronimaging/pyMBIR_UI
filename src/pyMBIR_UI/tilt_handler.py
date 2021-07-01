@@ -5,6 +5,7 @@ from .loader import Loader
 from .utilities.get import Get
 from . import TiltAlgorithm
 from .tilt.direct_minimization import DirectMinimization
+from .tilt.setup_0_180_degree_handler import Setup0180DegreeHandler
 
 
 class TiltHandler:
@@ -62,4 +63,5 @@ class TiltHandler:
         return np.NaN
 
     def set_up_images_at_0_and_180_degrees(self):
-        pass
+        o_setup = Setup0180DegreeHandler(parent=self.parent)
+        o_setup.show()
