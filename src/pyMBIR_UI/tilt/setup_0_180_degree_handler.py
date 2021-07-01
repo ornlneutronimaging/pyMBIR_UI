@@ -1,10 +1,9 @@
 from qtpy.QtWidgets import QDialog
-from qtpy import QtCore
 from qtpy.QtWidgets import QVBoxLayout
-from qtpy.QtWidgets import QApplication
 import numpy as np
 import os
 import pyqtgraph as pg
+import logging
 
 from .. import load_ui
 from ..utilities.gui import Gui
@@ -118,11 +117,19 @@ class Setup0180DegreeHandler(QDialog):
         image_180_degree_index = self.ui.image_180_degrees_comboBox.currentIndex()
         self.parent.tilt_correction_index_dict['180_degree'] = image_180_degree_index
 
+        logging.info("0 and 180 degrees tilt image has been set to:")
+        logging.info(f"-> index of 0 degree: {image_0_degree_index}")
+        logging.info(f"-> index of 180 degrees: {image_180_degree_index}")
+
         self.close()
 
     def reject(self):
         self.parent.tilt_correction_index_dict['0_degree'] = self.index_of_0_degree_image_when_entering_ui
         self.parent.tilt_correction_index_dict['180_degree'] = self.index_of_180_degree_image_when_entering_ui
+
+        logging.info("User canceled ui that set up the 0 and 180 degrees images for tilt correction")
+        logging.info(f"-> index of 0 degree: {self.index_of_0_degree_image_when_entering_ui}")
+        logging.info(f"-> index of 180 degrees: {self.index_of_180_degree_image_when_entering_ui}")
 
         self.close()
 

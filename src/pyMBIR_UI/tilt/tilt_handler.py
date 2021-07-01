@@ -2,7 +2,6 @@ import numpy as np
 
 from pyMBIR_UI import DataType
 from pyMBIR_UI.utilities.get import Get
-from pyMBIR_UI import TiltAlgorithm
 from pyMBIR_UI.tilt.direct_minimization import DirectMinimization
 from pyMBIR_UI.tilt.setup_0_180_degree_handler import Setup0180DegreeHandler
 from pyMBIR_UI.loader import Loader

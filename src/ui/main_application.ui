@@ -812,7 +812,7 @@
     <string>Log</string>
    </property>
    <property name="shortcut">
-    <string/>
+    <string>Ctrl+L</string>
    </property>
   </action>
   <action name="actionLoadSession">
