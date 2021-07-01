@@ -24,7 +24,7 @@ from .log_launcher import LogLauncher
 # from .utility_backend import multi_logger as ml
 from . import DataType
 from pyMBIR_UI.crop.crop_handler import CropHandler
-from .tilt_handler import TiltHandler
+from pyMBIR_UI.tilt.tilt_handler import TiltHandler
 from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
 
 # warnings.filterwarnings('ignore')

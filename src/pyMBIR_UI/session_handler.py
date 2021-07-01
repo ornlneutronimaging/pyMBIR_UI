@@ -8,6 +8,7 @@ from .utilities.get import Get
 from . import DataType
 from pyMBIR_UI.crop.crop_handler import CropHandler
 from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
+from pyMBIR_UI.tilt.tilt_handler import TiltHandler
 
 
 class SessionHandler:
@@ -63,6 +64,20 @@ class SessionHandler:
                                 'user value': user_value}
         session_dict['center rotation'] = center_rotation_dict
 
+        # tilt correction
+        o_tilt = TiltHandler(parent=self.parent)
+        tilt_correction_state = self.parent.ui.tilt_correction_checkBox.isChecked()
+        tilt_correction_file_index = self.parent.ui.tilt_correction_file_index_horizontalSlider.value()
+        index_of_180_degree_image = self.parent.tilt_correction_index_dict['180_degree']
+        index_of_0_degree_image = self.parent.tilt_correction_index_dict['0_degree']
+        tilt_algorithm = o_tilt.get_algorithm_selected()
+        tilt_dict = {'state': tilt_correction_state,
+                     'file index': tilt_correction_file_index,
+                     'algorithm selected': tilt_algorithm,
+                     'image 0 file index': index_of_0_degree_image,
+                     'image 180 file index': index_of_180_degree_image}
+        session_dict['tilt'] = tilt_dict
+
         self.parent.session_dict = session_dict
 
     def load_to_ui(self):
@@ -85,6 +100,7 @@ class SessionHandler:
             list_ui['select lineEdit'][data_type].setText(folder)
             list_load_method[data_type]()
 
+        # crop
         o_crop = CropHandler(parent=self.parent)
         o_crop.initialize_crop()
         self.parent.ui.crop_file_index_horizontalSlider.setValue(self.parent.session_dict['crop']['file index'])
@@ -95,8 +111,13 @@ class SessionHandler:
         o_crop.width_changed()
         o_crop.file_index_changed()
 
+        # center of rotation
         o_center = CenterOfRotation(parent=self.parent)
         o_center.initialize_from_session()
+
+        # tilt
+        o_tilt = TiltHandler(parent=self.parent)
+        o_tilt.initialize_tilt_from_session()
 
         show_status_message(parent=self.parent,
                             message=f"Loaded {self.config_file_name}",

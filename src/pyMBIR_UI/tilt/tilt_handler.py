@@ -1,11 +1,12 @@
 import numpy as np
 
-from . import DataType
-from .utilities.get import Get
-from . import TiltAlgorithm
-from .tilt.direct_minimization import DirectMinimization
-from .tilt.setup_0_180_degree_handler import Setup0180DegreeHandler
-from .loader import Loader
+from pyMBIR_UI import DataType
+from pyMBIR_UI.utilities.get import Get
+from pyMBIR_UI import TiltAlgorithm
+from pyMBIR_UI.tilt.direct_minimization import DirectMinimization
+from pyMBIR_UI.tilt.setup_0_180_degree_handler import Setup0180DegreeHandler
+from pyMBIR_UI.loader import Loader
+from pyMBIR_UI import TiltAlgorithm
 
 
 class TiltHandler:
@@ -33,6 +34,17 @@ class TiltHandler:
             index_of_180_degree_image = o_get.get_file_index_of_180_degree_image()
             self.parent.tilt_correction_index_dict['180_degree'] = index_of_180_degree_image
             self.parent.tilt_correction_index_dict['0_degree'] = 0
+
+    def initialize_tilt_from_session(self):
+        session = self.parent.session_dict['tilt']
+        self.parent.ui.tilt_correction_checkBox.setChecked(session['state'])
+        self.parent.ui.tilt_correction_file_index_horizontalSlider.setValue(session['file index'])
+        self.parent.tilt_correction_index_dict['180_degree'] = session['image 180 file index']
+        self.parent.tilt_correction_index_dict['0_degree'] = session['image 0 file index']
+        self.set_algorithm(algorithm=session['algorithm selected'])
+
+        self.file_index_changed()
+        self.master_checkBox_clicked()
 
     def file_index_changed(self):
         file_index_selected = self.parent.ui.tilt_correction_file_index_horizontalSlider.value()
@@ -71,3 +83,23 @@ class TiltHandler:
     def set_up_images_at_0_and_180_degrees(self):
         o_setup = Setup0180DegreeHandler(parent=self.parent)
         o_setup.show()
+
+    def get_algorithm_selected(self):
+        if self.parent.ui.tilt_correction_direct_minimization_radioButton.isChecked():
+            return TiltAlgorithm.direct_minimization
+        elif self.parent.ui.tilt_correction_phase_correlation_radioButton.isChecked():
+            return TiltAlgorithm.phase_correlation
+        elif self.parent.ui.tilt_correction_use_center_radioButton.isChecked():
+            return TiltAlgorithm.use_center
+        else:
+            raise NotImplementedError("algorithm not implemented!")
+
+    def set_algorithm(self, algorithm=TiltAlgorithm.direct_minimization):
+        if algorithm == TiltAlgorithm.direct_minimization:
+            self.parent.ui.tilt_correction_direct_minimization_radioButton.setChecked(True)
+        elif algorithm == TiltAlgorithm.phase_correlation:
+            self.parent.ui.tilt_correction_phase_correlation_radioButton.setChecked(True)
+        elif algorithm == TiltAlgorithm.use_center:
+            self.parent.ui.tilt_correction_use_center_radioButton.setChecked(True)
+        else:
+            raise NotImplementedError("Algorithm not implemened!")
