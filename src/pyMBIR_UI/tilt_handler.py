@@ -1,11 +1,11 @@
 import numpy as np
 
 from . import DataType
-from .loader import Loader
 from .utilities.get import Get
 from . import TiltAlgorithm
 from .tilt.direct_minimization import DirectMinimization
 from .tilt.setup_0_180_degree_handler import Setup0180DegreeHandler
+from .loader import Loader
 
 
 class TiltHandler:
@@ -26,7 +26,13 @@ class TiltHandler:
         self.parent.tilt_correction_image_height = image_height
         self.parent.tilt_correction_image_width = image_width
 
-        self.file_index_changed()
+        # initialize 0 and 180 degrees images
+        tilt_correction_index_dict = self.parent.tilt_correction_index_dict
+        if tilt_correction_index_dict['180_degree'] == -1:
+            o_get = Get(parent=self.parent)
+            index_of_180_degree_image = o_get.get_file_index_of_180_degree_image()
+            self.parent.tilt_correction_index_dict['180_degree'] = index_of_180_degree_image
+            self.parent.tilt_correction_index_dict['0_degree'] = 0
 
     def file_index_changed(self):
         file_index_selected = self.parent.ui.tilt_correction_file_index_horizontalSlider.value()

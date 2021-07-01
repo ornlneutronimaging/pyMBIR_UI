@@ -37,7 +37,10 @@
       </widget>
      </item>
      <item>
-      <widget class="QSlider" name="horizontalSlider">
+      <widget class="QSlider" name="transparency_horizontalSlider">
+       <property name="maximum">
+        <number>100</number>
+       </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -58,7 +61,7 @@
       <widget class="QLabel" name="center_of_rotation_0_degree_label">
        <property name="minimumSize">
         <size>
-         <width>100</width>
+         <width>150</width>
          <height>0</height>
         </size>
        </property>
@@ -74,13 +77,13 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QComboBox" name="center_of_rotation_0_degrees_comboBox"/>
+      <widget class="QComboBox" name="image_0_degrees_comboBox"/>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="center_of_rotation_180_degree_label">
        <property name="minimumSize">
         <size>
-         <width>100</width>
+         <width>150</width>
          <height>0</height>
         </size>
        </property>
@@ -96,7 +99,7 @@
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QComboBox" name="center_of_rotation_180_degrees_comboBox"/>
+      <widget class="QComboBox" name="image_180_degrees_comboBox"/>
      </item>
     </layout>
    </item>
@@ -168,7 +171,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>horizontalSlider</sender>
+   <sender>transparency_horizontalSlider</sender>
    <signal>sliderPressed()</signal>
    <receiver>Dialog</receiver>
    <slot>slider_clicked()</slot>
@@ -184,7 +187,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>horizontalSlider</sender>
+   <sender>transparency_horizontalSlider</sender>
    <signal>sliderMoved(int)</signal>
    <receiver>Dialog</receiver>
    <slot>slider_moved()</slot>
@@ -200,7 +203,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>center_of_rotation_0_degrees_comboBox</sender>
+   <sender>image_0_degrees_comboBox</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>Dialog</receiver>
    <slot>image_0_degree_changed()</slot>
@@ -216,7 +219,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>center_of_rotation_180_degrees_comboBox</sender>
+   <sender>image_180_degrees_comboBox</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>Dialog</receiver>
    <slot>image_180_degree_changed()</slot>

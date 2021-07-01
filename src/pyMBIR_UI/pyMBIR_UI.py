@@ -74,6 +74,10 @@ class PyMBIRUILauncher(QMainWindow):
     # center of rotation
     center_of_rotation_item = None
 
+    # tilt correction
+    tilt_correction_index_dict = {'0_degree': -1,
+                                  '180_degree': -1}
+
     # histogram of preview dialog
     preview_histogram = None
 

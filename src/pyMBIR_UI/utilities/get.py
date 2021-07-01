@@ -1,7 +1,10 @@
 from os.path import expanduser
 import os
+from pathlib import PurePath
+import numpy as np
 
 from .. import TiltAlgorithm
+from pyMBIR_UI import DataType
 
 
 class Get:
@@ -36,6 +39,29 @@ class Get:
             return TiltAlgorithm.use_center
         else:
             NotImplementedError("Tilt algorithm not implemented!")
+
+    def get_file_index_of_180_degree_image(self):
+        """
+        using the fact that the file name is based on the following structure, this method will return
+        the file that is as close as possible to the angle 180
+        structure_of_file:  ####_angleBeforeComma_angleAfterComma_fileIndex.ext
+        """
+        list_of_files = self.parent.input['list files'][DataType.projections]
+        list_angles = []
+        for _file in list_of_files:
+            basename = str(PurePath(PurePath(_file).name).stem)
+            split_basename = basename.split("_")
+            deg_before_comma = split_basename[-3]
+            deg_after_comma = split_basename[-2]
+            full_deg_value = f"{deg_before_comma}.{deg_after_comma}"
+            list_angles.append(np.float(full_deg_value))
+
+        offset_with_180degrees = np.abs(np.array(list_angles) - 180.0)
+        min_value = np.min(offset_with_180degrees)
+        index_of_min_value = np.where(offset_with_180degrees == min_value)
+
+        return int(index_of_min_value[0][0])
+
 
     @staticmethod
     def get_full_home_file_name(base_file_name):
