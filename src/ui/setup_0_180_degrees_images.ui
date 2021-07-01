@@ -134,5 +134,109 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>48</x>
+     <y>556</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>9</x>
+     <y>518</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>ok_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>662</x>
+     <y>558</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>713</x>
+     <y>534</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSlider</sender>
+   <signal>sliderPressed()</signal>
+   <receiver>Dialog</receiver>
+   <slot>slider_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>149</x>
+     <y>454</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>7</x>
+     <y>407</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>horizontalSlider</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>Dialog</receiver>
+   <slot>slider_moved()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>218</x>
+     <y>453</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>4</x>
+     <y>456</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>center_of_rotation_0_degrees_comboBox</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>Dialog</receiver>
+   <slot>image_0_degree_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>188</x>
+     <y>487</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>7</x>
+     <y>481</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>center_of_rotation_180_degrees_comboBox</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>Dialog</receiver>
+   <slot>image_180_degree_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>245</x>
+     <y>517</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>129</x>
+     <y>554</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>ok_clicked()</slot>
+  <slot>slider_clicked()</slot>
+  <slot>slider_moved()</slot>
+  <slot>image_0_degree_changed()</slot>
+  <slot>image_180_degree_changed()</slot>
+ </slots>
 </ui>
