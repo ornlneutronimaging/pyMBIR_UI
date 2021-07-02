@@ -3,6 +3,7 @@ import numpy as np
 from pyMBIR_UI import DataType
 from pyMBIR_UI.utilities.get import Get
 from pyMBIR_UI.tilt.direct_minimization import DirectMinimization
+from pyMBIR_UI.tilt.phase_correlation import PhaseCorrelation
 from pyMBIR_UI.tilt.setup_0_180_degree_handler import Setup0180DegreeHandler
 from pyMBIR_UI.loader import Loader
 from pyMBIR_UI import TiltAlgorithm
@@ -92,7 +93,9 @@ class TiltHandler:
         return tilt_value
 
     def phase_correlation(self):
-        return np.NaN
+        o_phase = PhaseCorrelation(parent=self.parent)
+        tilt_value = o_phase.compute()
+        return tilt_value
 
     def use_center(self):
         return np.NaN

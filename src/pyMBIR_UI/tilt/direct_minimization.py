@@ -1,26 +1,14 @@
 import logging
 import numpy as np
 from skimage.transform import rotate
-from ..status_message_config import StatusMessageStatus, show_status_message
 
-from .. import DataType
+from ..status_message_config import StatusMessageStatus, show_status_message
+from .base_algorithm import BaseAlgorithm
 
 MAX_SHIFT = 400
 
 
-class DirectMinimization:
-
-    image_0_degree = None
-    image_180_degree = None
-
-    def __init__(self, parent=None):
-        self.parent = parent
-
-        index_0_degree = self.parent.tilt_correction_index_dict['0_degree']
-        index_180_degree = self.parent.tilt_correction_index_dict['180_degree']
-
-        self.image_0_degree = self.parent.input['data'][DataType.projections][index_0_degree]
-        self.image_180_degree = self.parent.input['data'][DataType.projections][index_180_degree]
+class DirectMinimization(BaseAlgorithm):
 
     def compute(self):
         logging.info("Running tilt calculation - direct minimization")
@@ -39,6 +27,7 @@ class DirectMinimization:
                             message=f"",
                             status=StatusMessageStatus.ready,
                             duration_s=10)
+        logging.info(f"-> tilt: {tilt}")
 
         return tilt
 
