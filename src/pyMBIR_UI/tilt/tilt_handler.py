@@ -1,4 +1,6 @@
 import numpy as np
+import pyqtgraph as pg
+from qtpy import QtGui, QtCore
 
 from pyMBIR_UI import DataType
 from pyMBIR_UI.utilities.get import Get
@@ -58,6 +60,31 @@ class TiltHandler:
         image = o_loader.retrieve_data(file_index=file_index_selected)
         transpose_image = np.transpose(image)
         self.parent.tilt_correction_image_view.setImage(transpose_image)
+
+        # show or not tilt calculated
+        if self.parent.ui.show_tilt_checkBox.isChecked():
+            tilt_value = self.parent.ui.tilt_correcton_value_label.text()
+            tilt_value_float = np.float(tilt_value)
+            if np.isfinite(tilt_value_float):
+
+                _pen = QtGui.QPen()
+                _pen.setColor(QtGui.QColor(255, 0, 0))
+                _pen.setWidth(10)
+
+                self.parent.tilt_grid_item = pg.InfiniteLine([512, 512],
+                                                             angle=90-tilt_value_float,
+                                                             movable=True,
+                                                             pen=_pen)
+                self.parent.tilt_correction_image_view.addItem(self.parent.tilt_grid_item)
+
+            else:
+                self.parent.tilt_correction_image_view.removeItem(self.parent.tilt_grid_item)
+                self.parent.tilt_grid_item = None
+
+        else:
+            if not (self.parent.tilt_grid_item is None):
+                self.parent.tilt_correction_image_view.removeItem(self.parent.tilt_grid_item)
+                self.parent.tilt_grid_item = None
 
     def master_checkBox_clicked(self):
         master_value = self.parent.ui.tilt_correction_checkBox.isChecked()

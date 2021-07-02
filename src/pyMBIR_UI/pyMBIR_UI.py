@@ -81,6 +81,7 @@ class PyMBIRUILauncher(QMainWindow):
     tilt_calculation = {TiltAlgorithm.phase_correlation: None,
                         TiltAlgorithm.direct_minimization: None,
                         TiltAlgorithm.use_center: None}
+    tilt_grid_item = None
 
     # histogram of preview dialog
     preview_histogram = None
@@ -279,6 +280,10 @@ class PyMBIRUILauncher(QMainWindow):
     def tilt_correction_set_up_images_at_0_and_180_degrees_pushed(self):
         o_tilt = TiltHandler(parent=self)
         o_tilt.set_up_images_at_0_and_180_degrees()
+
+    def tilt_correction_show_tilt_clicked(self):
+        o_tilt = TiltHandler(parent=self)
+        o_tilt.file_index_changed()
 
     @wait_cursor
     def tilt_refresh_calculation_clicked(self):
