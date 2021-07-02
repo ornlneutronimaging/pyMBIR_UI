@@ -50,6 +50,8 @@ class TiltHandler:
                             TiltAlgorithm.direct_minimization: session[TiltAlgorithm.direct_minimization],
                             TiltAlgorithm.use_center: session[TiltAlgorithm.use_center]}
         self.parent.tilt_calculation = tilt_calculation
+        self.correction_algorithm_changed()
+        self.parent.ui.tilt_refresh_calculation_pushButton.setEnabled(False)
 
         self.file_index_changed()
         self.master_checkBox_clicked()
