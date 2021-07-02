@@ -4,6 +4,7 @@ from pyMBIR_UI import DataType
 from pyMBIR_UI.utilities.get import Get
 from pyMBIR_UI.tilt.direct_minimization import DirectMinimization
 from pyMBIR_UI.tilt.phase_correlation import PhaseCorrelation
+from pyMBIR_UI.tilt.use_center import UseCenter
 from pyMBIR_UI.tilt.setup_0_180_degree_handler import Setup0180DegreeHandler
 from pyMBIR_UI.loader import Loader
 from pyMBIR_UI import TiltAlgorithm
@@ -98,7 +99,9 @@ class TiltHandler:
         return tilt_value
 
     def use_center(self):
-        return np.NaN
+        o_center = UseCenter(parent=self.parent)
+        tilt_value = o_center.compute(sigma=15, maxshift=200)
+        return tilt_value
 
     def set_up_images_at_0_and_180_degrees(self):
         o_setup = Setup0180DegreeHandler(parent=self.parent)
