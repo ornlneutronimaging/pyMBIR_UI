@@ -26,6 +26,7 @@ from . import DataType, TiltAlgorithm
 from pyMBIR_UI.crop.crop_handler import CropHandler
 from pyMBIR_UI.tilt.tilt_handler import TiltHandler
 from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
+from .utilities.decorators import wait_cursor
 
 # warnings.filterwarnings('ignore')
 
@@ -282,9 +283,14 @@ class PyMBIRUILauncher(QMainWindow):
         o_tilt = TiltHandler(parent=self)
         o_tilt.set_up_images_at_0_and_180_degrees()
 
+    @wait_cursor
     def tilt_refresh_calculation_clicked(self):
+        # QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
+        # QApplication.processEvents()
         o_tilt = TiltHandler(parent=self)
         o_tilt.refresh_calculation()
+        # QApplication.restoreOverrideCursor()
+        # QApplication.processEvents()
 
     # leaving ui
     def closeEvent(self, c):

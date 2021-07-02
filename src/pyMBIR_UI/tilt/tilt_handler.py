@@ -66,7 +66,10 @@ class TiltHandler:
         o_get = Get(parent=self.parent)
         algo_selected = o_get.tilt_algorithm_selected()
         tilt_value = tilt_calculation[algo_selected]
-        self.parent.ui.tilt_correcton_value_label.setText("{:.2f}".format(tilt_value))
+        if tilt_value is None:
+            self.parent.ui.tilt_correcton_value_label.setText("NaN")
+        else:
+            self.parent.ui.tilt_correcton_value_label.setText("{:.2f}".format(tilt_value))
         self.parent.ui.tilt_refresh_calculation_pushButton.setEnabled(True)
 
     def refresh_calculation(self):
@@ -97,6 +100,11 @@ class TiltHandler:
     def set_up_images_at_0_and_180_degrees(self):
         o_setup = Setup0180DegreeHandler(parent=self.parent)
         o_setup.show()
+
+    def get_algorithm_selected(self):
+        o_get = Get(parent=self.parent)
+        algo_selected = o_get.tilt_algorithm_selected()
+        return algo_selected
 
     def set_algorithm(self, algorithm=TiltAlgorithm.direct_minimization):
         if algorithm == TiltAlgorithm.direct_minimization:
