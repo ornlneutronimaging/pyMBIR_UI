@@ -26,16 +26,17 @@ def check_ui(func):
     return wrap
 
 
-def wait_cursor(function):
-    """
-    Add a wait cursor during the running of the function
-    """
-    def wrapper(*args, **kwargs):
+def wait_cursor(func):
+
+    @functools.wraps(func)
+    def wrap(*args, **kwargs):
+
+        self = args[0]
+
         QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
         QtGui.QGuiApplication.processEvents()
-        function(*args, **kwargs)
-        # function(self)
+        func(self)
         QApplication.restoreOverrideCursor()
         QtGui.QGuiApplication.processEvents()
 
-    return wrapper
+    return wrap

@@ -247,15 +247,12 @@ class PyMBIRUILauncher(QMainWindow):
         o_center.display_images()
         o_center.calculate_center_of_rotation()
 
+    @wait_cursor
     def center_of_rotation_algorithm_clicked(self):
-        QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
-        QApplication.processEvents()
         o_center = CenterOfRotation(parent=self)
         o_center.update_widgets()
         o_center.calculate_center_of_rotation()
         o_center.display_center_of_rotation()
-        QApplication.restoreOverrideCursor()
-        QApplication.processEvents()
 
     def center_of_rotation_user_value_changed(self, value):
         o_center = CenterOfRotation(parent=self)
@@ -285,12 +282,8 @@ class PyMBIRUILauncher(QMainWindow):
 
     @wait_cursor
     def tilt_refresh_calculation_clicked(self):
-        # QApplication.setOverrideCursor(QtCore.Qt.WaitCursor)
-        # QApplication.processEvents()
         o_tilt = TiltHandler(parent=self)
         o_tilt.refresh_calculation()
-        # QApplication.restoreOverrideCursor()
-        # QApplication.processEvents()
 
     # leaving ui
     def closeEvent(self, c):
