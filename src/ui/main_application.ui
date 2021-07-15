@@ -24,7 +24,7 @@
        <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideMiddle</enum>
@@ -774,15 +774,18 @@
               <property name="singleStep">
                <double>0.010000000000000</double>
               </property>
+              <property name="value">
+               <double>1.000000000000000</double>
+              </property>
              </widget>
             </item>
             <item row="2" column="1">
              <widget class="QDoubleSpinBox" name="sigma_doubleSpinBox">
               <property name="minimum">
-               <double>1.000000000000000</double>
+               <double>0.010000000000000</double>
               </property>
               <property name="maximum">
-               <double>2.000000000000000</double>
+               <double>1000000.000000000000000</double>
               </property>
               <property name="singleStep">
                <double>0.100000000000000</double>
