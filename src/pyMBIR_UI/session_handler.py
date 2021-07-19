@@ -43,9 +43,10 @@ class SessionHandler:
         crop_width = self.parent.ui.crop_width_horizontalSlider.value()
         try:
             crop_from_slice = np.int(self.parent.ui.crop_from_slice_label.text())
+            crop_to_slice = np.int(self.parent.ui.crop_to_slice_label.text())
         except ValueError:
             crop_from_slice = np.NaN
-        crop_to_slice = np.int(self.parent.ui.crop_to_slice_label.text())
+            crop_to_slice = np.NaN
         file_index = self.parent.ui.crop_file_index_horizontalSlider.value()
         crop_dict = {'state': crop_state,
                      'width': crop_width,
@@ -79,6 +80,7 @@ class SessionHandler:
         tilt_algorithm = o_tilt.get_algorithm_selected()
         tilt_calculation = self.parent.tilt_calculation
         tilt_value_to_use_in_reconstruction = o_tilt.get_tilt_value_to_use_in_reconstruction()
+        use_tilt_value = self.parent.ui.show_tilt_checkBox.isChecked()
         tilt_dict = {'state': tilt_correction_state,
                      'file index': tilt_correction_file_index,
                      'algorithm selected': tilt_algorithm,
@@ -87,7 +89,8 @@ class SessionHandler:
                      TiltAlgorithm.phase_correlation: tilt_calculation[TiltAlgorithm.phase_correlation],
                      TiltAlgorithm.direct_minimization: tilt_calculation[TiltAlgorithm.direct_minimization],
                      TiltAlgorithm.use_center: tilt_calculation[TiltAlgorithm.use_center],
-                     'tilt value to use in reconstruction': tilt_value_to_use_in_reconstruction}
+                     'tilt value to use in reconstruction': tilt_value_to_use_in_reconstruction,
+                     'use title value': use_tilt_value}
         session_dict['tilt'] = tilt_dict
 
         # Advanced parameters

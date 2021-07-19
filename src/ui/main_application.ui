@@ -1037,6 +1037,9 @@
    <property name="text">
     <string>Advanced settings ...</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
   </action>
  </widget>
  <tabstops>
