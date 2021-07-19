@@ -1,0 +1,34 @@
+{
+  "pymbir": {
+    "output_path": [
+      "output",
+      "folder"
+    ],
+    "rot_center": [
+      "center rotation"
+    ],
+    "z-start": [
+      "crop",
+      "from slice"
+    ],
+    "z_numElts": [
+      "crop",
+      "to slice - from slice"
+    ],
+    "num_col": [
+      "crop",
+      "width / 2"
+    ],
+    "max_iter": "",
+    "gpu_idx": "",
+    "mrf_p": "",
+    "mrf_sigma": ["advanced parameters", "sigma"],
+    "stop_thresh": "",
+    "det_x": "",
+    "det_y": "",
+    "vox_xy": "",
+    "vox_z": "",
+    "disp_recon": "",
+    "write_op": ""
+  }
+}

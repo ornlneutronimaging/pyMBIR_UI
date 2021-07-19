@@ -1,5 +1,4 @@
 from qtpy.QtWidgets import QMainWindow, QApplication
-from qtpy import QtCore
 import sys
 import os
 import logging
@@ -7,26 +6,20 @@ from . import load_ui
 import versioneer
 import numpy as np
 
-# from .select_instrument_launcher import SelectInstrumentLauncher
 from .import_data_handler import ImportDataHandler
 from .gui_initialization import GuiInitialization
-# from .parameters_tab_handler import ParametersTabHandler
 from .event_handler import EventHandler
 from .session_handler import SessionHandler
-# from .help_handler import HelpHandler
 from .preview import PreviewHandler, PreviewLauncher
-# from .filter_tab_handler import FilterTabHandler
 from .load_previous_session_launcher import LoadPreviousSessionLauncher
 from .utilities.get import Get
-# from .roi_handler import RoiHandler
 from .log_launcher import LogLauncher
-# from .fitting import Fitting
-# from .utility_backend import multi_logger as ml
 from . import DataType, TiltAlgorithm
 from pyMBIR_UI.crop.crop_handler import CropHandler
 from pyMBIR_UI.tilt.tilt_handler import TiltHandler
 from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
 from .utilities.decorators import wait_cursor
+from pyMBIR_UI.reconstruction_launcher import ReconstructionLauncher
 
 # warnings.filterwarnings('ignore')
 
@@ -289,6 +282,11 @@ class PyMBIRUILauncher(QMainWindow):
     def tilt_refresh_calculation_clicked(self):
         o_tilt = TiltHandler(parent=self)
         o_tilt.refresh_calculation()
+
+    # advanced tab
+    def run_reconstruction(self):
+        o_reconstruction = ReconstructionLauncher(parent=self)
+        o_reconstruction.run()
 
     # leaving ui
     def closeEvent(self, c):

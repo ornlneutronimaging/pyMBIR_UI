@@ -46,8 +46,10 @@ class SessionHandler:
         file_index = self.parent.ui.crop_file_index_horizontalSlider.value()
         crop_dict = {'state': crop_state,
                      'width': crop_width,
+                     'width / 2': np.int(crop_width/2),
                      'from slice': crop_from_slice,
                      'to slice': crop_to_slice,
+                     'to slice - from slice': crop_to_slice - crop_from_slice,
                      'file index': file_index}
         session_dict['crop'] = crop_dict
 
@@ -87,9 +89,12 @@ class SessionHandler:
         diffuseness = self.parent.ui.diffuseness_doubleSpinBox.value()
         smoothness = self.parent.ui.smoothness_doubleSpinBox.value()
         sigma = self.parent.ui.sigma_doubleSpinBox.value()
+        o_advanced_parameters = AdvancedParametersHandler(parent=self.parent)
+        reconstruction_algorithm = o_advanced_parameters.get_reconstruction_algorithm_selected()
         session_dict['advanced parameters'] = {'diffuseness': diffuseness,
                                                'smoothness': smoothness,
-                                               'sigma': sigma}
+                                               'sigma': sigma,
+                                               'reconstruction algorithm': reconstruction_algorithm}
 
         self.parent.session_dict = session_dict
 

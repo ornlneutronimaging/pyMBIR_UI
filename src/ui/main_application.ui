@@ -1325,8 +1325,8 @@
    <slot>tilt_correction_checkBox_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>95</x>
-     <y>198</y>
+     <x>109</x>
+     <y>96</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -1341,8 +1341,8 @@
    <slot>tilt_correction_file_index_moved()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>245</x>
-     <y>651</y>
+     <x>323</x>
+     <y>145</y>
     </hint>
     <hint type="destinationlabel">
      <x>7</x>
@@ -1357,8 +1357,8 @@
    <slot>tilt_correction_file_index_pressed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1012</x>
-     <y>651</y>
+     <x>708</x>
+     <y>145</y>
     </hint>
     <hint type="destinationlabel">
      <x>1035</x>
@@ -1373,8 +1373,8 @@
    <slot>center_of_rotation_checkBox_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>83</x>
-     <y>156</y>
+     <x>97</x>
+     <y>96</y>
     </hint>
     <hint type="destinationlabel">
      <x>11</x>
@@ -1389,8 +1389,8 @@
    <slot>center_of_rotation_file_index_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>314</x>
-     <y>605</y>
+     <x>335</x>
+     <y>148</y>
     </hint>
     <hint type="destinationlabel">
      <x>1064</x>
@@ -1405,8 +1405,8 @@
    <slot>center_of_rotation_file_index_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>644</x>
-     <y>640</y>
+     <x>335</x>
+     <y>178</y>
     </hint>
     <hint type="destinationlabel">
      <x>1065</x>
@@ -1421,8 +1421,8 @@
    <slot>center_of_rotation_algorithm_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>123</x>
-     <y>694</y>
+     <x>150</x>
+     <y>230</y>
     </hint>
     <hint type="destinationlabel">
      <x>6</x>
@@ -1437,8 +1437,8 @@
    <slot>center_of_rotation_algorithm_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>198</x>
-     <y>691</y>
+     <x>249</x>
+     <y>230</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -1453,8 +1453,8 @@
    <slot>center_of_rotation_user_value_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>246</x>
-     <y>728</y>
+     <x>280</x>
+     <y>268</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -1485,8 +1485,8 @@
    <slot>tilt_correction_algorithm_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>206</x>
-     <y>732</y>
+     <x>272</x>
+     <y>234</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -1501,8 +1501,8 @@
    <slot>tilt_correction_algorithm_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>336</x>
-     <y>732</y>
+     <x>415</x>
+     <y>234</y>
     </hint>
     <hint type="destinationlabel">
      <x>282</x>
@@ -1517,8 +1517,8 @@
    <slot>tilt_correction_algorithm_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>465</x>
-     <y>734</y>
+     <x>519</x>
+     <y>234</y>
     </hint>
     <hint type="destinationlabel">
      <x>1063</x>
@@ -1533,8 +1533,8 @@
    <slot>tilt_correction_set_up_images_at_0_and_180_degrees_pushed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>165</x>
-     <y>691</y>
+     <x>186</x>
+     <y>203</y>
     </hint>
     <hint type="destinationlabel">
      <x>1063</x>
@@ -1549,8 +1549,8 @@
    <slot>tilt_refresh_calculation_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1021</x>
-     <y>738</y>
+     <x>695</x>
+     <y>241</y>
     </hint>
     <hint type="destinationlabel">
      <x>1187</x>
@@ -1565,12 +1565,28 @@
    <slot>tilt_correction_show_tilt_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1093</x>
-     <y>773</y>
+     <x>695</x>
+     <y>274</y>
     </hint>
     <hint type="destinationlabel">
      <x>1070</x>
      <y>838</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>reconstruction_run_pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>run_reconstruction()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>644</x>
+     <y>785</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1188</x>
+     <y>796</y>
     </hint>
    </hints>
   </connection>
@@ -1605,5 +1621,6 @@
   <slot>tilt_correction_set_up_images_at_0_and_180_degrees_pushed()</slot>
   <slot>tilt_refresh_calculation_clicked()</slot>
   <slot>tilt_correction_show_tilt_clicked()</slot>
+  <slot>run_reconstruction()</slot>
  </slots>
 </ui>

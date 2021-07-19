@@ -40,3 +40,8 @@ class TiltAlgorithm:
     direct_minimization = "direct minimization"
     phase_correlation = "phase correlation"
     use_center = "use center"
+
+
+class ReconstructionAlgorithm:
+    pymbir = "pymbir"
+    other = "other"
