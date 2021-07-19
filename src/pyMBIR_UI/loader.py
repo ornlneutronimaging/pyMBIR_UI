@@ -1,3 +1,5 @@
+import numpy as np
+
 from NeuNorm.normalization import Normalization
 
 from . import DataType
@@ -30,3 +32,6 @@ class Loader:
 
         data = o_norm.data['sample']['data'][0]
         self.parent.input['data'][self.data_type][file_index] = data
+
+        if self.parent.image_size['width'] is None:
+            self.parent.image_size['height'], self.parent.image_size['height'] = np.shape(data)

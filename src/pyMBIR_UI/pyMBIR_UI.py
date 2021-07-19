@@ -20,6 +20,7 @@ from pyMBIR_UI.tilt.tilt_handler import TiltHandler
 from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
 from .utilities.decorators import wait_cursor
 from pyMBIR_UI.reconstruction_launcher import ReconstructionLauncher
+from pyMBIR_UI.advanced_settings_handler import AdvancedSettingsHandler
 
 # warnings.filterwarnings('ignore')
 
@@ -29,6 +30,8 @@ class PyMBIRUILauncher(QMainWindow):
 
     config = None  # dictionary created out of config.json
     homepath = "./"
+
+    image_size = {'width': None, 'height': None}
 
     # all infos from the UI  used to save the entire session
     session_dict = {}
@@ -151,6 +154,10 @@ class PyMBIRUILauncher(QMainWindow):
 
     def menu_log_clicked(self):
         LogLauncher(parent=self)
+
+    def advanced_settings_clicked(self):
+        o_advanced = AdvancedSettingsHandler(parent=self)
+        o_advanced.show()
 
     # Input tab
     def projections_select_clicked(self):

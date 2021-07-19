@@ -2,7 +2,7 @@ import logging
 
 from . import ReconstructionAlgorithm
 from .session_handler import SessionHandler
-from .advanced_parameters_handler import AdvancedParametersHandler
+from .general_settings_handler import AdvancedParametersHandler
 
 
 class ReconstructionLauncher:

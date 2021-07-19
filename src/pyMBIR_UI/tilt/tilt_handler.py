@@ -141,6 +141,13 @@ class TiltHandler:
         algo_selected = o_get.tilt_algorithm_selected()
         return algo_selected
 
+    def get_tilt_value_to_use_in_reconstruction(self):
+        if self.parent.ui.tilt_correction_checkBox.isChecked():
+            algo_selected = self.get_algorithm_selected()
+            return self.parent.tilt_calculation[algo_selected]
+        else:
+            return None
+
     def set_algorithm(self, algorithm=TiltAlgorithm.direct_minimization):
         if algorithm == TiltAlgorithm.direct_minimization:
             self.parent.ui.tilt_correction_direct_minimization_radioButton.setChecked(True)

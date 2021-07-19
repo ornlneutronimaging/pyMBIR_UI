@@ -9,7 +9,7 @@ from . import DataType, TiltAlgorithm
 from pyMBIR_UI.crop.crop_handler import CropHandler
 from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
 from pyMBIR_UI.tilt.tilt_handler import TiltHandler
-from pyMBIR_UI.advanced_parameters_handler import AdvancedParametersHandler
+from pyMBIR_UI.general_settings_handler import AdvancedParametersHandler
 
 
 class SessionHandler:
@@ -41,7 +41,10 @@ class SessionHandler:
         # crop tab
         crop_state = self.parent.ui.cropping_checkBox.isChecked()
         crop_width = self.parent.ui.crop_width_horizontalSlider.value()
-        crop_from_slice = np.int(self.parent.ui.crop_from_slice_label.text())
+        try:
+            crop_from_slice = np.int(self.parent.ui.crop_from_slice_label.text())
+        except ValueError:
+            crop_from_slice = np.NaN
         crop_to_slice = np.int(self.parent.ui.crop_to_slice_label.text())
         file_index = self.parent.ui.crop_file_index_horizontalSlider.value()
         crop_dict = {'state': crop_state,
@@ -75,6 +78,7 @@ class SessionHandler:
         index_of_0_degree_image = self.parent.tilt_correction_index_dict['0_degree']
         tilt_algorithm = o_tilt.get_algorithm_selected()
         tilt_calculation = self.parent.tilt_calculation
+        tilt_value_to_use_in_reconstruction = o_tilt.get_tilt_value_to_use_in_reconstruction()
         tilt_dict = {'state': tilt_correction_state,
                      'file index': tilt_correction_file_index,
                      'algorithm selected': tilt_algorithm,
@@ -82,7 +86,8 @@ class SessionHandler:
                      'image 180 file index': index_of_180_degree_image,
                      TiltAlgorithm.phase_correlation: tilt_calculation[TiltAlgorithm.phase_correlation],
                      TiltAlgorithm.direct_minimization: tilt_calculation[TiltAlgorithm.direct_minimization],
-                     TiltAlgorithm.use_center: tilt_calculation[TiltAlgorithm.use_center]}
+                     TiltAlgorithm.use_center: tilt_calculation[TiltAlgorithm.use_center],
+                     'tilt value to use in reconstruction': tilt_value_to_use_in_reconstruction}
         session_dict['tilt'] = tilt_dict
 
         # Advanced parameters
@@ -92,9 +97,15 @@ class SessionHandler:
         o_advanced_parameters = AdvancedParametersHandler(parent=self.parent)
         reconstruction_algorithm = o_advanced_parameters.get_reconstruction_algorithm_selected()
         session_dict['advanced parameters'] = {'diffuseness': diffuseness,
+                                               'diffuseness + 1': diffuseness + 1,
                                                'smoothness': smoothness,
                                                'sigma': sigma,
+                                               'sigma / smoothness': sigma / smoothness,
                                                'reconstruction algorithm': reconstruction_algorithm}
+
+        # general parameters
+        image_width = self.parent.image_size['width']
+        session_dict['general parameters'] = {'image width': image_width}
 
         self.parent.session_dict = session_dict
 
