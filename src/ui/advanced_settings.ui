@@ -40,7 +40,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>OK</string>
+     <string>Close</string>
     </property>
    </widget>
   </widget>
@@ -57,5 +57,22 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>698</x>
+     <y>536</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>584</x>
+     <y>537</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

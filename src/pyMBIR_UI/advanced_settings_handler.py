@@ -13,15 +13,23 @@ class AdvancedSettingsPasswordHandler(QMainWindow):
                                     os.path.join('ui',
                                                  'password.ui'))
         self.ui = load_ui(ui_full_path, baseinstance=self)
+        self.ui.wrong_password_label.setVisible(False)
+
+    def password_changing(self, text):
+        self.ui.wrong_password_label.setVisible(False)
 
     def validate_password(self):
         password = self.ui.password_input.text()
         if password == self.parent.config["advanced_settings_password"]:
-
+            o_advanced = AdvancedSettingsHandler(parent=self.parent)
+            o_advanced.show()
             self.close()
+        else:
+            self.ui.password_input.setText("")
+            self.ui.wrong_password_label.setVisible(True)
 
     def ok_clicked(self):
-        pass
+        self.validate_password()
 
     def cancel_clicked(self):
         self.close()

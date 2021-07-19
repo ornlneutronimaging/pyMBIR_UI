@@ -156,7 +156,7 @@ class PyMBIRUILauncher(QMainWindow):
         LogLauncher(parent=self)
 
     def advanced_settings_clicked(self):
-        o_advanced = AdvancedSettingsHandler(parent=self)
+        o_advanced = AdvancedSettingsPasswordHandler(parent=self)
         o_advanced.show()
 
     # Input tab
