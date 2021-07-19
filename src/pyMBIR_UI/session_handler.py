@@ -9,6 +9,7 @@ from . import DataType, TiltAlgorithm
 from pyMBIR_UI.crop.crop_handler import CropHandler
 from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
 from pyMBIR_UI.tilt.tilt_handler import TiltHandler
+from pyMBIR_UI.advanced_parameters_handler import AdvancedParametersHandler
 
 
 class SessionHandler:
@@ -82,6 +83,14 @@ class SessionHandler:
                      TiltAlgorithm.use_center: tilt_calculation[TiltAlgorithm.use_center]}
         session_dict['tilt'] = tilt_dict
 
+        # Advanced parameters
+        diffuseness = self.parent.ui.diffuseness_doubleSpinBox.value()
+        smoothness = self.parent.ui.smoothness_doubleSpinBox.value()
+        sigma = self.parent.ui.sigma_doubleSpinBox.value()
+        session_dict['advanced parameters'] = {'diffuseness': diffuseness,
+                                               'smoothness': smoothness,
+                                               'sigma': sigma}
+
         self.parent.session_dict = session_dict
 
     def load_to_ui(self):
@@ -122,6 +131,10 @@ class SessionHandler:
         # tilt
         o_tilt = TiltHandler(parent=self.parent)
         o_tilt.initialize_tilt_from_session()
+
+        # advanced parameters
+        o_advanced = AdvancedParametersHandler(parent=self.parent)
+        o_advanced.initialization_from_session()
 
         show_status_message(parent=self.parent,
                             message=f"Loaded {self.config_file_name}",
