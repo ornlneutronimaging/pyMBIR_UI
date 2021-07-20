@@ -181,7 +181,7 @@
         <item>
          <widget class="QToolBox" name="toolBox">
           <property name="currentIndex">
-           <number>2</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="page">
            <property name="geometry">
@@ -189,7 +189,7 @@
              <x>0</x>
              <y>0</y>
              <width>1126</width>
-             <height>642</height>
+             <height>640</height>
             </rect>
            </property>
            <attribute name="label">
@@ -544,8 +544,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1126</width>
-             <height>642</height>
+             <width>686</width>
+             <height>236</height>
             </rect>
            </property>
            <attribute name="label">
@@ -720,7 +720,7 @@
       </widget>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
-        <string>General Settings</string>
+        <string>Advanced Parameters</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_12">
         <item>
@@ -915,7 +915,7 @@
      <x>0</x>
      <y>0</y>
      <width>1196</width>
-     <height>22</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp">
@@ -924,7 +924,7 @@
     </property>
     <addaction name="actionLog_2"/>
     <addaction name="separator"/>
-    <addaction name="actionAdvanced_settings"/>
+    <addaction name="actionAdvanced_Settings"/>
    </widget>
    <widget class="QMenu" name="menuSession">
     <property name="title">
@@ -1033,9 +1033,9 @@
     <string>Full Reset</string>
    </property>
   </action>
-  <action name="actionAdvanced_settings">
+  <action name="actionAdvanced_Settings">
    <property name="text">
-    <string>Advanced settings ...</string>
+    <string>Advanced Settings ...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+A</string>
@@ -1056,70 +1056,6 @@
  </tabstops>
  <resources/>
  <connections>
-  <connection>
-   <sender>actionLog_2</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>menu_log_clicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>454</x>
-     <y>245</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionLoadSession</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>load_session_clicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>454</x>
-     <y>245</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionSaveSession</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>save_session_clicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>454</x>
-     <y>245</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionFull_Reset</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>full_reset_clicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>534</x>
-     <y>428</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>select_projections_pushButton</sender>
    <signal>clicked()</signal>
@@ -1261,6 +1197,54 @@
     <hint type="destinationlabel">
      <x>902</x>
      <y>420</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionLog_2</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>menu_log_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>454</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionLoadSession</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>load_session_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>454</x>
+     <y>245</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSaveSession</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>save_session_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>454</x>
+     <y>245</y>
     </hint>
    </hints>
   </connection>
@@ -1489,6 +1473,22 @@
    </hints>
   </connection>
   <connection>
+   <sender>actionFull_Reset</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>full_reset_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>534</x>
+     <y>428</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>tilt_correction_direct_minimization_radioButton</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
@@ -1601,7 +1601,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionAdvanced_settings</sender>
+   <sender>actionAdvanced_Settings</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>advanced_settings_clicked()</slot>
