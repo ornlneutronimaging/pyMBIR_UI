@@ -9,20 +9,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
-    <height>519</height>
+    <width>515</width>
+    <height>687</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>500</width>
-    <height>300</height>
+    <height>500</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>500</width>
-    <height>519</height>
+    <width>515</width>
+    <height>700</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -37,7 +37,7 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Wavelet level</string>
+        <string>Wavelet level (ring correction filter)</string>
        </property>
       </widget>
      </item>
@@ -233,18 +233,15 @@
     </layout>
    </item>
    <item>
-    <widget class="QFrame" name="frame">
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Detector Parameters</string>
      </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QVBoxLayout" name="verticalLayout_4">
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QRadioButton" name="det_x_y_z_radioButton">
+         <widget class="QRadioButton" name="det_x_y_radioButton">
           <property name="text">
            <string/>
           </property>
@@ -254,14 +251,14 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="det_x_y_z_label">
+         <widget class="QLabel" name="det_x_y_label">
           <property name="text">
-           <string>det_x, det_y, det_z</string>
+           <string>det_x, det_y</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QDoubleSpinBox" name="det_x_y_z_doubleSpinBox">
+         <widget class="QDoubleSpinBox" name="det_x_y_doubleSpinBox">
           <property name="minimum">
            <double>0.000000000000000</double>
           </property>
@@ -288,7 +285,7 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="QRadioButton" name="det_x_det_x_det_z_radioButton">
+         <widget class="QRadioButton" name="det_x_det_x_radioButton">
           <property name="text">
            <string/>
           </property>
@@ -354,42 +351,6 @@
          </widget>
         </item>
         <item>
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item>
-         <widget class="QLabel" name="det_z_label">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="text">
-           <string>det_z</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QDoubleSpinBox" name="det_z_doubleSpinBox">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="minimum">
-           <double>0.000000000000000</double>
-          </property>
-          <property name="value">
-           <double>1.000000000000000</double>
-          </property>
-         </widget>
-        </item>
-        <item>
          <spacer name="horizontalSpacer_14">
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -408,14 +369,11 @@
     </widget>
    </item>
    <item>
-    <widget class="QFrame" name="frame_2">
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Voxel Grid Dimensions</string>
      </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
@@ -547,6 +505,178 @@
     </widget>
    </item>
    <item>
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="title">
+      <string>Number of Voxels</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_12">
+        <item>
+         <widget class="QRadioButton" name="n_vox_x_y_z_radioButton">
+          <property name="text">
+           <string/>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="n_vox_x_n_vox_y_n_vox_z_label">
+          <property name="text">
+           <string>n_vox_x,  n_vox_y,  n_vox_z</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDoubleSpinBox" name="n_vox_x_n_vox_y_n_vox_z_doubleSpinBox">
+          <property name="minimum">
+           <double>0.000000000000000</double>
+          </property>
+          <property name="value">
+           <double>1.000000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_7">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_13">
+        <item>
+         <widget class="QRadioButton" name="n_vox_x_n_vox_y_n_vox_z_radioButton">
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="n_vox_x_label">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>n_vox_x</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDoubleSpinBox" name="n_vox_x_doubleSpinBox">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="minimum">
+           <double>0.000000000000000</double>
+          </property>
+          <property name="value">
+           <double>1.000000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_9">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="n_vox_y_label">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>n_vox_y</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDoubleSpinBox" name="n_vox_y_doubleSpinBox">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="minimum">
+           <double>0.000000000000000</double>
+          </property>
+          <property name="value">
+           <double>1.000000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_10">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="n_vox_z_label">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string>n_vox_z</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDoubleSpinBox" name="n_vox_z_doubleSpinBox">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
+          <property name="minimum">
+           <double>0.000000000000000</double>
+          </property>
+          <property name="value">
+           <double>1.000000000000000</double>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout_10">
      <item>
       <widget class="QCheckBox" name="write_output_checkBox">
@@ -581,7 +711,7 @@
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>1</height>
+       <height>32</height>
       </size>
      </property>
     </spacer>
@@ -619,6 +749,26 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>close_button</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>wavelet_level_slider</tabstop>
+  <tabstop>max_nbr_iterations_spinBox</tabstop>
+  <tabstop>nbr_cores_slider</tabstop>
+  <tabstop>nbr_gpu_slider</tabstop>
+  <tabstop>stop_threshold_lineEdit</tabstop>
+  <tabstop>det_x_y_radioButton</tabstop>
+  <tabstop>det_x_y_doubleSpinBox</tabstop>
+  <tabstop>det_x_det_x_radioButton</tabstop>
+  <tabstop>det_x_doubleSpinBox</tabstop>
+  <tabstop>det_y_doubleSpinBox</tabstop>
+  <tabstop>vox_xy_z_radioButton</tabstop>
+  <tabstop>vox_xy_z_doubleSpinBox</tabstop>
+  <tabstop>vox_xy_vox_z_radioButton</tabstop>
+  <tabstop>vox_xy_doubleSpinBox</tabstop>
+  <tabstop>vox_z_doubleSpinBox</tabstop>
+  <tabstop>write_output_checkBox</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
@@ -628,8 +778,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>460</x>
-     <y>491</y>
+     <x>475</x>
+     <y>659</y>
     </hint>
     <hint type="destinationlabel">
      <x>356</x>
@@ -638,7 +788,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>det_x_y_z_radioButton</sender>
+   <sender>det_x_y_radioButton</sender>
    <signal>clicked()</signal>
    <receiver>Dialog</receiver>
    <slot>det_clicked()</slot>
@@ -654,7 +804,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>det_x_det_x_det_z_radioButton</sender>
+   <sender>det_x_det_x_radioButton</sender>
    <signal>clicked()</signal>
    <receiver>Dialog</receiver>
    <slot>det_clicked()</slot>
@@ -676,8 +826,8 @@
    <slot>vox_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>30</x>
-     <y>343</y>
+     <x>32</x>
+     <y>355</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -692,8 +842,8 @@
    <slot>vox_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>35</x>
-     <y>385</y>
+     <x>37</x>
+     <y>397</y>
     </hint>
     <hint type="destinationlabel">
      <x>3</x>
@@ -709,11 +859,43 @@
    <hints>
     <hint type="sourcelabel">
      <x>49</x>
-     <y>492</y>
+     <y>660</y>
     </hint>
     <hint type="destinationlabel">
      <x>124</x>
      <y>483</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>n_vox_x_y_z_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>nbr_vox_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>37</x>
+     <y>474</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>7</x>
+     <y>502</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>n_vox_x_n_vox_y_n_vox_z_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>nbr_vox_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>33</x>
+     <y>517</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>4</x>
+     <y>553</y>
     </hint>
    </hints>
   </connection>
@@ -722,5 +904,6 @@
   <slot>det_clicked()</slot>
   <slot>vox_clicked()</slot>
   <slot>reset_button_clicked()</slot>
+  <slot>nbr_vox_clicked()</slot>
  </slots>
 </ui>

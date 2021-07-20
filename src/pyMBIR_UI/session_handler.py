@@ -40,7 +40,7 @@ class SessionHandler:
 
         # crop tab
         crop_state = self.parent.ui.cropping_checkBox.isChecked()
-        crop_width = self.parent.ui.crop_width_horizontalSlider.value()
+        crop_width = 2*self.parent.ui.crop_width_horizontalSlider.value()
         try:
             crop_from_slice = np.int(self.parent.ui.crop_from_slice_label.text())
             crop_to_slice = np.int(self.parent.ui.crop_to_slice_label.text())
@@ -50,7 +50,7 @@ class SessionHandler:
         file_index = self.parent.ui.crop_file_index_horizontalSlider.value()
         crop_dict = {'state': crop_state,
                      'width': crop_width,
-                     'width / 2': np.int(crop_width/2),
+                     # 'width / 2': np.int(crop_width/2),
                      'from slice': crop_from_slice,
                      'to slice': crop_to_slice,
                      'to slice - from slice': crop_to_slice - crop_from_slice,
@@ -199,7 +199,6 @@ class SessionHandler:
                                 status=StatusMessageStatus.ready,
                                 duration_s=10)
             logging.info(f"Saving configuration into {config_file_name}")
-
 
     def load_from_file(self, config_file_name=None):
 
