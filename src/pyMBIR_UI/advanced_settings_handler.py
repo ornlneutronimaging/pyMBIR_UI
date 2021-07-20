@@ -59,4 +59,16 @@ class AdvancedSettingsHandler(QDialog):
             _ui.setEnabled(not same_behavior_state)
 
     def det_clicked(self):
-        pass
+        same_behavior_state = self.ui.det_x_y_z_radioButton.isChecked()
+        same_behavior_widgets = [self.ui.det_x_y_z_label,
+                                 self.ui.det_x_y_z_doubleSpinBox]
+        not_same_behavior_widgets = [self.ui.det_x_label,
+                                     self.ui.det_x_doubleSpinBox,
+                                     self.ui.det_y_label,
+                                     self.ui.det_y_doubleSpinBox,
+                                     self.ui.det_z_label,
+                                     self.ui.det_z_doubleSpinBox]
+        for _ui in same_behavior_widgets:
+            _ui.setEnabled(same_behavior_state)
+        for _ui in not_same_behavior_widgets:
+            _ui.setEnabled(not same_behavior_state)
