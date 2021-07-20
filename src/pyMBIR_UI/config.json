@@ -3,5 +3,19 @@
   "homepath2": "/Volumes/Buffalo/IPTS/IPTS-25967/raw",
   "homepath": "/Volumes/G-DRIVE/IPTS/IPTS-25967/raw/",
   "session_file_name": ".pymbir_ui_session.json",
-  "advanced_settings_password": "a"
+  "advanced_settings_password": "a",
+  "default widgets values": {
+    "wavelet level": 6,
+    "max number of iterations": 200,
+    "stop threshold": 1e-4,
+    "det_x, det_y, det_z": {
+      "linked": true,
+      "value": 1.00
+    },
+    "vox_xy, vox_z": {
+      "linked": true,
+      "value": 1.00
+    },
+    "write output": true
+  }
 }

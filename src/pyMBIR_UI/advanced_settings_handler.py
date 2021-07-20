@@ -72,3 +72,28 @@ class AdvancedSettingsHandler(QDialog):
             _ui.setEnabled(same_behavior_state)
         for _ui in not_same_behavior_widgets:
             _ui.setEnabled(not same_behavior_state)
+
+    def reset_button_clicked(self):
+        config = self.parent.config["default widgets values"]
+
+        wavelet_level = config["wavelet level"]
+        self.ui.wavelet_level_slider.setValue(wavelet_level)
+
+        max_number_of_iterations = config["max number of iterations"]
+        self.ui.max_nbr_iterations_spinBox.setValue(max_number_of_iterations)
+
+        stop_threshold = str(config["stop threshold"])
+        self.ui.stop_threshold_lineEdit.setText(stop_threshold)
+
+        det_x_det_y_det_z_linked = config["det_x, det_y, det_z"]["linked"]
+        self.ui.det_x_y_z_radioButton.setChecked(det_x_det_y_det_z_linked)
+        det_x_det_y_det_z_value = config["det_x, det_y, det_z"]["value"]
+        self.ui.det_x_y_z_doubleSpinBox.setValue(det_x_det_y_det_z_value)
+
+        vox_xy_vox_z_linked = config["vox_xy, vox_z"]["linked"]
+        self.ui.vox_xy_z_radioButton.setChecked(vox_xy_vox_z_linked)
+        vox_xy_vox_z_value = config["vox_xy, vox_z"]["value"]
+        self.ui.vox_xy_z_doubleSpinBox.setValue(vox_xy_vox_z_value)
+
+        write_output_value = config["write output"]
+        self.ui.write_output_checkBox.setChecked(write_output_value)

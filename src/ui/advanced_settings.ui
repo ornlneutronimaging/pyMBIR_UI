@@ -589,6 +589,13 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_11">
      <item>
+      <widget class="QPushButton" name="pushButton">
+       <property name="text">
+        <string>Reset</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="horizontalSpacer_13">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -694,9 +701,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>reset_button_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>49</x>
+     <y>492</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>124</x>
+     <y>483</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>det_clicked()</slot>
   <slot>vox_clicked()</slot>
+  <slot>reset_button_clicked()</slot>
  </slots>
 </ui>
