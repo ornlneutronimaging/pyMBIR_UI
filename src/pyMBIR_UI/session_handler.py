@@ -9,7 +9,7 @@ from . import DataType, TiltAlgorithm
 from pyMBIR_UI.crop.crop_handler import CropHandler
 from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
 from pyMBIR_UI.tilt.tilt_handler import TiltHandler
-from pyMBIR_UI.general_settings_handler import AdvancedParametersHandler
+from pyMBIR_UI.general_settings_handler import GeneralSettingsHandler
 
 
 class SessionHandler:
@@ -97,7 +97,7 @@ class SessionHandler:
         diffuseness = self.parent.ui.diffuseness_doubleSpinBox.value()
         smoothness = self.parent.ui.smoothness_doubleSpinBox.value()
         sigma = self.parent.ui.sigma_doubleSpinBox.value()
-        o_advanced_parameters = AdvancedParametersHandler(parent=self.parent)
+        o_advanced_parameters = GeneralSettingsHandler(parent=self.parent)
         reconstruction_algorithm = o_advanced_parameters.get_reconstruction_algorithm_selected()
         session_dict['advanced parameters'] = {'diffuseness': diffuseness,
                                                'diffuseness + 1': diffuseness + 1,
@@ -151,8 +151,8 @@ class SessionHandler:
         o_tilt = TiltHandler(parent=self.parent)
         o_tilt.initialize_tilt_from_session()
 
-        # advanced parameters
-        o_advanced = AdvancedParametersHandler(parent=self.parent)
+        # general parameters
+        o_advanced = GeneralSettingsHandler(parent=self.parent)
         o_advanced.initialization_from_session()
 
         show_status_message(parent=self.parent,

@@ -2,7 +2,7 @@ import logging
 
 from . import ReconstructionAlgorithm
 from .session_handler import SessionHandler
-from .general_settings_handler import AdvancedParametersHandler
+from .general_settings_handler import GeneralSettingsHandler
 
 
 class ReconstructionLauncher:
@@ -15,7 +15,7 @@ class ReconstructionLauncher:
         self.save_session_dict()
 
     def set_reconstruction_algorithm(self):
-        o_advanced = AdvancedParametersHandler(parent=self.parent)
+        o_advanced = GeneralSettingsHandler(parent=self.parent)
         self.reconstruction_algorithm_selected = o_advanced.get_reconstruction_algorithm_selected()
 
     def save_session_dict(self):

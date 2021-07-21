@@ -22,11 +22,11 @@ class AdvancedSettingsPasswordHandler(QMainWindow):
     def validate_password(self):
         password = self.ui.password_input.text()
         if password == self.parent.config["advanced_settings_password"]:
-            o_advanced = AdvancedSettingsHandler(parent=self.parent)
-            o_advanced.show()
-
             o_session = SessionHandler(parent=self.parent)
             o_session.save_from_ui()
+
+            o_advanced = AdvancedSettingsHandler(parent=self.parent)
+            o_advanced.show()
 
             self.close()
         else:
@@ -93,13 +93,13 @@ class AdvancedSettingsHandler(QDialog):
     def nbr_vox_clicked(self):
         same_behavior_state = self.ui.n_vox_x_y_z_radioButton.isChecked()
         same_behavior_widgets = [self.ui.n_vox_x_n_vox_y_n_vox_z_label,
-                                 self.ui.n_vox_x_n_vox_y_n_vox_z_doubleSpinBox]
+                                 self.ui.n_vox_x_n_vox_y_n_vox_z_spinBox]
         not_same_behavior_widgets = [self.ui.n_vox_x_label,
-                                     self.ui.n_vox_x_doubleSpinBox,
+                                     self.ui.n_vox_x_spinBox,
                                      self.ui.n_vox_y_label,
-                                     self.ui.n_vox_y_doubleSpinBox,
+                                     self.ui.n_vox_y_spinBox,
                                      self.ui.n_vox_z_label,
-                                     self.ui.n_vox_z_doubleSpinBox,
+                                     self.ui.n_vox_z_spinBox,
                                      ]
         for _ui in same_behavior_widgets:
             _ui.setEnabled(same_behavior_state)
@@ -132,15 +132,16 @@ class AdvancedSettingsHandler(QDialog):
         self.ui.n_vox_x_y_z_radioButton.setChecked(n_vox_x_n_vox_y_n_vox_z_linked)
 
         session_dict = self.parent.session_dict
+
         crop_width = session_dict['crop']['width']
         n_vox_x = crop_width / vox_xy_vox_z_value
         n_vox_y = n_vox_x
-        self.ui.n_vox_x_doubleSpinBox.setValue(n_vox_x)
-        self.ui.n_vox_y_doubleSpinBox.setValue(n_vox_y)
+        self.ui.n_vox_x_spinBox.setValue(n_vox_x)
+        self.ui.n_vox_y_spinBox.setValue(n_vox_y)
 
         crop_height = session_dict['crop']['to slice - from slice']
         n_vox_z = crop_height / vox_xy_vox_z_value
-        self.ui.n_vox_z_doubleSpinBox.setValue(n_vox_z)
+        self.ui.n_vox_z_spinBox.setValue(n_vox_z)
 
         write_output_value = config["write output"]
         self.ui.write_output_checkBox.setChecked(write_output_value)
@@ -172,12 +173,12 @@ class AdvancedSettingsHandler(QDialog):
         write_output_flag = self.ui.write_output_checkBox.isChecked()
         n_vox_x_y_z_linked = self.ui.n_vox_x_y_z_radioButton.isChecked()
         if n_vox_x_y_z_linked:
-            value = self.ui.n_vox_x_n_vox_y_n_vox_z_doubleSpinBox.value()
+            value = self.ui.n_vox_x_n_vox_y_n_vox_z_spinBox.value()
             n_vox_x, n_vox_y, n_vox_z = value, value, value
         else:
-            n_vox_x = self.ui.n_vox_x_doubleSpinBox.value()
-            n_vox_y = self.ui.n_vox_y_doubleSpinBox.value()
-            n_vox_z = self.ui.n_vox_z_doubleSpinBox.value()
+            n_vox_x = self.ui.n_vox_x_spinBox.value()
+            n_vox_y = self.ui.n_vox_y_spinBox.value()
+            n_vox_z = self.ui.n_vox_z_spinBox.value()
 
         self.parent.session_dict["advanced settings"] = {"wavelet level": wavelet_level,
                                                          "max number of iterations": max_number_of_iterations,

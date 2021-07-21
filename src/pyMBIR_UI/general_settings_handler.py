@@ -1,7 +1,7 @@
 from . import ReconstructionAlgorithm
 
 
-class AdvancedParametersHandler:
+class GeneralSettingsHandler:
 
     def __init__(self, parent=None):
         self.parent = parent
@@ -30,7 +30,6 @@ class AdvancedParametersHandler:
 
     def set_reconstruction_algorithm_selected(self, algorithm_selected=ReconstructionAlgorithm.pymbir):
         if algorithm_selected == ReconstructionAlgorithm.pymbir:
-            self.parent.ui.reconstruction_algorithm_other_radioButton.setChecked(True)
+            self.parent.ui.reconstruction_algorithm_pymbir_radioButton.setChecked(True)
         else:
             raise NotImplementedError(f"Reconstruction Algorithm not implemented yet!")
-
