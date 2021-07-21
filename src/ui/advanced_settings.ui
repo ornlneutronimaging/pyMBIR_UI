@@ -519,7 +519,7 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_12">
            <item>
-            <widget class="QRadioButton" name="n_vox_x_y_z_radioButton">
+            <widget class="QRadioButton" name="n_vox_x_y_radioButton">
              <property name="text">
               <string/>
              </property>
@@ -529,14 +529,14 @@
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="n_vox_x_n_vox_y_n_vox_z_label">
+            <widget class="QLabel" name="n_vox_x_n_vox_y_label">
              <property name="text">
               <string>n_vox_x,  n_vox_y</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="n_vox_x_n_vox_y_n_vox_z_spinBox">
+            <widget class="QSpinBox" name="n_vox_x_n_vox_y_spinBox">
              <property name="maximum">
               <number>10000</number>
              </property>
@@ -560,7 +560,7 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_13">
            <item>
-            <widget class="QRadioButton" name="n_vox_x_n_vox_y_n_vox_z_radioButton">
+            <widget class="QRadioButton" name="n_vox_x_n_vox_y_radioButton">
              <property name="text">
               <string/>
              </property>
@@ -871,7 +871,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>n_vox_x_y_z_radioButton</sender>
+   <sender>n_vox_x_y_radioButton</sender>
    <signal>clicked()</signal>
    <receiver>Dialog</receiver>
    <slot>nbr_vox_clicked()</slot>
@@ -887,7 +887,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>n_vox_x_n_vox_y_n_vox_z_radioButton</sender>
+   <sender>n_vox_x_n_vox_y_radioButton</sender>
    <signal>clicked()</signal>
    <receiver>Dialog</receiver>
    <slot>nbr_vox_clicked()</slot>

@@ -1,7 +1,7 @@
 {
   "log_file_name": ".pymbir_ui.log",
   "homepath2": "/Volumes/Buffalo/IPTS/IPTS-25967/raw",
-  "homepath": "/Volumes/G-DRIVE/IPTS/IPTS-25967/raw/",
+  "homepath": "/Volumes/G-DRIVE/IPTS/IPTS-25967-pymbir/raw/",
   "session_file_name": ".pymbir_ui_session.json",
   "advanced_settings_password": "a",
   "default widgets values": {
@@ -16,7 +16,7 @@
       "linked": true,
       "value": 1.00
     },
-    "n_vox_x, n_vox_y, n_vox_z": {
+    "n_vox_x, n_vox_y": {
       "linked": true
     },
     "write output": true

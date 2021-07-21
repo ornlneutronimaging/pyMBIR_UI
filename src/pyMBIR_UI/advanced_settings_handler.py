@@ -91,15 +91,13 @@ class AdvancedSettingsHandler(QDialog):
             _ui.setEnabled(not same_behavior_state)
 
     def nbr_vox_clicked(self):
-        same_behavior_state = self.ui.n_vox_x_y_z_radioButton.isChecked()
-        same_behavior_widgets = [self.ui.n_vox_x_n_vox_y_n_vox_z_label,
-                                 self.ui.n_vox_x_n_vox_y_n_vox_z_spinBox]
+        same_behavior_state = self.ui.n_vox_x_y_radioButton.isChecked()
+        same_behavior_widgets = [self.ui.n_vox_x_n_vox_y_label,
+                                 self.ui.n_vox_x_n_vox_y_spinBox]
         not_same_behavior_widgets = [self.ui.n_vox_x_label,
                                      self.ui.n_vox_x_spinBox,
                                      self.ui.n_vox_y_label,
                                      self.ui.n_vox_y_spinBox,
-                                     self.ui.n_vox_z_label,
-                                     self.ui.n_vox_z_spinBox,
                                      ]
         for _ui in same_behavior_widgets:
             _ui.setEnabled(same_behavior_state)
@@ -128,8 +126,8 @@ class AdvancedSettingsHandler(QDialog):
         vox_xy_vox_z_value = config["vox_xy, vox_z"]["value"]
         self.ui.vox_xy_z_doubleSpinBox.setValue(vox_xy_vox_z_value)
 
-        n_vox_x_n_vox_y_n_vox_z_linked = config["n_vox_x, n_vox_y, n_vox_z"]["linked"]
-        self.ui.n_vox_x_y_z_radioButton.setChecked(n_vox_x_n_vox_y_n_vox_z_linked)
+        n_vox_x_n_vox_y_linked = config["n_vox_x, n_vox_y"]["linked"]
+        self.ui.n_vox_x_y_radioButton.setChecked(n_vox_x_n_vox_y_linked)
 
         session_dict = self.parent.session_dict
 
@@ -138,9 +136,10 @@ class AdvancedSettingsHandler(QDialog):
         n_vox_y = n_vox_x
         self.ui.n_vox_x_spinBox.setValue(n_vox_x)
         self.ui.n_vox_y_spinBox.setValue(n_vox_y)
+        self.ui.n_vox_x_n_vox_y_spinBox.setValue(n_vox_x)
 
         crop_height = session_dict['crop']['to slice - from slice']
-        n_vox_z = crop_height / vox_xy_vox_z_value
+        n_vox_z = (crop_height) / vox_xy_vox_z_value
         self.ui.n_vox_z_spinBox.setValue(n_vox_z)
 
         write_output_value = config["write output"]
@@ -171,14 +170,14 @@ class AdvancedSettingsHandler(QDialog):
             vox_xy = self.ui.vox_xy_doubleSpinBox.value()
             vox_z = self.ui.vox_z_doubleSpinBox.value()
         write_output_flag = self.ui.write_output_checkBox.isChecked()
-        n_vox_x_y_z_linked = self.ui.n_vox_x_y_z_radioButton.isChecked()
-        if n_vox_x_y_z_linked:
-            value = self.ui.n_vox_x_n_vox_y_n_vox_z_spinBox.value()
-            n_vox_x, n_vox_y, n_vox_z = value, value, value
+        n_vox_x_y_linked = self.ui.n_vox_x_y_radioButton.isChecked()
+        if n_vox_x_y_linked:
+            value = self.ui.n_vox_x_n_vox_y_spinBox.value()
+            n_vox_x, n_vox_y = value, value
         else:
             n_vox_x = self.ui.n_vox_x_spinBox.value()
             n_vox_y = self.ui.n_vox_y_spinBox.value()
-            n_vox_z = self.ui.n_vox_z_spinBox.value()
+        n_vox_z = self.ui.n_vox_z_spinBox.value()
 
         self.parent.session_dict["advanced settings"] = {"wavelet level": wavelet_level,
                                                          "max number of iterations": max_number_of_iterations,
@@ -192,9 +191,9 @@ class AdvancedSettingsHandler(QDialog):
                                                          "vox_xy, vox_z": {"linked": vox_xy_z_linked,
                                                                            "vox_xy": vox_xy,
                                                                            "vox_z": vox_z},
-                                                         "n_vox_x, n_vox_y, n_vox_z": {"linked" : n_vox_x_y_z_linked,
-                                                                                       "n_vox_x": n_vox_x,
-                                                                                       "n_vox_y": n_vox_y,
-                                                                                       "n_vox_z": n_vox_z},
+                                                         "n_vox_x, n_vox_y": {"linked" : n_vox_x_y_linked,
+                                                                              "n_vox_x": n_vox_x,
+                                                                              "n_vox_y": n_vox_y},
+                                                         "n_vox_z": n_vox_z,
                                                          "write output": write_output_flag,
                                                          }
