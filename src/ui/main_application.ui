@@ -188,8 +188,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1126</width>
-             <height>640</height>
+             <width>331</width>
+             <height>189</height>
             </rect>
            </property>
            <attribute name="label">
@@ -915,7 +915,7 @@
      <x>0</x>
      <y>0</y>
      <width>1196</width>
-     <height>24</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp">
@@ -1034,6 +1034,9 @@
    </property>
   </action>
   <action name="actionAdvanced_Settings">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Advanced Settings ...</string>
    </property>

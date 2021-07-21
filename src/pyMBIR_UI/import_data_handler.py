@@ -218,7 +218,10 @@ class ImportDataHandler:
         if index_data_type == len(list_data_type) - 1:
             # activate reconstitution setup tab
             self.parent.ui.tabWidget.setTabEnabled(1, new_state)
+            # activate general settings tab
             self.parent.ui.tabWidget.setTabEnabled(2, new_state)
+            # activate button that launch advanced window
+            self.parent.ui.actionAdvanced_Settings.setEnabled(True)
 
         else:
             next_data_type = list_data_type[index_data_type+1]
