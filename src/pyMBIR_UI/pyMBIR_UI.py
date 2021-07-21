@@ -41,7 +41,7 @@ class PyMBIRUILauncher(QMainWindow):
     #  DataType.ob: {},
     #  DataType.df: {},
     #  DataType.output: "name_of_output_folder",
-    #
+    #  "advanced settings": {},
     #  }
 
     # QDialog/QMainWindow ids

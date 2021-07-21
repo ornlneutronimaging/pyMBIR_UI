@@ -20,29 +20,5 @@
       "linked": true
     },
     "write output": true
-  },
-  "user widgets values": {
-    "wavelet level": 6,
-    "max number of iterations": 200,
-    "stop threshold": 1e-4,
-    "number of cores": "",
-    "number of gpus": "",
-    "det_x, det_y": {
-      "linked": true,
-      "det_x": 1.00,
-      "det_y": 1.00
-    },
-    "vox_xy, vox_z": {
-      "linked": true,
-      "vox_xy": 1.00,
-      "vox_z": 1.00
-    },
-    "n_vox_x, n_vox_y, n_vox_z": {
-      "linked": true,
-      "n_vox_x": 1.00,
-      "n_vox_y": 1.00,
-      "n_vox_z": 1.00
-    },
-    "write output": true
   }
 }

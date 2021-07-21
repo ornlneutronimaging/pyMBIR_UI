@@ -52,13 +52,16 @@ class AdvancedSettingsHandler(QDialog):
         self.initialization()
 
     def initialization(self):
-        config = self.parent.config["user widgets values"]
-        wavelet_level = config["wavelet level"]
-        max_number_of_iterations = config["max number of iterations"]
-        number_of_cores = config["number of cores"]
-        number_of_gpus = config["number of gpus"]
-        stop_threshold = config["stop threshold"]
-        det_x_y_linked = config["det_x, det_y"]["linked"]
+        session = self.parent.session_dict.get("advanced settings", None)
+        if session is None:
+            self.reset_button_clicked()
+        else:
+            wavelet_level = session["wavelet level"]
+            max_number_of_iterations = session["max number of iterations"]
+            number_of_cores = session["number of cores"]
+            number_of_gpus = session["number of gpus"]
+            stop_threshold = session["stop threshold"]
+            det_x_y_linked = session["det_x, det_y"]["linked"]
 
     def vox_clicked(self):
         same_behavior_state = self.ui.vox_xy_z_radioButton.isChecked()
@@ -81,7 +84,7 @@ class AdvancedSettingsHandler(QDialog):
                                      self.ui.det_x_doubleSpinBox,
                                      self.ui.det_y_label,
                                      self.ui.det_y_doubleSpinBox,
-        ]
+                                     ]
         for _ui in same_behavior_widgets:
             _ui.setEnabled(same_behavior_state)
         for _ui in not_same_behavior_widgets:
@@ -176,21 +179,21 @@ class AdvancedSettingsHandler(QDialog):
             n_vox_y = self.ui.n_vox_y_doubleSpinBox.value()
             n_vox_z = self.ui.n_vox_z_doubleSpinBox.value()
 
-        self.parent.config["user widgets values"] = {"wavelet level": wavelet_level,
-                                                     "max number of iterations": max_number_of_iterations,
-                                                     "stop threshold": stop_threshold,
-                                                     "number of cores": number_of_cores,
-                                                     "number of gpus": number_of_gpus,
-                                                     "det_x, det_y, det_z": {"linked": det_x_y_linked,
-                                                                             "det_x": det_x,
-                                                                             "det_y": det_y,
-                                                                             },
-                                                     "vox_xy, vox_z": {"linked": vox_xy_z_linked,
-                                                                       "vox_xy": vox_xy,
-                                                                       "vox_z": vox_z},
-                                                     "n_vox_x, n_vox_y, n_vox_z": {"linked": n_vox_x_y_z_linked,
-                                                                                   "n_vox_x": n_vox_x,
-                                                                                   "n_vox_y": n_vox_y,
-                                                                                   "n_vox_z": n_vox_z},
-                                                     "write output": write_output_flag,
-                                                     }
+        self.parent.session_dict["advanced settings"] = {"wavelet level": wavelet_level,
+                                                         "max number of iterations": max_number_of_iterations,
+                                                         "stop threshold": stop_threshold,
+                                                         "number of cores": number_of_cores,
+                                                         "number of gpus": number_of_gpus,
+                                                         "det_x, det_y, det_z": {"linked": det_x_y_linked,
+                                                                                 "det_x": det_x,
+                                                                                 "det_y": det_y,
+                                                                                },
+                                                         "vox_xy, vox_z": {"linked": vox_xy_z_linked,
+                                                                           "vox_xy": vox_xy,
+                                                                           "vox_z": vox_z},
+                                                         "n_vox_x, n_vox_y, n_vox_z": {"linked" : n_vox_x_y_z_linked,
+                                                                                       "n_vox_x": n_vox_x,
+                                                                                       "n_vox_y": n_vox_y,
+                                                                                       "n_vox_z": n_vox_z},
+                                                         "write output": write_output_flag,
+                                                         }
