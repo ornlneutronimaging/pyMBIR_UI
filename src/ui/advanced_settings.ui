@@ -910,7 +910,7 @@
   </connection>
   <connection>
    <sender>wavelet_level_slider</sender>
-   <signal>sliderMoved(int)</signal>
+   <signal>valueChanged(int)</signal>
    <receiver>Dialog</receiver>
    <slot>wavelet_level_changed()</slot>
    <hints>
@@ -942,7 +942,7 @@
   </connection>
   <connection>
    <sender>nbr_cores_slider</sender>
-   <signal>sliderMoved(int)</signal>
+   <signal>valueChanged(int)</signal>
    <receiver>Dialog</receiver>
    <slot>number_of_cores_changed()</slot>
    <hints>
@@ -974,7 +974,7 @@
   </connection>
   <connection>
    <sender>nbr_gpu_slider</sender>
-   <signal>sliderMoved(int)</signal>
+   <signal>valueChanged(int)</signal>
    <receiver>Dialog</receiver>
    <slot>number_of_gpus_changed()</slot>
    <hints>

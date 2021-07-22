@@ -109,7 +109,7 @@ class SessionHandler:
                                               'image width': image_width}
 
         # general parameters
-        session_dict['advanced settings'] = self.parent.session_dict['advanced settings']
+        session_dict['advanced settings'] = self.parent.session_dict.get("advanced settings", None)
 
         self.parent.session_dict = session_dict
 
