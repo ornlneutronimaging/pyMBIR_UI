@@ -3,6 +3,7 @@ import logging
 from . import ReconstructionAlgorithm
 from .session_handler import SessionHandler
 from .general_settings_handler import GeneralSettingsHandler
+from .command_line_creator import CommandLineCreator
 
 
 class ReconstructionLauncher:
@@ -26,5 +27,10 @@ class ReconstructionLauncher:
         logging.info("Running reconstruction")
         logging.info(f"-> algorithm selected: {self.reconstruction_algorithm_selected}")
 
+        o_command_line = CommandLineCreator(parent=self.parent,
+                                            algorithm_selected=self.reconstruction_algorithm_selected)
+        o_command_line.build_command_line()
+        command_line = o_command_line.get_command_line()
+
         session_dict = self.parent.session_dict
-        logging.info(f"-> session dict: {session_dict}")
+        logging.info(f"-> About to run the command line: {command_line}")
