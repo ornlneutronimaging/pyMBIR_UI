@@ -56,9 +56,20 @@ class AdvancedSettingsHandler(QDialog):
     def initialization(self):
         session = self.parent.session_dict.get("advanced settings", None)
 
-        o_get = Get(parent=self.parent)
-        nbr_cpu = o_get.get_number_of_cpu()
+        nbr_cpu = Get.get_number_of_cpu()
         self.ui.nbr_cores_slider.setMaximum(nbr_cpu)
+        self.ui.nbr_cores_label.setText(str(nbr_cpu))
+
+        # nbr gpu
+        nbr_gpu = Get.get_number_of_gpu()
+        if nbr_gpu == 0:
+            widget_state = False
+        else:
+            widget_state = True
+        self.ui.number_of_gpu_first_label.setEnabled(widget_state)
+        self.ui.nbr_gpu_slider.setEnabled(widget_state)
+        self.ui.nbr_gpu_label.setEnabled(widget_state)
+        self.ui.nbr_gpu_label.setText(str(nbr_gpu))
 
         if session is None:
             self.reset_button_clicked()
@@ -127,10 +138,32 @@ class AdvancedSettingsHandler(QDialog):
         for _ui in not_same_behavior_widgets:
             _ui.setEnabled(not same_behavior_state)
 
+    def wavelet_level_changed(self, value):
+        self.ui.wavelet_level_label.setText(str(value))
+
+    def wavelet_level_clicked(self):
+        value = self.ui.wavelet_level_slider.value()
+        self.wavelet_level_changed(value)
+
+    def number_of_cores_changed(self, value):
+        self.ui.nbr_cores_label.setText(str(value))
+
+    def number_of_cores_clicked(self):
+        value = self.ui.nbr_cores_slider.value()
+        self.number_of_cores_changed(value)
+
+    def number_of_gpus_changed(self, value):
+        self.ui.nbr_gpu_label.setText(str(value))
+
+    def number_of_gpus_clicked(self):
+        value = self.ui.nbr_gpu_slider.value()
+        self.number_of_gpus_changed(value)
+
     def update_widgets(self):
         local_session_dict = self.local_session_dict
         wavelet_level = local_session_dict["wavelet_level"]
         self.ui.wavelet_level_slider.setValue(wavelet_level)
+        self.ui.wavelet_level_label.setText(str(wavelet_level))
         max_number_of_iterations = local_session_dict["max_number_of_iterations"]
         self.ui.max_nbr_iterations_spinBox.setValue(max_number_of_iterations)
         stop_threshold = local_session_dict["stop_threshold"]

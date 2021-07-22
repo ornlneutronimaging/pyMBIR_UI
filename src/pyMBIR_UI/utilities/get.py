@@ -3,6 +3,7 @@ import os
 from pathlib import PurePath
 import numpy as np
 import multiprocessing
+import subprocess
 
 from .. import TiltAlgorithm
 from pyMBIR_UI import DataType
@@ -63,8 +64,23 @@ class Get:
 
         return int(index_of_min_value[0][0])
 
-    def get_number_of_cpu(self):
+    @staticmethod
+    def get_number_of_cpu():
         return multiprocessing.cpu_count()
+
+    @staticmethod
+    def get_number_of_gpu():
+        try:
+            str_list_gpu = subprocess.run(["nvidia-smi", "L"], stdout=subprocess.PIPE)
+            list_gpu = str_list_gpu.stdout.decode("utf-8").split("\n")
+            nbr_gpu = 0
+            for _gpu in list_gpu:
+                if not (_gpu == ""):
+                    nbr_gpu += 1
+            return nbr_gpu
+
+        except FileNotFoundError:
+            return 0
 
     @staticmethod
     def get_full_home_file_name(base_file_name):
