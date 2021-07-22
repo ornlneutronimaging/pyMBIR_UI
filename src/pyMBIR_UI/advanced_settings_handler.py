@@ -3,6 +3,7 @@ from qtpy.QtWidgets import QMainWindow, QDialog
 
 from . import load_ui
 from pyMBIR_UI.session_handler import SessionHandler
+from pyMBIR_UI.utilities.get import Get
 
 
 class AdvancedSettingsPasswordHandler(QMainWindow):
@@ -41,6 +42,7 @@ class AdvancedSettingsPasswordHandler(QMainWindow):
 
 
 class AdvancedSettingsHandler(QDialog):
+    local_session_dict = {}
 
     def __init__(self, parent=None):
         self.parent = parent
@@ -53,15 +55,36 @@ class AdvancedSettingsHandler(QDialog):
 
     def initialization(self):
         session = self.parent.session_dict.get("advanced settings", None)
+
+        o_get = Get(parent=self.parent)
+        nbr_cpu = o_get.get_number_of_cpu()
+        self.ui.nbr_cores_slider.setMaximum(nbr_cpu)
+
         if session is None:
             self.reset_button_clicked()
         else:
-            wavelet_level = session["wavelet level"]
-            max_number_of_iterations = session["max number of iterations"]
-            number_of_cores = session["number of cores"]
-            number_of_gpus = session["number of gpus"]
-            stop_threshold = session["stop threshold"]
-            det_x_y_linked = session["det_x, det_y"]["linked"]
+            self.local_session_dict = {"wavelet_level"           : session["wavelet level"],
+                                       "max_number_of_iterations": session["max number of iterations"],
+                                       "number_of_cores"         : session["number of cores"],
+                                       "number_of_gpus"          : session["number of gpus"],
+                                       "stop_threshold"          : session[
+                                           "stop threshold"],
+                                       "det_x_y_linked"          : session["det_x, det_y"]["linked"],
+                                       "det_x_y_value"           : session["det_x, det_y"]["det_x_y"],
+                                       "det_x_value"             : session["det_x, det_y"]["det_x"],
+                                       "det_y_value"             : session["det_x, det_y"]["det_y"],
+                                       "vox_xy_z_linked"         : session["vox_xy, vox_z"]["linked"],
+                                       "vox_xy_z_value"          : session["vox_xy, vox_z"]["vox_xy_z"],
+                                       "vox_xy_value"            : session["vox_xy, vox_z"]["vox_xy"],
+                                       "vox_z_value"             : session["vox_xy, vox_z"]["vox_z"],
+                                       "n_vox_x_y_linked"        : session["n_vox_x, n_vox_y"]["linked"],
+                                       "n_vox_x_y_value"         : session["n_vox_x, n_vox_y"]["n_vox_x_y"],
+                                       "n_vox_x_value"           : session["n_vox_x, n_vox_y"]["n_vox_x"],
+                                       "n_vox_y_value"           : session["n_vox_x, n_vox_y"]["n_vox_y"],
+                                       "n_vox_z_value"           : session["n_vox_z"],
+                                       "write_output_flag"       : session["write output"],
+                                       }
+            self.update_widgets()
 
     def vox_clicked(self):
         same_behavior_state = self.ui.vox_xy_z_radioButton.isChecked()
@@ -104,46 +127,79 @@ class AdvancedSettingsHandler(QDialog):
         for _ui in not_same_behavior_widgets:
             _ui.setEnabled(not same_behavior_state)
 
+    def update_widgets(self):
+        local_session_dict = self.local_session_dict
+        wavelet_level = local_session_dict["wavelet_level"]
+        self.ui.wavelet_level_slider.setValue(wavelet_level)
+        max_number_of_iterations = local_session_dict["max_number_of_iterations"]
+        self.ui.max_nbr_iterations_spinBox.setValue(max_number_of_iterations)
+        stop_threshold = local_session_dict["stop_threshold"]
+        self.ui.stop_threshold_lineEdit.setText(stop_threshold)
+
+        det_x_det_y_linked = local_session_dict["det_x_y_linked"]
+        self.ui.det_x_y_radioButton.setChecked(det_x_det_y_linked)
+        det_x_y_value = local_session_dict["det_x_y_value"]
+        self.ui.det_x_y_doubleSpinBox.setValue(det_x_y_value)
+        det_x_value = local_session_dict["det_x_value"]
+        self.ui.det_x_doubleSpinBox.setValue(det_x_value)
+        det_y_value = local_session_dict["det_y_value"]
+        self.ui.det_y_doubleSpinBox.setValue(det_y_value)
+
+        vox_xy_z_linked = local_session_dict["vox_xy_z_linked"]
+        self.ui.vox_xy_z_radioButton.setChecked(vox_xy_z_linked)
+        vox_xy_z_value = local_session_dict["vox_xy_z_value"]
+        self.ui.vox_xy_z_doubleSpinBox.setValue(vox_xy_z_value)
+        vox_xy_value = local_session_dict["vox_xy_value"]
+        self.ui.vox_xy_doubleSpinBox.setValue(vox_xy_value)
+        vox_z_value = local_session_dict["vox_z_value"]
+        self.ui.vox_z_doubleSpinBox.setValue(vox_z_value)
+
+        n_vox_x_y_linked = local_session_dict["n_vox_x_y_linked"]
+        self.ui.n_vox_x_y_radioButton.setChecked(n_vox_x_y_linked)
+        n_vox_x_y_value = local_session_dict["n_vox_x_y_value"]
+        self.ui.n_vox_x_n_vox_y_spinBox.setValue(n_vox_x_y_value)
+        n_vox_x = local_session_dict["n_vox_x_value"]
+        self.ui.n_vox_x_spinBox.setValue(n_vox_x)
+        n_vox_y = local_session_dict["n_vox_y_value"]
+        self.ui.n_vox_y_spinBox.setValue(n_vox_y)
+        n_vox_z = local_session_dict["n_vox_z_value"]
+        self.ui.n_vox_z_spinBox.setValue(n_vox_z)
+
+        output_flag = local_session_dict["write_output_flag"]
+        self.ui.write_output_checkBox.setChecked(output_flag)
+
     def reset_button_clicked(self):
         config = self.parent.config["default widgets values"]
 
-        wavelet_level = config["wavelet level"]
-        self.ui.wavelet_level_slider.setValue(wavelet_level)
+        self.local_session_dict["wavelet_level"] = config["wavelet level"]
+        self.local_session_dict["max_number_of_iterations"] = config["max number of iterations"]
+        self.local_session_dict["stop_threshold"] = str(config["stop threshold"])
 
-        max_number_of_iterations = config["max number of iterations"]
-        self.ui.max_nbr_iterations_spinBox.setValue(max_number_of_iterations)
+        self.local_session_dict["det_x_y_linked"] = config["det_x, det_y"]["linked"]
+        self.local_session_dict["det_x_y_value"] = config["det_x, det_y"]["value"]
+        self.local_session_dict["det_x_value"] = config["det_x, det_y"]["det_x"]
+        self.local_session_dict["det_y_value"] = config["det_x, det_y"]["det_y"]
 
-        stop_threshold = str(config["stop threshold"])
-        self.ui.stop_threshold_lineEdit.setText(stop_threshold)
-
-        det_x_det_y_linked = config["det_x, det_y"]["linked"]
-        self.ui.det_x_y_radioButton.setChecked(det_x_det_y_linked)
-        det_x_det_y_value = config["det_x, det_y"]["value"]
-        self.ui.det_x_y_doubleSpinBox.setValue(det_x_det_y_value)
-
-        vox_xy_vox_z_linked = config["vox_xy, vox_z"]["linked"]
-        self.ui.vox_xy_z_radioButton.setChecked(vox_xy_vox_z_linked)
-        vox_xy_vox_z_value = config["vox_xy, vox_z"]["value"]
-        self.ui.vox_xy_z_doubleSpinBox.setValue(vox_xy_vox_z_value)
-
-        n_vox_x_n_vox_y_linked = config["n_vox_x, n_vox_y"]["linked"]
-        self.ui.n_vox_x_y_radioButton.setChecked(n_vox_x_n_vox_y_linked)
+        self.local_session_dict["vox_xy_z_linked"] = config["vox_xy, vox_z"]["linked"]
+        self.local_session_dict["vox_xy_z_value"] = config["vox_xy, vox_z"]["value"]
+        self.local_session_dict["vox_xy_value"] = config["vox_xy, vox_z"]["vox_xy"]
+        self.local_session_dict["vox_z_value"] = config["vox_xy, vox_z"]["vox_z"]
 
         session_dict = self.parent.session_dict
-
         crop_width = session_dict['crop']['width']
-        n_vox_x = crop_width / vox_xy_vox_z_value
-        n_vox_y = n_vox_x
-        self.ui.n_vox_x_spinBox.setValue(n_vox_x)
-        self.ui.n_vox_y_spinBox.setValue(n_vox_y)
-        self.ui.n_vox_x_n_vox_y_spinBox.setValue(n_vox_x)
+        n_vox_x = crop_width / self.local_session_dict["vox_xy_z_value"]
+        self.local_session_dict["n_vox_x_y_linked"] = config["n_vox_x, n_vox_y"]["linked"]
+        self.local_session_dict["n_vox_x_y_value"] = n_vox_x
+        self.local_session_dict["n_vox_x_value"] = n_vox_x
+        self.local_session_dict["n_vox_y_value"] = n_vox_x
 
         crop_height = session_dict['crop']['to slice - from slice']
-        n_vox_z = (crop_height) / vox_xy_vox_z_value
-        self.ui.n_vox_z_spinBox.setValue(n_vox_z)
+        n_vox_z = (crop_height) / self.local_session_dict["vox_xy_z_value"]
+        self.local_session_dict["n_vox_z_value"] = n_vox_z
 
-        write_output_value = config["write output"]
-        self.ui.write_output_checkBox.setChecked(write_output_value)
+        self.local_session_dict["write_output_flag"] = config["write output"]
+
+        self.update_widgets()
 
     def accept(self):
         self.save_widgets()
@@ -155,45 +211,43 @@ class AdvancedSettingsHandler(QDialog):
         number_of_cores = self.ui.nbr_cores_slider.value()
         number_of_gpus = self.ui.nbr_gpu_slider.value()
         stop_threshold = self.ui.stop_threshold_lineEdit.text()
+
         det_x_y_linked = self.ui.det_x_y_radioButton.isChecked()
-        if det_x_y_linked:
-            value = self.ui.det_x_y_doubleSpinBox.value()
-            det_x, det_y = value, value
-        else:
-            det_x = self.ui.det_x_doubleSpinBox.value()
-            det_y = self.ui.det_y_doubleSpinBox.value()
+        det_x_y_value = self.ui.det_x_y_doubleSpinBox.value()
+        det_x = self.ui.det_x_doubleSpinBox.value()
+        det_y = self.ui.det_y_doubleSpinBox.value()
+
         vox_xy_z_linked = self.ui.vox_xy_z_radioButton.isChecked()
-        if vox_xy_z_linked:
-            value = self.ui.vox_xy_z_doubleSpinBox.value()
-            vox_xy, vox_z = value, value
-        else:
-            vox_xy = self.ui.vox_xy_doubleSpinBox.value()
-            vox_z = self.ui.vox_z_doubleSpinBox.value()
-        write_output_flag = self.ui.write_output_checkBox.isChecked()
+        vox_xy_z_value = self.ui.vox_xy_z_doubleSpinBox.value()
+        vox_xy = self.ui.vox_xy_doubleSpinBox.value()
+        vox_z = self.ui.vox_z_doubleSpinBox.value()
+
         n_vox_x_y_linked = self.ui.n_vox_x_y_radioButton.isChecked()
-        if n_vox_x_y_linked:
-            value = self.ui.n_vox_x_n_vox_y_spinBox.value()
-            n_vox_x, n_vox_y = value, value
-        else:
-            n_vox_x = self.ui.n_vox_x_spinBox.value()
-            n_vox_y = self.ui.n_vox_y_spinBox.value()
+        n_vox_x_y_value = self.ui.n_vox_x_n_vox_y_spinBox.value()
+        n_vox_x = self.ui.n_vox_x_spinBox.value()
+        n_vox_y = self.ui.n_vox_y_spinBox.value()
         n_vox_z = self.ui.n_vox_z_spinBox.value()
 
-        self.parent.session_dict["advanced settings"] = {"wavelet level": wavelet_level,
+        write_output_flag = self.ui.write_output_checkBox.isChecked()
+
+        self.parent.session_dict["advanced settings"] = {"wavelet level"           : wavelet_level,
                                                          "max number of iterations": max_number_of_iterations,
-                                                         "stop threshold": stop_threshold,
-                                                         "number of cores": number_of_cores,
-                                                         "number of gpus": number_of_gpus,
-                                                         "det_x, det_y, det_z": {"linked": det_x_y_linked,
-                                                                                 "det_x": det_x,
-                                                                                 "det_y": det_y,
-                                                                                },
-                                                         "vox_xy, vox_z": {"linked": vox_xy_z_linked,
-                                                                           "vox_xy": vox_xy,
-                                                                           "vox_z": vox_z},
-                                                         "n_vox_x, n_vox_y": {"linked" : n_vox_x_y_linked,
-                                                                              "n_vox_x": n_vox_x,
-                                                                              "n_vox_y": n_vox_y},
-                                                         "n_vox_z": n_vox_z,
-                                                         "write output": write_output_flag,
+                                                         "stop threshold"          : stop_threshold,
+                                                         "number of cores"         : number_of_cores,
+                                                         "number of gpus"          : number_of_gpus,
+                                                         "det_x, det_y"            : {"linked" : det_x_y_linked,
+                                                                                      "det_x_y": det_x_y_value,
+                                                                                      "det_x"  : det_x,
+                                                                                      "det_y"  : det_y,
+                                                                                      },
+                                                         "vox_xy, vox_z"           : {"linked"  : vox_xy_z_linked,
+                                                                                      "vox_xy_z": vox_xy_z_value,
+                                                                                      "vox_xy"  : vox_xy,
+                                                                                      "vox_z"   : vox_z},
+                                                         "n_vox_x, n_vox_y"        : {"linked"   : n_vox_x_y_linked,
+                                                                                      "n_vox_x_y": n_vox_x_y_value,
+                                                                                      "n_vox_x"  : n_vox_x,
+                                                                                      "n_vox_y"  : n_vox_y},
+                                                         "n_vox_z"                 : n_vox_z,
+                                                         "write output"            : write_output_flag,
                                                          }

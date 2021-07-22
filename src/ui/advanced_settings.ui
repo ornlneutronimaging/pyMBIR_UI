@@ -753,8 +753,6 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>close_button</tabstop>
-  <tabstop>pushButton</tabstop>
   <tabstop>wavelet_level_slider</tabstop>
   <tabstop>max_nbr_iterations_spinBox</tabstop>
   <tabstop>nbr_cores_slider</tabstop>
@@ -770,7 +768,15 @@
   <tabstop>vox_xy_vox_z_radioButton</tabstop>
   <tabstop>vox_xy_doubleSpinBox</tabstop>
   <tabstop>vox_z_doubleSpinBox</tabstop>
+  <tabstop>n_vox_x_y_radioButton</tabstop>
+  <tabstop>n_vox_x_n_vox_y_spinBox</tabstop>
+  <tabstop>n_vox_x_n_vox_y_radioButton</tabstop>
+  <tabstop>n_vox_x_spinBox</tabstop>
+  <tabstop>n_vox_y_spinBox</tabstop>
+  <tabstop>n_vox_z_spinBox</tabstop>
   <tabstop>write_output_checkBox</tabstop>
+  <tabstop>close_button</tabstop>
+  <tabstop>pushButton</tabstop>
  </tabstops>
  <resources/>
  <connections>

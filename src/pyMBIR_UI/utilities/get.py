@@ -2,6 +2,7 @@ from os.path import expanduser
 import os
 from pathlib import PurePath
 import numpy as np
+import multiprocessing
 
 from .. import TiltAlgorithm
 from pyMBIR_UI import DataType
@@ -62,6 +63,8 @@ class Get:
 
         return int(index_of_min_value[0][0])
 
+    def get_number_of_cpu(self):
+        return multiprocessing.cpu_count()
 
     @staticmethod
     def get_full_home_file_name(base_file_name):
