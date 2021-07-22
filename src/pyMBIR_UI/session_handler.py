@@ -93,22 +93,23 @@ class SessionHandler:
                      'use title value': use_tilt_value}
         session_dict['tilt'] = tilt_dict
 
-        # Advanced parameters
+        # general parameters
         diffuseness = self.parent.ui.diffuseness_doubleSpinBox.value()
         smoothness = self.parent.ui.smoothness_doubleSpinBox.value()
         sigma = self.parent.ui.sigma_doubleSpinBox.value()
         o_advanced_parameters = GeneralSettingsHandler(parent=self.parent)
         reconstruction_algorithm = o_advanced_parameters.get_reconstruction_algorithm_selected()
-        session_dict['advanced parameters'] = {'diffuseness': diffuseness,
-                                               'diffuseness + 1': diffuseness + 1,
-                                               'smoothness': smoothness,
-                                               'sigma': sigma,
-                                               'sigma / smoothness': sigma / smoothness,
-                                               'reconstruction algorithm': reconstruction_algorithm}
+        image_width = self.parent.image_size['width']
+        session_dict['general parameters'] = {'diffuseness': diffuseness,
+                                              'diffuseness + 1': diffuseness + 1,
+                                              'smoothness': smoothness,
+                                              'sigma': sigma,
+                                              'sigma / smoothness': sigma / smoothness,
+                                              'reconstruction algorithm': reconstruction_algorithm,
+                                              'image width': image_width}
 
         # general parameters
-        image_width = self.parent.image_size['width']
-        session_dict['general parameters'] = {'image width': image_width}
+        session_dict['advanced settings'] = self.parent.session_dict['advanced settings']
 
         self.parent.session_dict = session_dict
 
