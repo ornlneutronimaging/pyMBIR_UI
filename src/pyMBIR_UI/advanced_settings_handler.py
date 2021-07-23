@@ -79,7 +79,7 @@ class AdvancedSettingsHandler(QDialog):
                                        "number_of_cores"         : session["number of cores"],
                                        "number_of_gpus"          : session["number of gpus"],
                                        "stop_threshold"          : session["stop threshold"],
-                                       "median_filter_size"      : session.get("median filter size", 
+                                       "median_filter_size"      : session.get("median filter size",
                                                                                self.parent.config["default widgets values"]['median filter size']),
                                        "det_x_y_linked"          : session["det_x, det_y"]["linked"],
                                        "det_x_y_value"           : session["det_x, det_y"]["det_x_y"],
