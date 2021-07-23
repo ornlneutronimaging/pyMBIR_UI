@@ -22,7 +22,7 @@ class Setup0180DegreeHandler(QDialog):
         self.parent = parent
         super(Setup0180DegreeHandler, self).__init__(parent)
 
-        ui_full_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+        ui_full_path = os.path.join(os.path.dirname(os.path.dirname(__file__)),
                                     os.path.join('ui',
                                                  'setup_0_180_degrees_images.ui'))
 

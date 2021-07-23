@@ -1,6 +1,6 @@
 import numpy as np
 import pyqtgraph as pg
-from qtpy import QtGui, QtCore
+from qtpy import QtGui
 
 from pyMBIR_UI import DataType
 from pyMBIR_UI.utilities.get import Get

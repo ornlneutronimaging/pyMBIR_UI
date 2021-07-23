@@ -13,6 +13,6 @@ setup(name='pyMBIR_UI',
       package_dir={'': 'src'},
       scripts=["scripts/pyMBIR_UI"],
       # Requirements are handled by conda
-      install_requires=['qtpy', 'pyqtgraph', 'pillow', 'tomopy', 'PyQt5', 'scikit-image'],
+      #install_requires=['qtpy', 'pyqtgraph=0.11.0', 'pillow', 'tomopy', 'PyQt5', 'scikit-image', "NeuNorm"],
       extras_require=dict(tests=['pytest']),
       zip_safe=False)

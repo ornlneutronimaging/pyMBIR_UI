@@ -38,7 +38,7 @@ class FittingAlgorithm(QMainWindow):
         self.parent = parent
 
         QMainWindow.__init__(self, parent=parent)
-        ui_full_path = os.path.join(os.path.dirname(os.path.dirname(__file__)),
+        ui_full_path = os.path.join(os.path.dirname(__file__),
                                     os.path.join('ui',
                                                  'fitting_algorithm_helper.ui'))
         self.ui = load_ui(ui_full_path, baseinstance=self)

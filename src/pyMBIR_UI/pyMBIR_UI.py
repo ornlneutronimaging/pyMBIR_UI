@@ -86,7 +86,7 @@ class PyMBIRUILauncher(QMainWindow):
     def __init__(self, parent=None):
         super(PyMBIRUILauncher, self).__init__(parent)
 
-        ui_full_path = os.path.join(os.path.dirname(os.path.dirname(__file__)),
+        ui_full_path = os.path.join(os.path.dirname(__file__),
                                     os.path.join('ui',
                                                  'main_application.ui'))
 
