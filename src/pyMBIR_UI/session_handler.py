@@ -64,10 +64,12 @@ class SessionHandler:
         image_180_file_index = self.parent.ui.center_of_rotation_180_degrees_comboBox.currentIndex()
         algorithm_selected = o_center.get_algorithm_selected()
         user_value = self.parent.ui.center_of_rotation_user_defined_doubleSpinBox.value()
+        center_of_rotation_value = o_center.get_center_of_rotation()
         center_rotation_dict = {'state': center_of_rotation_state,
                                 'image 0 file index': image_0_file_index,
                                 'image 180 file index': image_180_file_index,
                                 'algorithm selected': algorithm_selected,
+                                'center of rotation value': center_of_rotation_value,
                                 'user value': user_value}
         session_dict['center rotation'] = center_rotation_dict
 
@@ -100,15 +102,16 @@ class SessionHandler:
         o_advanced_parameters = GeneralSettingsHandler(parent=self.parent)
         reconstruction_algorithm = o_advanced_parameters.get_reconstruction_algorithm_selected()
         image_width = self.parent.image_size['width']
+        sub_sampling_factor = self.parent.ui.sub_sampling_spinBox.value()
         session_dict['general parameters'] = {'diffuseness': diffuseness,
-                                              'diffuseness + 1': diffuseness + 1,
                                               'smoothness': smoothness,
                                               'sigma': sigma,
                                               'sigma / smoothness': sigma / smoothness,
                                               'reconstruction algorithm': reconstruction_algorithm,
-                                              'image width': image_width}
+                                              'image width': image_width,
+                                              'sub sampling factor': sub_sampling_factor}
 
-        # general parameters
+        # advanced parameters
         session_dict['advanced settings'] = self.parent.session_dict.get("advanced settings", None)
 
         self.parent.session_dict = session_dict

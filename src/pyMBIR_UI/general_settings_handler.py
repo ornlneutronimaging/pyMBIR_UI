@@ -9,20 +9,22 @@ class GeneralSettingsHandler:
         self.parent = parent
 
     def initialization_from_session(self):
-        advanced_parameters_session = self.parent.session_dict.get('advanced parameters', None)
+        general_parameters_session = self.parent.session_dict.get('general parameters', None)
 
-        if advanced_parameters_session is None:
+        if general_parameters_session is None:
             return
 
-        diffuseness = advanced_parameters_session['diffuseness']
-        smoothness = advanced_parameters_session['smoothness']
-        sigma = advanced_parameters_session['sigma']
-        reconstruction_algorithm = advanced_parameters_session['reconstruction algorithm']
+        diffuseness = general_parameters_session['diffuseness']
+        smoothness = general_parameters_session['smoothness']
+        sigma = general_parameters_session['sigma']
+        reconstruction_algorithm = general_parameters_session['reconstruction algorithm']
+        sub_sampling_factor = general_parameters_session['sub sampling factor']
 
         self.parent.ui.diffuseness_doubleSpinBox.setValue(diffuseness)
         self.parent.ui.smoothness_doubleSpinBox.setValue(smoothness)
         self.parent.ui.sigma_doubleSpinBox.setValue(sigma)
         self.set_reconstruction_algorithm_selected(reconstruction_algorithm)
+        self.parent.ui.sub_sampling_spinBox.setValue(sub_sampling_factor)
 
     def sub_sampling_value_changed(self):
         factor = self.parent.ui.sub_sampling_spinBox.value()

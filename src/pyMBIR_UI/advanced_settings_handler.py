@@ -250,10 +250,24 @@ class AdvancedSettingsHandler(QDialog):
         det_x = self.ui.det_x_doubleSpinBox.value()
         det_y = self.ui.det_y_doubleSpinBox.value()
 
+        if det_x_y_linked:
+            det_x_to_use = det_x_y_value
+            det_y_to_use = det_x_y_value
+        else:
+            det_x_to_use = det_x
+            det_y_to_use = det_y
+
         vox_xy_z_linked = self.ui.vox_xy_z_radioButton.isChecked()
         vox_xy_z_value = self.ui.vox_xy_z_doubleSpinBox.value()
         vox_xy = self.ui.vox_xy_doubleSpinBox.value()
         vox_z = self.ui.vox_z_doubleSpinBox.value()
+
+        if vox_xy_z_linked:
+            vox_xy_to_use = vox_xy_z_value
+            vox_z_to_use = vox_xy_z_value
+        else:
+            vox_xy_to_use = vox_xy
+            vox_z_to_use = vox_z
 
         n_vox_x_y_linked = self.ui.n_vox_x_y_radioButton.isChecked()
         n_vox_x_y_value = self.ui.n_vox_x_n_vox_y_spinBox.value()
@@ -261,26 +275,41 @@ class AdvancedSettingsHandler(QDialog):
         n_vox_y = self.ui.n_vox_y_spinBox.value()
         n_vox_z = self.ui.n_vox_z_spinBox.value()
 
+        if n_vox_x_y_linked:
+            n_vox_y_to_use = n_vox_x_y_value
+            n_vox_x_to_use = n_vox_x_y_value
+        else:
+            n_vox_x_to_use = n_vox_x
+            n_vox_y_to_use = n_vox_y
+
         write_output_flag = self.ui.write_output_checkBox.isChecked()
 
-        self.parent.session_dict["advanced settings"] = {"wavelet level"           : wavelet_level,
+        self.parent.session_dict["advanced settings"] = {"wavelet level": wavelet_level,
                                                          "max number of iterations": max_number_of_iterations,
-                                                         "stop threshold"          : stop_threshold,
-                                                         "number of cores"         : number_of_cores,
-                                                         "number of gpus"          : number_of_gpus,
-                                                         "det_x, det_y"            : {"linked" : det_x_y_linked,
-                                                                                      "det_x_y": det_x_y_value,
-                                                                                      "det_x"  : det_x,
-                                                                                      "det_y"  : det_y,
-                                                                                      },
-                                                         "vox_xy, vox_z"           : {"linked"  : vox_xy_z_linked,
-                                                                                      "vox_xy_z": vox_xy_z_value,
-                                                                                      "vox_xy"  : vox_xy,
-                                                                                      "vox_z"   : vox_z},
-                                                         "n_vox_x, n_vox_y"        : {"linked"   : n_vox_x_y_linked,
-                                                                                      "n_vox_x_y": n_vox_x_y_value,
-                                                                                      "n_vox_x"  : n_vox_x,
-                                                                                      "n_vox_y"  : n_vox_y},
-                                                         "n_vox_z"                 : n_vox_z,
-                                                         "write output"            : write_output_flag,
+                                                         "stop threshold": stop_threshold,
+                                                         "number of cores": number_of_cores,
+                                                         "number of gpus": number_of_gpus,
+                                                         "det_x, det_y": {"linked": det_x_y_linked,
+                                                                          "det_x_y": det_x_y_value,
+                                                                          "det_x": det_x,
+                                                                          "det_y": det_y,
+                                                                          "det_x_to_use": det_x_to_use,
+                                                                          "det_y_to_use": det_y_to_use,
+                                                                          },
+                                                         "vox_xy, vox_z": {"linked": vox_xy_z_linked,
+                                                                           "vox_xy_z": vox_xy_z_value,
+                                                                           "vox_xy": vox_xy,
+                                                                           "vox_z": vox_z,
+                                                                           "vox_xy_to_use": vox_xy_to_use,
+                                                                           "vox_z_to_use": vox_z_to_use,
+                                                                           },
+                                                         "n_vox_x, n_vox_y": {"linked": n_vox_x_y_linked,
+                                                                              "n_vox_x_y": n_vox_x_y_value,
+                                                                              "n_vox_x": n_vox_x,
+                                                                              "n_vox_y": n_vox_y,
+                                                                              "n_vox_x_to_use": n_vox_x_to_use,
+                                                                              "n_vox_y_to_use": n_vox_y_to_use,
+                                                                              },
+                                                         "n_vox_z": n_vox_z,
+                                                         "write output": write_output_flag,
                                                          }
