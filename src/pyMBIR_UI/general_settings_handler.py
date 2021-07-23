@@ -1,3 +1,5 @@
+import numpy as np
+
 from . import ReconstructionAlgorithm
 
 
@@ -21,6 +23,17 @@ class GeneralSettingsHandler:
         self.parent.ui.smoothness_doubleSpinBox.setValue(smoothness)
         self.parent.ui.sigma_doubleSpinBox.setValue(sigma)
         self.set_reconstruction_algorithm_selected(reconstruction_algorithm)
+
+    def sub_sampling_value_changed(self):
+        factor = self.parent.ui.sub_sampling_spinBox.value()
+        try:
+            from_slice = np.int(str(self.parent.ui.crop_from_slice_label.text()))
+            to_slice = np.int(str(self.parent.ui.crop_to_slice_label.text()))
+            nbr_sampling = np.int(np.abs(to_slice - from_slice) / factor)
+        except ValueError:
+            nbr_sampling = "N/A"
+
+        self.parent.ui.sub_sampling_label.setText(f"({nbr_sampling} projections will be reconstructed)")
 
     def get_reconstruction_algorithm_selected(self):
         if self.parent.ui.reconstruction_algorithm_pymbir_radioButton.isChecked():

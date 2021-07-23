@@ -31,6 +31,4 @@ class ReconstructionLauncher:
                                             algorithm_selected=self.reconstruction_algorithm_selected)
         o_command_line.build_command_line()
         command_line = o_command_line.get_command_line()
-
-        session_dict = self.parent.session_dict
         logging.info(f"-> About to run the command line: {command_line}")

@@ -21,6 +21,7 @@ from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
 from .utilities.decorators import wait_cursor
 from pyMBIR_UI.reconstruction_launcher import ReconstructionLauncher
 from pyMBIR_UI.advanced_settings_handler import AdvancedSettingsPasswordHandler
+from pyMBIR_UI.general_settings_handler import GeneralSettingsHandler
 
 # warnings.filterwarnings('ignore')
 
@@ -160,6 +161,10 @@ class PyMBIRUILauncher(QMainWindow):
         o_advanced.show()
 
     # Input tab
+    def main_tab_changed(self, new_tab):
+        if new_tab == 2:
+            self.sub_sampling_value_changed(-1)
+
     def projections_select_clicked(self):
         o_import = ImportDataHandler(parent=self,
                                      data_type=DataType.projections)
@@ -290,7 +295,11 @@ class PyMBIRUILauncher(QMainWindow):
         o_tilt = TiltHandler(parent=self)
         o_tilt.refresh_calculation()
 
-    # advanced tab
+    # general tab
+    def sub_sampling_value_changed(self, value):
+        o_general = GeneralSettingsHandler(parent=self)
+        o_general.sub_sampling_value_changed()
+
     def run_reconstruction(self):
         o_reconstruction = ReconstructionLauncher(parent=self)
         o_reconstruction.run()
