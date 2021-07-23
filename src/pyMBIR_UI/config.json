@@ -8,6 +8,7 @@
     "wavelet level": 6,
     "max number of iterations": 200,
     "stop threshold": 1e-4,
+    "median filter size": 5,
     "det_x, det_y": {
       "linked": true,
       "value": 1.00,

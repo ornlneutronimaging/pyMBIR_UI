@@ -78,8 +78,9 @@ class AdvancedSettingsHandler(QDialog):
                                        "max_number_of_iterations": session["max number of iterations"],
                                        "number_of_cores"         : session["number of cores"],
                                        "number_of_gpus"          : session["number of gpus"],
-                                       "stop_threshold"          : session[
-                                           "stop threshold"],
+                                       "stop_threshold"          : session["stop threshold"],
+                                       "median_filter_size"      : session.get("median filter size", 
+                                                                               self.parent.config["default widgets values"]['median filter size']),
                                        "det_x_y_linked"          : session["det_x, det_y"]["linked"],
                                        "det_x_y_value"           : session["det_x, det_y"]["det_x_y"],
                                        "det_x_value"             : session["det_x, det_y"]["det_x"],
@@ -168,6 +169,8 @@ class AdvancedSettingsHandler(QDialog):
         self.ui.max_nbr_iterations_spinBox.setValue(max_number_of_iterations)
         stop_threshold = local_session_dict["stop_threshold"]
         self.ui.stop_threshold_lineEdit.setText(stop_threshold)
+        median_filter_size = local_session_dict["median_filter_size"]
+        self.ui.median_filter_spinBox.setValue(median_filter_size)
 
         det_x_det_y_linked = local_session_dict["det_x_y_linked"]
         self.ui.det_x_y_radioButton.setChecked(det_x_det_y_linked)
@@ -207,6 +210,7 @@ class AdvancedSettingsHandler(QDialog):
         self.local_session_dict["wavelet_level"] = config["wavelet level"]
         self.local_session_dict["max_number_of_iterations"] = config["max number of iterations"]
         self.local_session_dict["stop_threshold"] = str(config["stop threshold"])
+        self.local_session_dict["median_filter_size"] = config["median filter size"]
 
         self.local_session_dict["det_x_y_linked"] = config["det_x, det_y"]["linked"]
         self.local_session_dict["det_x_y_value"] = config["det_x, det_y"]["value"]
@@ -244,6 +248,7 @@ class AdvancedSettingsHandler(QDialog):
         number_of_cores = self.ui.nbr_cores_slider.value()
         number_of_gpus = self.ui.nbr_gpu_slider.value()
         stop_threshold = self.ui.stop_threshold_lineEdit.text()
+        median_filter_size = self.ui.median_filter_spinBox.value()
 
         det_x_y_linked = self.ui.det_x_y_radioButton.isChecked()
         det_x_y_value = self.ui.det_x_y_doubleSpinBox.value()
@@ -289,6 +294,7 @@ class AdvancedSettingsHandler(QDialog):
                                                          "stop threshold": stop_threshold,
                                                          "number of cores": number_of_cores,
                                                          "number of gpus": number_of_gpus,
+                                                         "median filter size": median_filter_size,
                                                          "det_x, det_y": {"linked": det_x_y_linked,
                                                                           "det_x_y": det_x_y_value,
                                                                           "det_x": det_x,

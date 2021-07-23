@@ -88,7 +88,8 @@ class PyMBIRCommandLineCreator:
         arguments['--wav_level'] = wavelet_level
 
         # 2D median filter window size to remove outliers
-        # ??
+        median_filter = session_dict['advanced settings']['median filter size']
+        arguments['--med_filt_win'] = median_filter
 
         # maximum number of cores to use
         max_core = session_dict['advanced settings']['number of cores']
@@ -114,10 +115,38 @@ class PyMBIRCommandLineCreator:
         stop_thresh = session_dict['advanced settings']['stop threshold']
         arguments['--stop_thresh'] = stop_thresh
 
-        # det pix size along x
+        # det pix size along x and y
+        det_x = session_dict['advanced settings']['det_x, det_y']['det_x_to_use']
+        det_y = session_dict['advanced settings']['det_x, det_y']['det_y_to_use']
+        arguments['--det_x'] = det_x
+        arguments['--det_y'] = det_y
 
+        # Voxel size along plane dim (vox_xy)
+        vox_xy = session_dict['advanced settings']['vox_xy, vox_z']['vox_xy_to_use']
+        arguments['--vox_xy'] = vox_xy
 
+        # voxel size along axial z direction
+        vox_z = session_dict['advanced settings']['vox_xy, vox_z']['vox_z_to_use']
+        arguments['--vox_z'] = vox_z
 
+        # number of voxels along x, y and z dimension in the object to be reconstructed
+        n_vox_x = session_dict['advanced settings']['n_vox_x, n_vox_y']['n_vox_x_to_use']
+        n_vox_y = session_dict['advanced settings']['n_vox_x, n_vox_y']['n_vox_y_to_use']
+        n_vox_z = session_dict['advanced settings']['n_vox_z']
+        arguments['--n_vox_x'] = n_vox_x
+        arguments['--n_vox_y'] = n_vox_y
+        arguments['--n_vox_z'] = n_vox_z
+
+        # Write output
+        write_output_flag = session_dict['advanced settings']['write output']
+        arguments['--write_op'] = write_output_flag
+
+        # output folder
+        output_folder = session_dict[DataType.output]['folder']
+        arguments['--op_path'] = output_folder
+
+        for _arg in arguments.keys():
+            self.command_line += f" {_arg} {arguments[_arg]}"
 
     def get_command_line(self):
         return self.command_line
