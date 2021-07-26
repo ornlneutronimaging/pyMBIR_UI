@@ -20,7 +20,7 @@ from pyMBIR_UI.tilt.tilt_handler import TiltHandler
 from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
 from .utilities.decorators import wait_cursor
 from pyMBIR_UI.reconstruction_launcher import ReconstructionLauncher
-from pyMBIR_UI.advanced_settings_handler import AdvancedSettingsPasswordHandler, AdvancedSettings
+from pyMBIR_UI.advanced_settings_handler import AdvancedSettingsPasswordHandler
 from pyMBIR_UI.general_settings_handler import GeneralSettingsHandler
 
 # warnings.filterwarnings('ignore')
@@ -128,9 +128,6 @@ class PyMBIRUILauncher(QMainWindow):
                             level=logging.INFO)
         logging.info("*** Starting a new session ***")
         logging.info(f" Version: {versioneer.get_version()}")
-
-        o_advanced = AdvancedSettings(parent=self)
-        o_advanced.from_config_to_session_dict()
 
         self.automatic_load_of_previous_session()
 
