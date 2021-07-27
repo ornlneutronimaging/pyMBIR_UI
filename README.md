@@ -1,6 +1,10 @@
 # pyMBIR_UI
 
+UI for pyMBIR software. 
+
 ## Installation
+
+Please install the pyMBIR code from the git repo before installing the UI t prevent package conflicts. 
 
 ### Git
 Download source files from git.
