@@ -42,8 +42,13 @@ class Loader:
         if self.data_type != DataType.projections:
             return
 
-        o_get = Get(parent=self.parent)
-        list_angles = o_get.angles(self.parent.input['list files'][self.data_type])
-        self.parent.input['list angles'] = list_angles
+        if self.parent.loading_from_config:
+            self.parent.input['list angles'] = [np.float(angle) for angle in self.parent.session_dict['list angles']]
+            self.parent.loading_from_config = False
+        else:
 
-        logging.info(f"List of angles retrieved is: {list_angles}")
+            o_get = Get(parent=self.parent)
+            list_angles = o_get.angles(self.parent.input['list files'][self.data_type])
+            self.parent.input['list angles'] = list_angles
+
+            logging.info(f"List of angles retrieved is: {list_angles}")

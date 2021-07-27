@@ -28,6 +28,7 @@ from pyMBIR_UI.general_settings_handler import GeneralSettingsHandler
 
 class PyMBIRUILauncher(QMainWindow):
     automatic_config_file_name = None
+    loading_from_config = False
 
     config = None  # dictionary created out of config.json
     homepath = "./"

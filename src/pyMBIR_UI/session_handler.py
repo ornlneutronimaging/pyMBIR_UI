@@ -36,6 +36,9 @@ class SessionHandler:
         session_dict[DataType.ob] = retrieve_infos_from_import_data(data_type=DataType.ob)
         session_dict[DataType.df] = retrieve_infos_from_import_data(data_type=DataType.df)
 
+        # list of angles
+        session_dict['list angles'] = [str(angle) for angle in self.parent.input['list angles']]
+
         # output folder
         session_dict[DataType.output] = {'folder': str(list_ui['select lineEdit'][DataType.output].text())}
 
@@ -214,6 +217,8 @@ class SessionHandler:
 
     def load_from_file(self, config_file_name=None):
 
+        self.parent.loading_from_config = True
+
         if config_file_name is None:
             config_file_name = QFileDialog.getOpenFileName(self.parent,
                                                            directory=self.parent.homepath,
@@ -237,3 +242,4 @@ class SessionHandler:
 
         else:
             self.load_successful = False
+
