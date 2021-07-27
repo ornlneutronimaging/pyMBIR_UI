@@ -103,7 +103,6 @@ class ImportDataHandler:
         populate them with list of files, and enable
         or not the widgets if files have been found or not.
         """
-
         if len(folder_name) == 0:
             return
 

@@ -40,6 +40,8 @@ class CenterOfRotation:
         o_gui = Gui(parent=self.parent)
         o_gui.block_signal_handler(block=True, ui=self.parent.ui.center_of_rotation_0_degrees_comboBox)
         o_gui.block_signal_handler(block=True, ui=self.parent.ui.center_of_rotation_180_degrees_comboBox)
+        self.parent.ui.center_of_rotation_0_degrees_comboBox.clear()
+        self.parent.ui.center_of_rotation_180_degrees_comboBox.clear()
         self.parent.ui.center_of_rotation_0_degrees_comboBox.addItems(list_of_files)
         self.parent.ui.center_of_rotation_180_degrees_comboBox.addItems(list_of_files)
         o_gui.block_signal_handler(block=False, ui=self.parent.ui.center_of_rotation_0_degrees_comboBox)
