@@ -242,4 +242,3 @@ class SessionHandler:
 
         else:
             self.load_successful = False
-
