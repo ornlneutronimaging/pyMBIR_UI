@@ -107,6 +107,7 @@ class PyMBIRUILauncher(QMainWindow):
                                      DataType.ob: None,
                                      DataType.df: None,
                                      },
+                      'list angles': None,
                       'full list files': {DataType.projections: None,
                                           DataType.ob: None,
                                           DataType.df: None,

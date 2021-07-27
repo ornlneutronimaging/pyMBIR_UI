@@ -159,6 +159,7 @@ class ImportDataHandler:
                 o_loader = Loader(parent=self.parent,
                                   data_type=self.data_type)
                 o_loader.load_data(file_index=0)
+                o_loader.load_angles()
 
                 if self.parent.preview_id:
                     self.parent.preview_id.update_radiobuttons_state()
@@ -214,10 +215,6 @@ class ImportDataHandler:
             o_tilt.initialize_tilt_correction()
             o_tilt.master_checkBox_clicked()
             o_tilt.correction_algorithm_changed()
-
-            # if self.parent.session_dict.get("advanced settings", None) is None:
-            #     o_advanced = AdvancedSettings(parent=self.parent)
-            #     o_advanced.from_config_to_session_dict()
 
         if index_data_type == len(list_data_type) - 1:
             # activate reconstitution setup tab

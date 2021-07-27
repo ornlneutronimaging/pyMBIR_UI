@@ -1,8 +1,10 @@
 import numpy as np
+import logging
 
 from NeuNorm.normalization import Normalization
 
 from . import DataType
+from pyMBIR_UI.utilities.get import Get
 
 
 class Loader:
@@ -35,3 +37,13 @@ class Loader:
 
         if self.parent.image_size['width'] is None:
             self.parent.image_size['height'], self.parent.image_size['height'] = np.shape(data)
+
+    def load_angles(self):
+        if self.data_type != DataType.projections:
+            return
+
+        o_get = Get(parent=self.parent)
+        list_angles = o_get.angles(self.parent.input['list files'][self.data_type])
+        self.parent.input['list angles'] = list_angles
+
+        logging.info(f"List of angles retrieved is: {list_angles}")

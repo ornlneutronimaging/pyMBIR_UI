@@ -1,3 +1,5 @@
+import numpy as np
+
 from pyMBIR_UI.utilities.get import Get
 
 
@@ -45,15 +47,22 @@ class AdvancedSettingsInitialization:
         n_vox_x_y_linked = config['n_vox_x, n_vox_y']['linked']
 
         session_dict = self.parent.session_dict
-        crop_width = session_dict['crop']['width']
-        n_vox_x_y_value = crop_width / vox_xy_to_use
-        n_vox_x = n_vox_x_y_value
-        n_vox_y = n_vox_x_y_value
-        n_vox_x_to_use = n_vox_x
-        n_vox_y_to_use = n_vox_y
-
-        crop_height = session_dict['crop']['to slice - from slice']
-        n_vox_z = (crop_height) / vox_xy_z_value
+        if session_dict.get('crop', None) is None:
+            n_vox_x_y_value = np.NaN
+            n_vox_x = np.NaN
+            n_vox_y = np.NaN
+            n_vox_x_to_use = np.NaN
+            n_vox_y_to_use = np.NaN
+            n_vox_z = np.NaN
+        else:
+            crop_width = session_dict['crop']['width']
+            n_vox_x_y_value = crop_width / vox_xy_to_use
+            n_vox_x = n_vox_x_y_value
+            n_vox_y = n_vox_x_y_value
+            n_vox_x_to_use = n_vox_x
+            n_vox_y_to_use = n_vox_y
+            crop_height = session_dict['crop']['to slice - from slice']
+            n_vox_z = (crop_height) / vox_xy_z_value
 
         write_output_flag = config['write output']
 
