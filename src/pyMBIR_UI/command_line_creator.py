@@ -1,5 +1,6 @@
 from . import ReconstructionAlgorithm, DataType
 from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
+from pyMBIR_UI.advanced_settings.advanced_settings_initialization import AdvancedSettingsInitialization
 
 
 class CommandLineCreator:
@@ -84,6 +85,10 @@ class PyMBIRCommandLineCreator:
         arguments['--det_tilt'] = tilt_value
 
         # number of wavelet levels for tomopy based stripe suppression filter routines
+        if session_dict.get('advanced settings', None) is None:
+            o_init = AdvancedSettingsInitialization(parent=self.parent)
+            o_init.from_config_to_session_dict()
+
         wavelet_level = session_dict['advanced settings']['wavelet level']
         arguments['--wav_level'] = wavelet_level
 

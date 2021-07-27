@@ -11,7 +11,6 @@ from pyMBIR_UI.crop.crop_handler import CropHandler
 from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
 from pyMBIR_UI.tilt.tilt_handler import TiltHandler
 from .loader import Loader
-from pyMBIR_UI.advanced_settings_handler import AdvancedSettings
 
 
 class ImportDataHandler:
