@@ -22,7 +22,7 @@ class SessionHandler:
         self.parent = parent
 
     def save_from_ui(self):
-        session_dict = {}
+        session_dict = {'config version': self.parent.config["config version"]}
 
         # import input tab data
         list_ui = self.parent.list_ui
@@ -37,7 +37,8 @@ class SessionHandler:
         session_dict[DataType.df] = retrieve_infos_from_import_data(data_type=DataType.df)
 
         # list of angles
-        session_dict['list angles'] = [str(angle) for angle in self.parent.input['list angles']]
+        if not (self.parent.input['list angles'] is None):
+            session_dict['list angles'] = [str(angle) for angle in self.parent.input['list angles']]
 
         # output folder
         session_dict[DataType.output] = {'folder': str(list_ui['select lineEdit'][DataType.output].text())}
@@ -233,12 +234,33 @@ class SessionHandler:
             self.config_file_name = config_file_name
             show_status_message(parent=self.parent,
                                 message=f"Loading {config_file_name} ...",
-                                status=StatusMessageStatus.ready,
-                                duration_s=10)
+                                status=StatusMessageStatus.ready)
 
             with open(config_file_name, "r") as read_file:
-                self.parent.session_dict = json.load(read_file)
-            logging.info(f"Loaded from {config_file_name}")
+                session_to_save = json.load(read_file)
+                if session_to_save.get("config version", None) is None:
+                    logging.info(f"Session file is out of date!")
+                    logging.info(f"-> expected version: {self.parent.config['config version']}")
+                    logging.info(f"-> session version: Unknown!")
+                    self.load_successful = False
+                elif session_to_save["config version"] == self.parent.config["config version"]:
+                    self.parent.session_dict = session_to_save
+                    logging.info(f"Loaded from {config_file_name}")
+                else:
+                    logging.info(f"Session file is out of date!")
+                    logging.info(f"-> expected version: {self.parent.config['config version']}")
+                    logging.info(f"-> session version: {session_to_save['config version']}")
+                    self.load_successful = False
+
+                if self.load_successful == False:
+                    show_status_message(parent=self.parent,
+                                        message=f"{config_file_name} not loaded! (check log for more information)",
+                                        status=StatusMessageStatus.error,
+                                        duration_s=10)
 
         else:
             self.load_successful = False
+            show_status_message(parent=self.parent,
+                                message=f"{config_file_name} not loaded! (check log for more information)",
+                                status=StatusMessageStatus.ready,
+                                duration_s=10)
