@@ -36,6 +36,12 @@ class PyMBIRCommandLineCreator:
 
         session_dict = self.parent.session_dict
 
+        import pprint
+        pprint.pprint(session_dict)
+
+        return
+
+
         # adding arguments
         arguments = {}
 

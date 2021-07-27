@@ -112,7 +112,11 @@ class SessionHandler:
                                               'sub sampling factor': sub_sampling_factor}
 
         # advanced parameters
-        session_dict['advanced settings'] = self.parent.session_dict.get("advanced settings", None)
+        advanced_session_dict = self.parent.session_dict.get("advanced settings", None)
+        if advanced_session_dict is None:
+
+        else:
+            session_dict['advanced settings'] = advanced_session_dict
 
         self.parent.session_dict = session_dict
 
@@ -136,28 +140,30 @@ class SessionHandler:
             list_ui['select lineEdit'][data_type].setText(folder)
             list_load_method[data_type]()
 
-        # crop
-        o_crop = CropHandler(parent=self.parent)
-        o_crop.initialize_crop()
-        self.parent.ui.crop_file_index_horizontalSlider.setValue(self.parent.session_dict['crop']['file index'])
-        crop_width = self.parent.session_dict['crop']['width']
-        self.parent.ui.crop_width_horizontalSlider.setValue(crop_width)
-        self.parent.ui.crop_width_label.setText(str(2*crop_width))
-        self.parent.ui.crop_width_horizontalSlider.setMinimum(10)
-        o_crop.width_changed()
-        o_crop.file_index_changed()
+        if not (self.parent.input['data'][DataType.projections] is None):
 
-        # center of rotation
-        o_center = CenterOfRotation(parent=self.parent)
-        o_center.initialize_from_session()
+            # crop
+            o_crop = CropHandler(parent=self.parent)
+            o_crop.initialize_crop()
+            self.parent.ui.crop_file_index_horizontalSlider.setValue(self.parent.session_dict['crop']['file index'])
+            crop_width = self.parent.session_dict['crop']['width']
+            self.parent.ui.crop_width_horizontalSlider.setValue(crop_width)
+            self.parent.ui.crop_width_label.setText(str(2*crop_width))
+            self.parent.ui.crop_width_horizontalSlider.setMinimum(10)
+            o_crop.width_changed()
+            o_crop.file_index_changed()
 
-        # tilt
-        o_tilt = TiltHandler(parent=self.parent)
-        o_tilt.initialize_tilt_from_session()
+            # center of rotation
+            o_center = CenterOfRotation(parent=self.parent)
+            o_center.initialize_from_session()
 
-        # general parameters
-        o_advanced = GeneralSettingsHandler(parent=self.parent)
-        o_advanced.initialization_from_session()
+            # tilt
+            o_tilt = TiltHandler(parent=self.parent)
+            o_tilt.initialize_tilt_from_session()
+
+            # general parameters
+            o_advanced = GeneralSettingsHandler(parent=self.parent)
+            o_advanced.initialization_from_session()
 
         show_status_message(parent=self.parent,
                             message=f"Loaded {self.config_file_name}",

@@ -115,7 +115,9 @@ class CenterOfRotation:
     def get_center_of_rotation(self):
         algorithm_selected = self.get_algorithm_selected()
         if algorithm_selected == Algorithm.tomopy:
-            value = np.float(str(self.parent.ui.center_of_rotation_calculated_label.text()))
+            value = str(self.parent.ui.center_of_rotation_calculated_label.text())
+            if value != "N/A":
+                value = np.float(value)
             logging.info("Center of rotation calculated via tomopy (find_center_pc)")
         elif algorithm_selected == Algorithm.user:
             value = self.parent.ui.center_of_rotation_user_defined_doubleSpinBox.value()

@@ -94,6 +94,7 @@ class CropHandler:
 
     def file_index_changed(self):
         file_index_selected = self.parent.ui.crop_file_index_horizontalSlider.value()
+
         o_loader = Loader(parent=self.parent)
         image = o_loader.retrieve_data(file_index=file_index_selected)
         transpose_image = np.transpose(image)
@@ -187,9 +188,10 @@ class CropHandler:
         max_value = self.parent.ui.crop_width_horizontalSlider.maximum()
         self.parent.ui.crop_width_label.setText(str(width_value*2))
 
-        self.parent.crop_left_region_item.setRegion([0, max_value - width_value])
-        self.parent.crop_right_region_item.setRegion([self.parent.crop_image_width - (max_value - width_value),
-                                                      self.parent.crop_image_width])
+        if self.parent.crop_left_region_item:
+            self.parent.crop_left_region_item.setRegion([0, max_value - width_value])
+            self.parent.crop_right_region_item.setRegion([self.parent.crop_image_width - (max_value - width_value),
+                                                          self.parent.crop_image_width])
 
     def crop_slice_moved(self):
         if self.parent.crop_to_slice_label_item:
