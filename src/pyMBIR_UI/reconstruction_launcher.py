@@ -1,4 +1,5 @@
 import logging
+import os
 
 from . import ReconstructionAlgorithm
 from .session_handler import SessionHandler
@@ -32,3 +33,5 @@ class ReconstructionLauncher:
         o_command_line.build_command_line()
         command_line = o_command_line.get_command_line()
         logging.info(f"-> About to run the command line: {command_line}")
+
+        os.system(command_line)

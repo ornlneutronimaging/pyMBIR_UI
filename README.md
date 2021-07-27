@@ -7,17 +7,32 @@ UI for pyMBIR software.
 Please install the pyMBIR code from the git repo before installing the UI t prevent package conflicts. 
 
 ### Git
-Download source files from git.
+clone the source file from github
 
-Install required packages:
+> git clone https://github.com/ornlneutronimaging/pyMBIR_UI.git
 
-conda env update -n [desired environment] -f testing_environment.yml
+### Create conda environment
 
-Launch:
+> conda create -n pymbir_ui python=3.7
 
-python ./src/pyMBIR_UI/pyMBIR_UI.py
+> source activate pymbir_ui
 
-### for local development
+### Install required packages:
 
-> pip install .
+> conda install -c anaconda qtpy
+
+> conda install -c conda-forge tomopy
+
+> pip install NeuNorm
+
+> conda install -c anaconda pyqtgraph=0.11.0
+
+### install 
+
+> cd pymbir_ui
+
+> pip install -e .
+
+### run UI
+
 > python -m pyMBIR_UI
