@@ -327,7 +327,6 @@ class AdvancedSettings:
         self.parent = parent
 
     def from_config_to_session_dict(self):
-
         config = self.parent.config['default widgets values']
         wavelet_level = config['wavelet level']
         max_number_of_iterations = config['max number of iterations']
