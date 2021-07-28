@@ -25,6 +25,7 @@ class LoadPreviousSessionLauncher(QDialog):
         full_config_file_name = o_get.get_automatic_config_file_name()
         o_session.load_from_file(config_file_name=full_config_file_name)
         o_session.load_to_ui()
+        self.parent.loading_from_config = False
 
     def no_clicked(self):
         self.close()

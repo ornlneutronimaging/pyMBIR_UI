@@ -255,7 +255,7 @@ class SessionHandler:
                 if self.load_successful == False:
                     show_status_message(parent=self.parent,
                                         message=f"{config_file_name} not loaded! (check log for more information)",
-                                        status=StatusMessageStatus.error,
+                                        status=StatusMessageStatus.ready,
                                         duration_s=10)
 
         else:
