@@ -12,4 +12,7 @@ class ConfigHandler:
         with open(config_file_name) as f:
             config = json.load(f)
         self.parent.config = config
-        self.parent.homepath = config['homepath']
+
+        for _homepath in config['homepath']:
+            if os.path.exists(_homepath):
+                self.parent.homepath = _homepath
