@@ -33,7 +33,7 @@ class PyMBIRCommandLineCreator:
         self.parent = parent
 
     def build_command_line(self):
-        self.command_line = "recon_HFIR_script.py"
+        self.command_line = "python recon_HFIR_script.py"
 
         session_dict = self.parent.session_dict
 
