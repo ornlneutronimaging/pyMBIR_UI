@@ -78,7 +78,7 @@ class Get:
         '''
         ANGLE_KEY = 65039  # 65048
         x = self.retrieve_value_of_metadata_key(list_files,
-                                               list_key=[ANGLE_KEY])
+                                                list_key=[ANGLE_KEY])
         angles = np.zeros(len(x))
         for idx, val in enumerate(list(x.items())):
             temp = val[1]

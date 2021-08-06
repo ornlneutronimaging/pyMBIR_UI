@@ -46,7 +46,6 @@ class Loader:
             self.parent.input['list angles'] = [np.float(angle) for angle in self.parent.session_dict['list angles']]
             self.parent.loading_from_config = False
         else:
-
             o_get = Get(parent=self.parent)
             list_angles = o_get.angles(self.parent.input['list files'][self.data_type])
             self.parent.input['list angles'] = list_angles
