@@ -36,7 +36,7 @@ class Loader:
         self.parent.input['data'][self.data_type][file_index] = data
 
         if self.parent.image_size['width'] is None:
-            self.parent.image_size['height'], self.parent.image_size['height'] = np.shape(data)
+            self.parent.image_size['height'], self.parent.image_size['width'] = np.shape(data)
 
     def load_angles(self):
         if self.data_type != DataType.projections:
