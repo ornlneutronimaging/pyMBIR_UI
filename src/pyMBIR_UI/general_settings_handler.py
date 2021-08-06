@@ -1,7 +1,5 @@
-import numpy as np
-
 from . import ReconstructionAlgorithm
-
+from . import DataType
 
 class GeneralSettingsHandler:
 
@@ -29,9 +27,11 @@ class GeneralSettingsHandler:
     def sub_sampling_value_changed(self):
         factor = self.parent.ui.sub_sampling_spinBox.value()
         try:
-            from_slice = np.int(str(self.parent.ui.crop_from_slice_label.text()))
-            to_slice = np.int(str(self.parent.ui.crop_to_slice_label.text()))
-            nbr_sampling = np.int(np.abs(to_slice - from_slice) / factor)
+            # from_slice = np.int(str(self.parent.ui.crop_from_slice_label.text()))
+            # to_slice = np.int(str(self.parent.ui.crop_to_slice_label.text()))
+            # nbr_sampling = np.int(np.abs(to_slice - from_slice) / factor)
+            nbr_images = len(self.parent.input['list files'][DataType.projections])
+            nbr_sampling = int(nbr_images / factor)
         except ValueError:
             nbr_sampling = "N/A"
 
