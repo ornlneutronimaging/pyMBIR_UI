@@ -89,6 +89,9 @@ class PyMBIRUILauncher(QMainWindow):
     # histogram of preview dialog
     preview_histogram = None
 
+    # reconstructed full array
+    full_reconstructed_array = None
+
     def __init__(self, parent=None):
         super(PyMBIRUILauncher, self).__init__(parent)
 
@@ -337,8 +340,14 @@ class PyMBIRUILauncher(QMainWindow):
         self.ui.tabWidget.setTabEnabled(3, True)
         QGuiApplication.processEvents()
 
-    def display_reconstructed_array(self, my_dictionary):
-        print(my_dictionary)
+    def display_reconstructed_array(self, reconstructed_array):
+        if self.full_reconstructed_array is None:
+            self.full_reconstructed_array = [reconstructed_array]
+        else:
+            self.full_reconstructed_array.append(reconstructed_array)
+
+        o_event = EventHandler(parent=self)
+        o_event.update_output_plot()
 
     # output tab
     def update_output_plot(self, data):
@@ -359,7 +368,7 @@ class PyMBIRUILauncher(QMainWindow):
 class Worker(QObject):
     finished = Signal()
     progress = Signal(int)
-    sent_reconstructed_array = Signal(dict)
+    sent_reconstructed_array = Signal(np.ndarray)
 
     def run(self):
 
@@ -369,7 +378,8 @@ class Worker(QObject):
         for _i in np.arange(nbr_iteration):
             time.sleep(sleeping_time)
             fake_2d_array = np.random.random((512, 512))
-            self.sent_reconstructed_array.emit({_i: fake_2d_array})
+            #self.sent_reconstructed_array.emit({_i: fake_2d_array})
+            self.sent_reconstructed_array.emit(fake_2d_array)
 
             logging.info(f"worker iteration {_i+1}/{nbr_iteration}")
 
