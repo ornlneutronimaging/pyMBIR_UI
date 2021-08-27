@@ -1045,11 +1045,34 @@
          </widget>
         </item>
         <item>
-         <widget class="QSlider" name="output_horizontalSlider">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
+         <layout class="QHBoxLayout" name="horizontalLayout_13">
+          <item>
+           <widget class="QSlider" name="output_horizontalSlider">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="output_slider_label">
+            <property name="minimumSize">
+             <size>
+              <width>30</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>30</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>0</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
        </layout>
       </widget>
@@ -1502,7 +1525,7 @@
    <slot>tilt_correction_file_index_moved()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>323</x>
+     <x>210</x>
      <y>145</y>
     </hint>
     <hint type="destinationlabel">
@@ -1518,7 +1541,7 @@
    <slot>tilt_correction_file_index_pressed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>708</x>
+     <x>210</x>
      <y>145</y>
     </hint>
     <hint type="destinationlabel">
@@ -1550,7 +1573,7 @@
    <slot>center_of_rotation_file_index_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>335</x>
+     <x>291</x>
      <y>148</y>
     </hint>
     <hint type="destinationlabel">
@@ -1566,7 +1589,7 @@
    <slot>center_of_rotation_file_index_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>335</x>
+     <x>291</x>
      <y>178</y>
     </hint>
     <hint type="destinationlabel">
@@ -1582,8 +1605,8 @@
    <slot>center_of_rotation_algorithm_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>150</x>
-     <y>230</y>
+     <x>146</x>
+     <y>224</y>
     </hint>
     <hint type="destinationlabel">
      <x>6</x>
@@ -1646,7 +1669,7 @@
    <slot>tilt_correction_algorithm_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>272</x>
+     <x>232</x>
      <y>234</y>
     </hint>
     <hint type="destinationlabel">
@@ -1662,7 +1685,7 @@
    <slot>tilt_correction_algorithm_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>415</x>
+     <x>382</x>
      <y>234</y>
     </hint>
     <hint type="destinationlabel">
@@ -1694,8 +1717,8 @@
    <slot>tilt_correction_set_up_images_at_0_and_180_degrees_pushed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>186</x>
-     <y>203</y>
+     <x>146</x>
+     <y>192</y>
     </hint>
     <hint type="destinationlabel">
      <x>1063</x>
@@ -1710,8 +1733,8 @@
    <slot>tilt_refresh_calculation_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>695</x>
-     <y>241</y>
+     <x>637</x>
+     <y>239</y>
     </hint>
     <hint type="destinationlabel">
      <x>1187</x>
@@ -1799,6 +1822,54 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>output_horizontalSlider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>output_slider_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>546</x>
+     <y>801</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1190</x>
+     <y>771</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>output_horizontalSlider</sender>
+   <signal>sliderPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>output_slider_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1119</x>
+     <y>797</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1190</x>
+     <y>725</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>output_checkBox</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>output_checkbox_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>118</x>
+     <y>773</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>6</x>
+     <y>829</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>projections_select_clicked()</slot>
@@ -1834,5 +1905,8 @@
   <slot>advanced_settings_clicked()</slot>
   <slot>sub_sampling_value_changed()</slot>
   <slot>main_tab_changed()</slot>
+  <slot>output_slider_changed()</slot>
+  <slot>output_slider_clicked()</slot>
+  <slot>output_checkbox_clicked()</slot>
  </slots>
 </ui>

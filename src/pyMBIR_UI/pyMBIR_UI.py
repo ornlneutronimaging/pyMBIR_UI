@@ -355,6 +355,23 @@ class PyMBIRUILauncher(QMainWindow):
         o_event.update_output_plot(data)
         QGuiApplication.processEvents()
 
+    def output_slider_changed(self, value):
+        self.ui.output_checkBox.setChecked(False)
+        o_event = EventHandler(parent=self)
+        o_event.display_output_plot(array_index_to_show=value)
+
+    def output_slider_clicked(self):
+        self.ui.output_checkBox.setChecked(False)
+        value = self.ui.output_horizontalSlider.value()
+        o_event = EventHandler(parent=self)
+        o_event.display_output_plot(array_index_to_show=value)
+
+    def output_checkbox_clicked(self):
+        value = self.ui.output_checkBox.isChecked()
+        if value:
+            max_slider_value = self.ui.output_horizontalSlider.maximum()
+            self.ui.output_horizontalSlider.setValue(max_slider_value)
+
     # leaving ui
     def closeEvent(self, c):
         o_session = SessionHandler(parent=self)
@@ -372,7 +389,7 @@ class Worker(QObject):
 
     def run(self):
 
-        nbr_iteration = 4
+        nbr_iteration = 20
         sleeping_time = 3  # s
 
         for _i in np.arange(nbr_iteration):
