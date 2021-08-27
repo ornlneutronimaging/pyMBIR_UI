@@ -47,5 +47,3 @@ class Worker(QObject):
 
             self.progress.emit(_i+1)
         self.finished.emit()
-
-

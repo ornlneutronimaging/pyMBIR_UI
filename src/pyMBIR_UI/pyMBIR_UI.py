@@ -319,6 +319,7 @@ class PyMBIRUILauncher(QMainWindow):
         self.worker.finished.connect(self.worker.deleteLater)
         self.thread.finished.connect(self.thread.deleteLater)
         self.worker.progress.connect(self.reportProgress)
+        self.worker.sent_reconstructed_array.connect(self.display_reconstructed_array)
 
         self.thread.start()
         self.ui.reconstruction_run_pushButton.setEnabled(False)
@@ -336,17 +337,8 @@ class PyMBIRUILauncher(QMainWindow):
         self.ui.tabWidget.setTabEnabled(3, True)
         QGuiApplication.processEvents()
 
-
-
-
-
-
-
-
-
-
-
-
+    def display_reconstructed_array(self, my_dictionary):
+        print(my_dictionary)
 
     # output tab
     def update_output_plot(self, data):
@@ -367,6 +359,7 @@ class PyMBIRUILauncher(QMainWindow):
 class Worker(QObject):
     finished = Signal()
     progress = Signal(int)
+    sent_reconstructed_array = Signal(dict)
 
     def run(self):
 
@@ -375,6 +368,9 @@ class Worker(QObject):
 
         for _i in np.arange(nbr_iteration):
             time.sleep(sleeping_time)
+            fake_2d_array = np.random.random((512, 512))
+            self.sent_reconstructed_array.emit({_i: fake_2d_array})
+
             logging.info(f"worker iteration {_i+1}/{nbr_iteration}")
 
             self.progress.emit(_i+1)
