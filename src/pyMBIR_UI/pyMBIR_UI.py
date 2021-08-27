@@ -1,10 +1,13 @@
 from qtpy.QtWidgets import QMainWindow, QApplication
+from qtpy.QtGui import QGuiApplication
 import sys
 import os
 import logging
 from . import load_ui
 import versioneer
 import numpy as np
+from qtpy.QtCore import QObject, QThread, Signal
+import time
 
 from .import_data_handler import ImportDataHandler
 from .gui_initialization import GuiInitialization
@@ -22,6 +25,7 @@ from .utilities.decorators import wait_cursor
 from pyMBIR_UI.reconstruction_launcher import ReconstructionLauncher
 from pyMBIR_UI.advanced_settings.advanced_settings_handler import AdvancedSettingsPasswordHandler
 from pyMBIR_UI.general_settings_handler import GeneralSettingsHandler
+from .status_message_config import show_status_message, StatusMessageStatus
 
 # warnings.filterwarnings('ignore')
 
@@ -304,8 +308,51 @@ class PyMBIRUILauncher(QMainWindow):
         o_general.sub_sampling_value_changed()
 
     def run_reconstruction(self):
-        o_reconstruction = ReconstructionLauncher(parent=self)
-        o_reconstruction.run()
+        # o_reconstruction = ReconstructionLauncher(parent=self)
+        # o_reconstruction.run()
+
+        self.thread = QThread()
+        self.worker = Worker()
+        self.worker.moveToThread(self.thread)
+        self.thread.started.connect(self.worker.run)
+        self.worker.finished.connect(self.thread.quit)
+        self.worker.finished.connect(self.worker.deleteLater)
+        self.thread.finished.connect(self.thread.deleteLater)
+        self.worker.progress.connect(self.reportProgress)
+
+        self.thread.start()
+        self.ui.reconstruction_run_pushButton.setEnabled(False)
+
+        self.thread.finished.connect(lambda: self.ui.reconstruction_run_pushButton.setEnabled(True))
+        self.thread.finished.connect(lambda: show_status_message(parent=self,
+                                                                 message=f"Reconstruction ... DONE!",
+                                                                 status=StatusMessageStatus.ready,
+                                                                 duration_s=5))
+
+    def reportProgress(self, iteration):
+        show_status_message(parent=self,
+                            message=f"Reconstruction ... {iteration}",
+                            status=StatusMessageStatus.working)
+        self.ui.tabWidget.setTabEnabled(3, True)
+        QGuiApplication.processEvents()
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # output tab
+    def update_output_plot(self, data):
+        o_event = EventHandler(parent=self)
+        o_event.update_output_plot(data)
+        QGuiApplication.processEvents()
 
     # leaving ui
     def closeEvent(self, c):
@@ -315,6 +362,23 @@ class PyMBIRUILauncher(QMainWindow):
         logging.info(" #### Leaving pyMBIR_UI ####")
 
         self.close()
+
+
+class Worker(QObject):
+    finished = Signal()
+    progress = Signal(int)
+
+    def run(self):
+
+        nbr_iteration = 4
+        sleeping_time = 3  # s
+
+        for _i in np.arange(nbr_iteration):
+            time.sleep(sleeping_time)
+            logging.info(f"worker iteration {_i+1}/{nbr_iteration}")
+
+            self.progress.emit(_i+1)
+        self.finished.emit()
 
 
 def main(args):

@@ -82,3 +82,11 @@ class GuiInitialization:
         image_layout = QVBoxLayout()
         image_layout.addWidget(self.parent.ui.tilt_correction_image_view)
         self.parent.ui.tilt_correction_widget.setLayout(image_layout)
+
+        # output tab
+        self.parent.ui.output_image_view = pg.ImageView(view=pg.PlotItem())
+        self.parent.ui.output_image_view.ui.roiBtn.hide()
+        self.parent.ui.output_image_view.ui.menuBtn.hide()
+        image_layout = QVBoxLayout()
+        image_layout.addWidget(self.parent.ui.output_image_view)
+        self.parent.ui.output_widget.setLayout(image_layout)

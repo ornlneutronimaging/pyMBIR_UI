@@ -1,4 +1,5 @@
 import logging
+import numpy as np
 
 from . import DataType
 from .gui_initialization import GuiInitialization
@@ -27,3 +28,10 @@ class EventHandler:
         o_init.full_reset()
 
         logging.info("Full reset of application!")
+
+    def update_output_plot(self, data):
+        self.parent.ui.tabWidget.setTabEnabled(3, True)
+        self.parent.ui.tabWidget.setCurrentIndex(3)
+
+        data_to_display = np.transpose(data)
+        self.parent.ui.output_image_view.setImage(data_to_display)

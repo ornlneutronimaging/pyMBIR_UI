@@ -1022,7 +1022,7 @@
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_14">
         <item>
-         <widget class="QWidget" name="widget" native="true">
+         <widget class="QWidget" name="output_widget" native="true">
           <property name="enabled">
            <bool>true</bool>
           </property>
