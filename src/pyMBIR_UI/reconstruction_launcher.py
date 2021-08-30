@@ -8,7 +8,7 @@ from .session_handler import SessionHandler
 from .general_settings_handler import GeneralSettingsHandler
 from .command_line_creator import CommandLineCreator
 from .fake_reconstruction_script import main as fake_reconstruction_script
-from .fake_reconstruction_script import Worker
+from pyMBIR_UI.venkat_function import Worker
 from .status_message_config import show_status_message, StatusMessageStatus
 
 
@@ -53,13 +53,14 @@ class ReconstructionLauncher:
         self.parent.worker.finished.connect(self.parent.thread.quit)
         self.parent.worker.finished.connect(self.parent.worker.deleteLater)
         self.parent.thread.finished.connect(self.parent.thread.deleteLater)
-        # self.parent.worker.progress.connect(self.parent.reportProgress)
+        self.parent.worker.progress.connect(self.parent.reportProgress)
+        self.parent.worker.sent_reconstructed_array.connect(self.parent.display_reconstructed_array)
 
         self.parent.thread.start()
         self.parent.ui.reconstruction_run_pushButton.setEnabled(False)
 
         self.parent.thread.finished.connect(lambda: self.parent.ui.reconstruction_run_pushButton.setEnabled(True))
         self.parent.thread.finished.connect(lambda: show_status_message(parent=self.parent,
-                                                                        message=f"Reconstruction ... DONE!",
-                                                                        status=StatusMessageStatus.ready,
-                                                                        duration_s=5))
+                                                                 message=f"Reconstruction ... DONE!",
+                                                                 status=StatusMessageStatus.ready,
+                                                                 duration_s=5))

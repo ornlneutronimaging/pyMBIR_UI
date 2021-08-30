@@ -6,8 +6,6 @@ import logging
 from . import load_ui
 import versioneer
 import numpy as np
-from qtpy.QtCore import QObject, QThread, Signal
-import time
 
 from .import_data_handler import ImportDataHandler
 from .gui_initialization import GuiInitialization
@@ -311,27 +309,8 @@ class PyMBIRUILauncher(QMainWindow):
         o_general.sub_sampling_value_changed()
 
     def run_reconstruction(self):
-        # o_reconstruction = ReconstructionLauncher(parent=self)
-        # o_reconstruction.run()
-
-        self.thread = QThread()
-        self.worker = Worker()
-        self.worker.moveToThread(self.thread)
-        self.thread.started.connect(self.worker.run)
-        self.worker.finished.connect(self.thread.quit)
-        self.worker.finished.connect(self.worker.deleteLater)
-        self.thread.finished.connect(self.thread.deleteLater)
-        self.worker.progress.connect(self.reportProgress)
-        self.worker.sent_reconstructed_array.connect(self.display_reconstructed_array)
-
-        self.thread.start()
-        self.ui.reconstruction_run_pushButton.setEnabled(False)
-
-        self.thread.finished.connect(lambda: self.ui.reconstruction_run_pushButton.setEnabled(True))
-        self.thread.finished.connect(lambda: show_status_message(parent=self,
-                                                                 message=f"Reconstruction ... DONE!",
-                                                                 status=StatusMessageStatus.ready,
-                                                                 duration_s=5))
+        o_reconstruction = ReconstructionLauncher(parent=self)
+        o_reconstruction.run()
 
     def reportProgress(self, iteration):
         show_status_message(parent=self,
@@ -380,28 +359,6 @@ class PyMBIRUILauncher(QMainWindow):
         logging.info(" #### Leaving pyMBIR_UI ####")
 
         self.close()
-
-
-class Worker(QObject):
-    finished = Signal()
-    progress = Signal(int)
-    sent_reconstructed_array = Signal(np.ndarray)
-
-    def run(self):
-
-        nbr_iteration = 20
-        sleeping_time = 3  # s
-
-        for _i in np.arange(nbr_iteration):
-            time.sleep(sleeping_time)
-            fake_2d_array = np.random.random((512, 512))
-            #self.sent_reconstructed_array.emit({_i: fake_2d_array})
-            self.sent_reconstructed_array.emit(fake_2d_array)
-
-            logging.info(f"worker iteration {_i+1}/{nbr_iteration}")
-
-            self.progress.emit(_i+1)
-        self.finished.emit()
 
 
 def main(args):
