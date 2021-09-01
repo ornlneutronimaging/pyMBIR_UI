@@ -21,5 +21,5 @@ class Worker(QObject):
 
             logging.info(f"worker iteration {_i+1}/{nbr_iteration}")
 
-            self.progress.emit(_i+1)
+            self.progress.emit(_i+1, 0.5)
         self.finished.emit()
