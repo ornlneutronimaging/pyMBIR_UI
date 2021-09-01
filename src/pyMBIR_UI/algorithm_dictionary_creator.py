@@ -3,37 +3,36 @@ from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
 from pyMBIR_UI.advanced_settings.advanced_settings_initialization import AdvancedSettingsInitialization
 
 
-class CommandLineCreator:
+class AlgorithmDictionaryCreator:
 
-    command_line = None
+    dictionary = None
     algorithm_selected = None
 
     def __init__(self, parent=None, algorithm_selected=ReconstructionAlgorithm.pymbir):
         self.parent = parent
         self.algorithm_selected = algorithm_selected
 
-    def build_command_line(self):
+    def build_dictionary(self):
         if self.algorithm_selected == ReconstructionAlgorithm.pymbir:
-            o_command_line = PyMBIRCommandLineCreator(parent=self.parent)
-            o_command_line.build_command_line()
-            self.command_line = o_command_line.get_command_line()
+            o_dictionary = PyMBIRDictionaryCreator(parent=self.parent)
+            o_dictionary.build_dictionary()
+            self.dictionary = o_dictionary.get_dictionary()
         else:
-            raise NotImplementedError("Can no build command line, algorithm not implemented yet!")
+            raise NotImplementedError("Can no create dictionary, algorithm not implemented yet!")
 
-    def get_command_line(self):
-        return self.command_line
+    def get_dictionary(self):
+        return self.dictionary
 
 
-class PyMBIRCommandLineCreator:
+class PyMBIRDictionaryCreator:
 
     parent = None
-    command_line = None
+    dictionary = None
 
     def __init__(self, parent=None):
         self.parent = parent
 
-    def build_command_line(self):
-        self.command_line = "python recon_HFIR_script.py"
+    def build_dictionary(self):
 
         session_dict = self.parent.session_dict
 
@@ -150,8 +149,7 @@ class PyMBIRCommandLineCreator:
         output_folder = session_dict[DataType.output]['folder']
         arguments['--op_path'] = output_folder
 
-        for _arg in arguments.keys():
-            self.command_line += f" {_arg} {arguments[_arg]}"
+        self.dictionary = arguments
 
-    def get_command_line(self):
-        return self.command_line
+    def get_dictionary(self):
+        return self.dictionary

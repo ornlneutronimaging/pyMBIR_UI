@@ -6,7 +6,7 @@ from qtpy.QtCore import QObject, QThread, Signal
 from . import ReconstructionAlgorithm
 from .session_handler import SessionHandler
 from .general_settings_handler import GeneralSettingsHandler
-from .command_line_creator import CommandLineCreator
+from .algorithm_dictionary_creator import AlgorithmDictionaryCreator
 from .fake_reconstruction_script import main as fake_reconstruction_script
 from pyMBIR_UI.venkat_function import Worker
 from .status_message_config import show_status_message, StatusMessageStatus
@@ -33,11 +33,11 @@ class ReconstructionLauncher:
         logging.info("Running reconstruction")
         logging.info(f"-> algorithm selected: {self.reconstruction_algorithm_selected}")
 
-        o_command_line = CommandLineCreator(parent=self.parent,
-                                            algorithm_selected=self.reconstruction_algorithm_selected)
-        o_command_line.build_command_line()
-        command_line = o_command_line.get_command_line()
-        logging.info(f"-> About to run the command line: {command_line}")
+        o_dictionary = AlgorithmDictionaryCreator(parent=self.parent,
+                                                  algorithm_selected=self.reconstruction_algorithm_selected)
+        o_dictionary.build_dictionary()
+        dictionary_of_arguments = o_dictionary.get_dictionary()
+        logging.info(f"-> Dictionary of arguments: {dictionary_of_arguments}")
 
         # os.system(command_line)
         current_path = Path(__file__).parent
@@ -47,7 +47,7 @@ class ReconstructionLauncher:
         #                            progress_bar_id=self.parent.eventProgress)
 
         self.parent.thread = QThread()
-        self.parent.worker = Worker()
+        self.parent.worker = Worker(dictionary_of_arguments=dictionary_of_arguments)
         self.parent.worker.moveToThread(self.parent.thread)
         self.parent.thread.started.connect(self.parent.worker.run)
         self.parent.worker.finished.connect(self.parent.thread.quit)

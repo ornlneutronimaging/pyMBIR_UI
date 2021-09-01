@@ -9,7 +9,7 @@ class Worker(QObject):
     progress = Signal(int)
     sent_reconstructed_array = Signal(np.ndarray)
 
-    def run(self):
+    def run(self, dictionary_of_arguments=None):
 
         nbr_iteration = 20
         sleeping_time = 3  # s
