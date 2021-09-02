@@ -9,7 +9,7 @@ class Worker(QObject):
     progress = Signal(int)
     sent_reconstructed_array = Signal(np.ndarray)
 
-    def run(self, dictionary=None):
+    def run(self, dictionary_of_arguments=None):
 
         nbr_iteration = 20
         sleeping_time = 3  # s
@@ -21,5 +21,5 @@ class Worker(QObject):
 
             logging.info(f"worker iteration {_i+1}/{nbr_iteration}")
 
-            self.progress.emit(_i+1) 
+            self.progress.emit(_i+1, 0.5)
         self.finished.emit()

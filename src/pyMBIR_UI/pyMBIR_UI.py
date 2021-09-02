@@ -312,9 +312,9 @@ class PyMBIRUILauncher(QMainWindow):
         o_reconstruction = ReconstructionLauncher(parent=self)
         o_reconstruction.run()
 
-    def reportProgress(self, iteration):
+    def reportProgress(self, iteration, stopping_criteria):
         show_status_message(parent=self,
-                            message=f"Reconstruction ... {iteration}",
+                            message=f"Reconstruction ... {iteration} and stopping criteria: {int(100*stopping_criteria)}",
                             status=StatusMessageStatus.working)
         self.ui.tabWidget.setTabEnabled(3, True)
         QGuiApplication.processEvents()
