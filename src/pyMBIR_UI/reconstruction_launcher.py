@@ -47,7 +47,8 @@ class ReconstructionLauncher:
         #                            progress_bar_id=self.parent.eventProgress)
 
         self.parent.thread = QThread()
-        self.parent.worker = Worker(dictionary_of_arguments=dictionary_of_arguments)
+        self.parent.worker = Worker()
+        self.parent.worker.init(dictionary_of_arguments=dictionary_of_arguments)
         self.parent.worker.moveToThread(self.parent.thread)
         self.parent.thread.started.connect(self.parent.worker.run)
         self.parent.worker.finished.connect(self.parent.thread.quit)
