@@ -55,6 +55,7 @@ class VenkatWorker(QObject):
     progress = Signal(int,float)
     sent_reconstructed_array = Signal(np.ndarray)
 
+
     def init(self, dictionary_of_arguments=None):
         self.dictionary_of_arguments = dictionary_of_arguments
 
@@ -89,7 +90,7 @@ def create_circle_mask(y,x,center,rad):
     mask = (x-center[0])*(x-center[0]) + (y-center[1])*(y-center[1]) <= rad*rad
     return mask
     
-def full_recon_testdata(progress,finished,sent_reconstructed_array):
+def full_recon_testdata(progress,finished,sent_recon_array):
     #Detector and experiment parameters
     num_angles = 256
     det_row = 128
@@ -219,7 +220,7 @@ def full_recon_testdata(progress,finished,sent_reconstructed_array):
 
     rec_params['gui_emit']=True
     rec_params['emit_freq']=5
-    rec_params['sent_recon_array']=sent_reconstructed_array
+    rec_params['sent_recon_array']=sent_recon_array
     rec_params['progress']=progress
     rec_params['finished']=finished
 
