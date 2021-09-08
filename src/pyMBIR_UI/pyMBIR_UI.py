@@ -24,6 +24,7 @@ from pyMBIR_UI.reconstruction_launcher import ReconstructionLauncher
 from pyMBIR_UI.advanced_settings.advanced_settings_handler import AdvancedSettingsPasswordHandler
 from pyMBIR_UI.general_settings_handler import GeneralSettingsHandler
 from .status_message_config import show_status_message, StatusMessageStatus
+from pyMBIR_UI.venkat_function import run_venkat_function
 
 # warnings.filterwarnings('ignore')
 
@@ -359,6 +360,10 @@ class PyMBIRUILauncher(QMainWindow):
         logging.info(" #### Leaving pyMBIR_UI ####")
 
         self.close()
+
+    def run_venkat_code(self):
+        run_venkat_function(parent=self)
+
 
 
 def main(args):

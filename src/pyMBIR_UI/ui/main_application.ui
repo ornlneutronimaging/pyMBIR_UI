@@ -24,7 +24,7 @@
        <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideMiddle</enum>
@@ -189,7 +189,7 @@
              <x>0</x>
              <y>0</y>
              <width>1126</width>
-             <height>640</height>
+             <height>606</height>
             </rect>
            </property>
            <attribute name="label">
@@ -1078,6 +1078,13 @@
       </widget>
      </widget>
     </item>
+    <item>
+     <widget class="QPushButton" name="pushButton">
+      <property name="text">
+       <string>RUN VENKAT'S CODE</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -1430,7 +1437,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>298</x>
-     <y>621</y>
+     <y>587</y>
     </hint>
     <hint type="destinationlabel">
      <x>9</x>
@@ -1446,7 +1453,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>321</x>
-     <y>621</y>
+     <y>587</y>
     </hint>
     <hint type="destinationlabel">
      <x>6</x>
@@ -1462,7 +1469,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>301</x>
-     <y>674</y>
+     <y>640</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -1478,7 +1485,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>208</x>
-     <y>674</y>
+     <y>640</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -1766,7 +1773,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>644</x>
-     <y>785</y>
+     <y>751</y>
     </hint>
     <hint type="destinationlabel">
      <x>1188</x>
@@ -1830,7 +1837,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>546</x>
-     <y>801</y>
+     <y>767</y>
     </hint>
     <hint type="destinationlabel">
      <x>1190</x>
@@ -1846,7 +1853,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>1119</x>
-     <y>797</y>
+     <y>763</y>
     </hint>
     <hint type="destinationlabel">
      <x>1190</x>
@@ -1862,11 +1869,27 @@
    <hints>
     <hint type="sourcelabel">
      <x>118</x>
-     <y>773</y>
+     <y>739</y>
     </hint>
     <hint type="destinationlabel">
      <x>6</x>
      <y>829</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>run_venkat_code()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>680</x>
+     <y>823</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>303</x>
+     <y>843</y>
     </hint>
    </hints>
   </connection>
@@ -1908,5 +1931,6 @@
   <slot>output_slider_changed()</slot>
   <slot>output_slider_clicked()</slot>
   <slot>output_checkbox_clicked()</slot>
+  <slot>run_venkat_code()</slot>
  </slots>
 </ui>
