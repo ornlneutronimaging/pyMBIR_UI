@@ -4,6 +4,11 @@ import numpy as np
 import logging
 
 from qtpy.QtCore import QObject, QThread, Signal
+import astra
+import time
+from pyMBIR.utils import createTransmission,rmse
+from pyMBIR.geometry import generateAmatrix
+from pyMBIR.reconEngine import MBIR
 
 
 class Worker(QObject):
@@ -47,15 +52,15 @@ def my_function(nbr_iteration, sleeping_time, finished, progress, sent_reconstru
 
 class VenkatWorker(QObject):
     finished = Signal()
-    progress = Signal(int)
+    progress = Signal(int,float)
     sent_reconstructed_array = Signal(np.ndarray)
 
     def init(self, dictionary_of_arguments=None):
         self.dictionary_of_arguments = dictionary_of_arguments
 
     def run(self):
-        venkat_my_function(self.progress, self.finished)
-
+        #venkat_my_function(self.progress, self.finished)
+        full_recon_testdata(self.progress,self.finished,self.sent_reconstructed_array)
 
 def venkat_my_function(progress, finished):
 
@@ -79,4 +84,148 @@ def run_venkat_function(parent=None):
 
 def reportProgress():
     print("in report progress")
+
+def create_circle_mask(y,x,center,rad):
+    mask = (x-center[0])*(x-center[0]) + (y-center[1])*(y-center[1]) <= rad*rad
+    return mask
     
+def full_recon_testdata(progress,finished,sent_reconstructed_array):
+    #Detector and experiment parameters
+    num_angles = 256
+    det_row = 128
+    det_col = 256
+    
+    #Input flux and noise 
+    I0 = 2e4
+    noise_std = 1
+    off_center_u = 20 #Number of pixels by which the center of rotation is off. To test artifacts due to this type of error.
+    off_center_v=0
+    det_tilt=0 
+    lam_angle = 70 #Laminography angle
+    det_x=1.0
+    det_y=1.0
+    vox_xy=1.0
+    vox_z=1.0
+    
+    disc_height = 40
+    center1=np.array([0,0])
+    disc_rad1 = 100
+    density1=0.01
+    
+    ring1_length = 50
+    ring1_rad = 42
+    ring2_length = 50
+    ring2_rad = 25
+    theta_list = np.array([0,72,144,216,288])*np.pi/180
+    density2=0.02
+    
+    # Geometry for laminography 
+    alpha=np.array([lam_angle])
+    
+    #Miscalibrations - detector offset, tilt
+    miscalib={}
+    miscalib['delta_u']=off_center_u
+    miscalib['delta_v']=off_center_v
+    miscalib['phi']=det_tilt*np.pi/180
+    
+    #MRF parameters
+    MRF_P = 1.2 #1.2
+    MRF_SIGMA = 0.5 
+
+    NUM_ITER = 200
+    gpu_index = 0
+    
+    ######End of inputs#######
+    
+    im_size = np.int(det_col*det_x/vox_xy) # n X n X n_slice volume             
+    num_slice = np.int(det_row*det_y/vox_z)
+    
+    astra.astra.set_gpu_index(gpu_index)
+    alpha=alpha*np.pi/180
+    
+    obj = np.zeros((num_slice,im_size,im_size)).astype(np.float32)
+    
+    y,x=np.ogrid[-im_size/2:im_size/2,-im_size/2:im_size/2]
+    height_idx = slice(np.int(det_row/2-disc_height/2),np.int(det_row/2+disc_height/2))
+    
+    mask=create_circle_mask(y,x,center1,disc_rad1)
+    obj[height_idx,mask]=density1
+    
+    for theta in theta_list:
+        center_temp=np.array([ring1_length*np.cos(theta),ring1_length*np.sin(theta)])
+        mask1 = create_circle_mask(y,x,center_temp,ring1_rad)
+        mask2 = create_circle_mask(y,x,center_temp,ring2_rad)
+    obj[height_idx,mask1^mask2] = density2
+
+    
+    # ----------------------------------
+    # Parallel beam Laminography Vectors
+    # ----------------------------------
+    # Parameters: width of detector column, height of detector row, #rows, #columns
+    angles = np.linspace(0, 2*np.pi, num_angles, False)
+    
+    proj_dims=np.array([det_row,num_angles,det_col])
+    
+    proj_params={}
+    proj_params['type'] = 'par'
+    proj_params['dims']= proj_dims
+    proj_params['angles'] = angles
+    proj_params['alpha'] = np.array([alpha])
+    proj_params['forward_model_idx']=2
+    
+    proj_params['pix_x']= det_x
+    proj_params['pix_y']= det_y
+    
+    vol_params={}
+    vol_params['vox_xy'] = vox_xy
+    vol_params['vox_z'] = vox_z
+    vol_params['n_vox_x']=det_col
+    vol_params['n_vox_y']=det_col
+    vol_params['n_vox_z']=det_row
+
+    A=generateAmatrix(proj_params,miscalib,vol_params,gpu_index)
+    proj_data = A*obj
+    proj_data=proj_data.astype(np.float32).reshape(det_row,num_angles,det_col)
+
+    #Simulate Poisson like statistics using Gaussian approximation
+    weight_data = createTransmission(proj_data,I0,noise_std)
+    
+    
+    #Test projector
+    print('Min/Max %f/%f of weight data' %(weight_data.min(),weight_data.max()))
+    proj_data = np.log(I0/weight_data)
+    
+    #Display object
+    print('Actual projection shape (%d,%d,%d)'% proj_data.shape)
+    temp_proj_data=np.swapaxes(proj_data,0,1)
+    temp_proj_data=np.swapaxes(temp_proj_data,1,2)
+    print(temp_proj_data.shape)
+    
+    print(proj_data.shape)
+    
+    rec_params={}
+    rec_params['num_iter'] = NUM_ITER
+    rec_params['gpu_index']= gpu_index
+    rec_params['MRF_P'] = MRF_P
+    rec_params['MRF_SIGMA'] = MRF_SIGMA
+    rec_params['debug']=False
+    rec_params['huber_T']=5
+    rec_params['huber_delta']=0.1
+    rec_params['sigma']=1
+    rec_params['reject_frac']=.1
+    rec_params['verbose']=True
+    rec_params['stop_thresh']=0.001
+
+
+    rec_params['gui_emit']=True
+    rec_params['emit_freq']=5
+    rec_params['sent_recon_array']=sent_reconstructed_array
+    rec_params['progress']=progress
+    rec_params['finished']=finished
+
+    #params for fbp
+    rec_params['filt_type']='Ram-Lak'
+    rec_params['filt_cutoff']=0.8
+    
+    recon_mbir=MBIR(proj_data,weight_data,proj_params,miscalib,vol_params,rec_params)
+
