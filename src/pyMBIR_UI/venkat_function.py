@@ -114,7 +114,7 @@ def MBIR_fromGUI(input_params, gui_params):
     rec_params['gpu_index']=range(0,input_params['num_gpu'])
     rec_params['MRF_P']=input_params['mrf_p']
     rec_params['MRF_SIGMA']=input_params['mrf_sigma']
-    rec_params['stop_thresh']=input_params['stop_thresh']
+    rec_params['stop_thresh']=float(input_params['stop_thresh'])
 
     #GUI related params 
     rec_params['gui_emit']=True
@@ -175,7 +175,7 @@ def MBIR_fromGUI(input_params, gui_params):
     count_data=count_data.swapaxes(0,1)
     
     #For data set 1
-    print('Subsetting data ..')
+    print('Subsetting data by a factor of %d' %(input_params['view_subsamp']))
     ang_idx = range(0,len(angles),input_params['view_subsamp'])
     count_data=count_data[:,ang_idx,:]
     norm_data = norm_data[:,ang_idx,:] #Subset to run on GPU 
