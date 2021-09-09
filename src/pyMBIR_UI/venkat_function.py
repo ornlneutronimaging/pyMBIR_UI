@@ -65,7 +65,7 @@ class VenkatWorker(QObject):
                      {'progress': self.progress,
                       'finished': self.finished,
                       'sent_recon_array': self.sent_reconstructed_array,
-                      'emit_frew': 5})
+                      'emit_freq': 5})
 
 def venkat_my_function(progress, finished):
 
@@ -119,7 +119,7 @@ def MBIR_fromGUI(input_params, gui_params):
     #GUI related params 
     rec_params['gui_emit']=True
     rec_params['emit_freq']=gui_params['emit_freq']
-    rec_params['sent_recon_array']=gui_params['sent_reconstructed_array']
+    rec_params['sent_recon_array']=gui_params['sent_recon_array']
     rec_params['progress']=gui_params['progress']
     rec_params['finished']=gui_params['finished']
 
@@ -136,7 +136,8 @@ def MBIR_fromGUI(input_params, gui_params):
     z_numSlice = input_params['z_numSlice']
     filt_size=input_params['med_filt_win'] #window of median filter 
     print(os.path.join(input_params['brt_path'],'*.tiff'))
-    #Read data 
+    #Read data
+    print('Reading slices from %d to %d with %d cores' %(z_start,z_numSlice,max_core))
     brights=readMedianTifDir(os.path.join(input_params['brt_path'],'*.tiff'),z_start,z_numSlice,filt_size)
     darks=readMedianTifDir(os.path.join(input_params['drk_path'],'*.tiff'),z_start,z_numSlice,filt_size)
     count_data=readRadiographTifDir2(input_params['data_path'],z_start,z_numSlice)
