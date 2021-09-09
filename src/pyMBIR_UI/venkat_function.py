@@ -1,19 +1,14 @@
 import numpy as np
 import logging
 from qtpy.QtCore import QObject, QThread, Signal
-#import astra
-#import time
-#from pyMBIR.utils import createTransmission,rmse
-#from pyMBIR.geometry import generateAmatrix
-#from pyMBIR.reconEngine import MBIR
 from tomopy import remove_stripe_fw
-from dxchange.writer import write_tiff_stack
 from pyMBIR.reconEngine import analytic, MBIR
 from pyMBIR.utils import apply_proj_tilt
 from readNeutronData import * 
 from tomopy.misc.corr import median_filter
 import os
 import dxchange
+import time
 
 
 
@@ -67,7 +62,11 @@ class VenkatWorker(QObject):
 
     def run(self):
         #venkat_my_function(self.progress, self.finished)
-        full_recon_testdata(self.progress,self.finished,self.sent_reconstructed_array)
+        MBIR_fromGUI(self.dictionary_of_arguments,
+                     {'progress': self.progress,
+                      'finished': self.finished,
+                      'sent_recon_array': self.sent_reconstructed_array,
+                      'emit_frew': 5})
 
 def venkat_my_function(progress, finished):
 
@@ -96,7 +95,7 @@ def create_circle_mask(y,x,center,rad):
     mask = (x-center[0])*(x-center[0]) + (y-center[1])*(y-center[1]) <= rad*rad
     return mask
     
-def MBIR_fromGUI(input_params,gui_params):
+def MBIR_fromGUI(input_params, gui_params):
     '''
     2 dictionaries from the GUI interface
     input_params : Has all the user inputs including advanced params 
