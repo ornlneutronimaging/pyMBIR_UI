@@ -56,7 +56,6 @@ class VenkatWorker(QObject):
     progress = Signal(int,float)
     sent_reconstructed_array = Signal(np.ndarray)
 
-
     def init(self, dictionary_of_arguments=None):
         self.dictionary_of_arguments = dictionary_of_arguments
 
