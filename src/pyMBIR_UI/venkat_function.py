@@ -1,14 +1,14 @@
 import numpy as np
 import logging
 from qtpy.QtCore import QObject, QThread, Signal
-# from tomopy import remove_stripe_fw
-# from pyMBIR.reconEngine import analytic, MBIR
-# from pyMBIR.utils import apply_proj_tilt
-# from readNeutronData import *
-# from tomopy.misc.corr import median_filter
-# import os
-# import dxchange
-# import time
+from tomopy import remove_stripe_fw
+from pyMBIR.reconEngine import analytic, MBIR
+from pyMBIR.utils import apply_proj_tilt
+from readNeutronData import *
+from tomopy.misc.corr import median_filter
+import os
+import dxchange
+import time
 
 
 
@@ -38,17 +38,17 @@ class Worker(QObject):
         #     self.progress.emit(_i+1, 0.5)
         # self.finished.emit()
 
-# def my_function(nbr_iteration, sleeping_time, finished, progress, sent_reconstructed_array):
-#
-#     for _i in np.arange(nbr_iteration):
-#         time.sleep(sleeping_time)
-#         fake_2d_array = np.random.random((512, 512))
-#         sent_reconstructed_array.emit(fake_2d_array)  # I need this
-#
-#         logging.info(f"worker iteration {_i + 1}/{nbr_iteration}")
-#
-#         progress.emit(_i + 1, 0.5)
-#     finished.emit()
+def my_function(nbr_iteration, sleeping_time, finished, progress, sent_reconstructed_array):
+
+    for _i in np.arange(nbr_iteration):
+        time.sleep(sleeping_time)
+        fake_2d_array = np.random.random((512, 512))
+        sent_reconstructed_array.emit(fake_2d_array)  # I need this
+
+        logging.info(f"worker iteration {_i + 1}/{nbr_iteration}")
+
+        progress.emit(_i + 1, 0.5)
+    finished.emit()
 
 
 class VenkatWorker(QObject):
