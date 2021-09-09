@@ -167,7 +167,7 @@ class AdvancedSettingsHandler(QDialog):
         self.ui.wavelet_level_label.setText(str(wavelet_level))
         max_number_of_iterations = local_session_dict["max_number_of_iterations"]
         self.ui.max_nbr_iterations_spinBox.setValue(max_number_of_iterations)
-        stop_threshold = local_session_dict["stop_threshold"]
+        stop_threshold = str(local_session_dict["stop_threshold"])
         self.ui.stop_threshold_lineEdit.setText(stop_threshold)
         median_filter_size = local_session_dict["median_filter_size"]
         self.ui.median_filter_spinBox.setValue(median_filter_size)

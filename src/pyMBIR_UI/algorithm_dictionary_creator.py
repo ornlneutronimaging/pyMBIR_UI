@@ -117,7 +117,7 @@ class PyMBIRDictionaryCreator:
 
         # Relative change stopping criteria in percentage
         stop_thresh = session_dict['advanced settings']['stop threshold']
-        arguments['stop_thresh'] = stop_thresh
+        arguments['stop_thresh'] = float(stop_thresh)
 
         # det pix size along x and y
         det_x = session_dict['advanced settings']['det_x, det_y']['det_x_to_use']
