@@ -24,7 +24,7 @@
        <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideMiddle</enum>
@@ -188,8 +188,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>331</width>
-             <height>189</height>
+             <width>1126</width>
+             <height>640</height>
             </rect>
            </property>
            <attribute name="label">
@@ -778,6 +778,9 @@
                  <property name="singleStep">
                   <double>0.010000000000000</double>
                  </property>
+                 <property name="value">
+                  <double>0.200000000000000</double>
+                 </property>
                 </widget>
                </item>
                <item row="1" column="0">
@@ -871,6 +874,9 @@
                  </property>
                  <property name="singleStep">
                   <double>0.100000000000000</double>
+                 </property>
+                 <property name="value">
+                  <double>0.500000000000000</double>
                  </property>
                 </widget>
                </item>
