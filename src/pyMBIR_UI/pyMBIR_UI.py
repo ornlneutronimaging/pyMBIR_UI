@@ -6,6 +6,7 @@ import logging
 from . import load_ui
 import versioneer
 import numpy as np
+from qtpy.QtCore import QObject, QThread, Signal
 
 from .import_data_handler import ImportDataHandler
 from .gui_initialization import GuiInitialization
@@ -24,7 +25,6 @@ from pyMBIR_UI.reconstruction_launcher import ReconstructionLauncher
 from pyMBIR_UI.advanced_settings.advanced_settings_handler import AdvancedSettingsPasswordHandler
 from pyMBIR_UI.general_settings_handler import GeneralSettingsHandler
 from .status_message_config import show_status_message, StatusMessageStatus
-from pyMBIR_UI.venkat_function import run_venkat_function
 
 # warnings.filterwarnings('ignore')
 
@@ -90,6 +90,8 @@ class PyMBIRUILauncher(QMainWindow):
 
     # reconstructed full array
     full_reconstructed_array = None
+
+    stop_thread = Signal(bool)
 
     def __init__(self, parent=None):
         super(PyMBIRUILauncher, self).__init__(parent)
@@ -311,7 +313,15 @@ class PyMBIRUILauncher(QMainWindow):
 
     def run_reconstruction(self):
         o_reconstruction = ReconstructionLauncher(parent=self)
+        o_reconstruction.initialization()
         o_reconstruction.run()
+
+    def stop_reconstruction(self):
+        o_reconstruction = ReconstructionLauncher(parent=self)
+        o_reconstruction.stop()
+
+    def launch_reconstruction(self):
+        print("launching reconstruction")
 
     def reportProgress(self, iteration, stopping_criteria):
         show_status_message(parent=self,
@@ -351,6 +361,10 @@ class PyMBIRUILauncher(QMainWindow):
         if value:
             max_slider_value = self.ui.output_horizontalSlider.maximum()
             self.ui.output_horizontalSlider.setValue(max_slider_value)
+
+    # def stop_thread(self, state):
+    #     print("state")
+
 
     # leaving ui
     def closeEvent(self, c):

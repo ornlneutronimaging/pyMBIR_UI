@@ -14,44 +14,55 @@ import dxchange
 import time
 
 
-
-class Worker(QObject):
+class TestWorker(QObject):
     finished = Signal()
     progress = Signal(int, float)
     sent_reconstructed_array = Signal(np.ndarray)
+    stop_state = False
 
-    def init(self, dictionary_of_arguments=None):
+    def init(self, dictionary_of_arguments=None, stop_thread=None):
         self.dictionary_of_arguments = dictionary_of_arguments
+        # self.stop_thread = stop_thread
+        stop_thread.connect(self.stop_this_thread)
 
     def run(self):
 
-        nbr_iteration = 20
+        nbr_iteration = 5
         sleeping_time = 3  # s
         dictionary_of_arguments = self.dictionary_of_arguments
 
-        my_function(nbr_iteration, sleeping_time, self.finished, self.progress, self.sent_reconstructed_array)
 
-        # for _i in np.arange(nbr_iteration):
-        #     time.sleep(sleeping_time)
-        #     fake_2d_array = np.random.random((512, 512))
-        #     self.sent_reconstructed_array.emit(fake_2d_array)    # I need this
-        #
-        #     logging.info(f"worker iteration {_i+1}/{nbr_iteration}")
-        #
-        #     self.progress.emit(_i+1, 0.5)
-        # self.finished.emit()
+        # my_function(nbr_iteration, sleeping_time, self.finished, self.progress, self.sent_reconstructed_array)
 
-def my_function(nbr_iteration, sleeping_time, finished, progress, sent_reconstructed_array):
+        for _i in np.arange(nbr_iteration):
+            time.sleep(sleeping_time)
+            fake_2d_array = np.random.random((512, 512))
+            self.sent_reconstructed_array.emit(fake_2d_array)    # I need this
 
-    for _i in np.arange(nbr_iteration):
-        time.sleep(sleeping_time)
-        fake_2d_array = np.random.random((512, 512))
-        sent_reconstructed_array.emit(fake_2d_array)  # I need this
+            logging.info(f"worker iteration {_i+1}/{nbr_iteration}")
 
-        logging.info(f"worker iteration {_i + 1}/{nbr_iteration}")
+            self.progress.emit(_i+1, 0.5)
+            if self.stop_state:
+                logging.info(f"User manually stopped thread before the end!")
+                break
+        self.finished.emit()
 
-        progress.emit(_i + 1, 0.5)
-    finished.emit()
+    def stop_this_thread(self, state):
+        self.stop_state = state
+
+
+# def my_function(nbr_iteration, sleeping_time, finished, progress, sent_reconstructed_array):
+#
+#     for _i in np.arange(nbr_iteration):
+#         time.sleep(sleeping_time)
+#         fake_2d_array = np.random.random((512, 512))
+#         sent_reconstructed_array.emit(fake_2d_array)  # I need this
+#
+#         logging.info(f"worker iteration {_i + 1}/{nbr_iteration}")
+#
+#         progress.emit(_i + 1, 0.5)
+#
+#     finished.emit()
 
 
 class VenkatWorker(QObject):
