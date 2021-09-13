@@ -188,8 +188,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1126</width>
-             <height>606</height>
+             <width>331</width>
+             <height>189</height>
             </rect>
            </property>
            <attribute name="label">
@@ -1078,13 +1078,6 @@
       </widget>
      </widget>
     </item>
-    <item>
-     <widget class="QPushButton" name="pushButton">
-      <property name="text">
-       <string>RUN VENKAT'S CODE</string>
-      </property>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -1134,7 +1127,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>../../../../../../.designer/backup/icons/document-save.png</normaloff>../../../../../../.designer/backup/icons/document-save.png</iconset>
+     <normaloff>../../../../../../../../../.designer/backup/icons/document-save.png</normaloff>../../../../../../../../../.designer/backup/icons/document-save.png</iconset>
    </property>
    <property name="text">
     <string>Save ...</string>
@@ -1149,7 +1142,7 @@
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>../../../../../../.designer/backup/icons/document-open.png</normaloff>../../../../../../.designer/backup/icons/document-open.png</iconset>
+     <normaloff>../../../../../../../../../.designer/backup/icons/document-open.png</normaloff>../../../../../../../../../.designer/backup/icons/document-open.png</iconset>
    </property>
    <property name="text">
     <string>Load ...</string>
@@ -1166,7 +1159,7 @@
   <action name="actionAbout">
    <property name="icon">
     <iconset>
-     <normaloff>../../../../../../.designer/backup/icons/about.png</normaloff>../../../../../../.designer/backup/icons/about.png</iconset>
+     <normaloff>../../../../../../../../../.designer/backup/icons/about.png</normaloff>../../../../../../../../../.designer/backup/icons/about.png</iconset>
    </property>
    <property name="text">
     <string>About</string>
@@ -1874,22 +1867,6 @@
     <hint type="destinationlabel">
      <x>6</x>
      <y>829</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pushButton</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>run_venkat_code()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>680</x>
-     <y>823</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>303</x>
-     <y>843</y>
     </hint>
    </hints>
   </connection>

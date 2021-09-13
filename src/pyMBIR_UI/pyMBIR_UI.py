@@ -361,10 +361,6 @@ class PyMBIRUILauncher(QMainWindow):
 
         self.close()
 
-    def run_venkat_code(self):
-        run_venkat_function(parent=self)
-
-
 
 def main(args):
     app = QApplication(args)
