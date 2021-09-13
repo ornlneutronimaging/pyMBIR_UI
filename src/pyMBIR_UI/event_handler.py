@@ -56,3 +56,10 @@ class EventHandler:
         full_reconstructed_array = self.parent.full_reconstructed_array
         data_to_display = np.transpose(full_reconstructed_array[array_index_to_show])
         self.parent.ui.output_image_view.setImage(data_to_display)
+
+    def reset_output_plot(self):
+        self.parent.ui.tabWidget.setTabEnabled(3, False)
+        self.parent.ui.output_image_view.clear()
+        self.parent.ui.output_horizontalSlider.setVisible(False)
+        self.parent.ui.output_horizontalSlider.setMaximum(1)
+        self.parent.full_reconstructed_array = None

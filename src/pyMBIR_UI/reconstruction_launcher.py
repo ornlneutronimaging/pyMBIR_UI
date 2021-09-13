@@ -11,6 +11,7 @@ from .fake_reconstruction_script import main as fake_reconstruction_script
 from pyMBIR_UI.venkat_function import TestWorker as Worker
 # from pyMBIR_UI.venkat_function import VenkatWorker as Worker
 from .status_message_config import show_status_message, StatusMessageStatus
+from .event_handler import EventHandler
 
 
 class ReconstructionLauncher:
@@ -34,6 +35,9 @@ class ReconstructionLauncher:
         o_session.save_from_ui()
 
     def run(self):
+
+        self.reset_widgets()
+
         logging.info("Running reconstruction")
         logging.info(f"-> algorithm selected: {self.reconstruction_algorithm_selected}")
 
@@ -75,3 +79,7 @@ class ReconstructionLauncher:
 
     def stop(self):
         self.parent.stop_thread.emit(True)
+
+    def reset_widgets(self):
+        o_event = EventHandler(parent=self.parent)
+        o_event.reset_output_plot()
