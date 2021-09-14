@@ -37,10 +37,8 @@ class CropHandler:
         self.parent.ui.crop_width_horizontalSlider.setMinimum(10)
 
         # height
-        self.parent.ui.crop_from_slice_label.setText("1")
         self.parent.ui.crop_from_slice_spinBox.setValue(1)
         self.parent.ui.crop_from_slice_spinBox.setMinimum(1)
-        self.parent.ui.crop_to_slice_label.setText(str(image_height))
         self.parent.ui.crop_to_slice_spinBox.setMaximum(image_height)
         self.parent.ui.crop_to_slice_spinBox.setValue(image_height)
         self.parent.ui.crop_from_slice_spinBox.setMaximum(self.parent.ui.crop_to_slice_spinBox.value() - 1)
@@ -124,8 +122,8 @@ class CropHandler:
         self.parent.crop_image_view.setImage(transpose_image)
 
     def slice_range(self):
-        from_slice = np.int(str(self.parent.ui.crop_from_slice_label.text()))
-        to_slice = np.int(str(self.parent.ui.crop_to_slice_label.text()))
+        from_slice = self.parent.ui.crop_from_slice_spinBox.value()
+        to_slice = self.parent.ui.crop_to_slice_spinBox.value()
 
         _pen = QtGui.QPen()
         _pen.setColor(QtGui.QColor(0, 255, 255))
@@ -239,9 +237,6 @@ class CropHandler:
         real_to_value = np.max([from_value, to_value])
         self.parent.ui.crop_from_slice_spinBox.setValue(real_from_value)
         self.parent.ui.crop_to_slice_spinBox.setValue(real_to_value)
-
-        self.parent.ui.crop_from_slice_label.setText(str(real_from_value))
-        self.parent.ui.crop_to_slice_label.setText(str(real_to_value))
 
         self.parent.crop_top_region_item.setRegion([0, from_value])
         self.parent.crop_bottom_region_item.setRegion([to_value, self.parent.crop_image_height])

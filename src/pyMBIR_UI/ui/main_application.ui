@@ -300,25 +300,6 @@
                   <widget class="QSpinBox" name="crop_from_slice_spinBox"/>
                  </item>
                  <item>
-                  <widget class="QLabel" name="crop_from_slice_label">
-                   <property name="minimumSize">
-                    <size>
-                     <width>50</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>50</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>N/A</string>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
                   <widget class="QLabel" name="label_9">
                    <property name="maximumSize">
                     <size>
@@ -333,25 +314,6 @@
                  </item>
                  <item>
                   <widget class="QSpinBox" name="crop_to_slice_spinBox"/>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="crop_to_slice_label">
-                   <property name="minimumSize">
-                    <size>
-                     <width>50</width>
-                     <height>0</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>50</width>
-                     <height>16777215</height>
-                    </size>
-                   </property>
-                   <property name="text">
-                    <string>N/A</string>
-                   </property>
-                  </widget>
                  </item>
                  <item>
                   <spacer name="horizontalSpacer">
