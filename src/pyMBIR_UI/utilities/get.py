@@ -147,7 +147,7 @@ class Get:
     @staticmethod
     def get_number_of_gpu():
         try:
-            str_list_gpu = subprocess.run(["nvidia-smi", "L"], stdout=subprocess.PIPE)
+            str_list_gpu = subprocess.run(["nvidia-smi", "-L"], stdout=subprocess.PIPE)
             list_gpu = str_list_gpu.stdout.decode("utf-8").split("\n")
             nbr_gpu = 0
             for _gpu in list_gpu:
