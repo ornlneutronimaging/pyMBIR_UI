@@ -365,7 +365,6 @@ class PyMBIRUILauncher(QMainWindow):
     # def stop_thread(self, state):
     #     print("state")
 
-
     # leaving ui
     def closeEvent(self, c):
         o_session = SessionHandler(parent=self)

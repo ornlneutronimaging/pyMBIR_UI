@@ -45,7 +45,8 @@ class SessionHandler:
 
         # crop tab
         crop_state = self.parent.ui.cropping_checkBox.isChecked()
-        crop_width = 2*self.parent.ui.crop_width_horizontalSlider.value()
+        # crop_width = 2*self.parent.ui.crop_width_horizontalSlider.value()
+        crop_width = int(str(self.parent.ui.crop_width_label.text()))
         try:
             crop_from_slice = np.int(self.parent.ui.crop_from_slice_label.text())
             crop_to_slice = np.int(self.parent.ui.crop_to_slice_label.text())
@@ -153,8 +154,9 @@ class SessionHandler:
             o_crop.initialize_crop()
             self.parent.ui.crop_file_index_horizontalSlider.setValue(self.parent.session_dict['crop']['file index'])
             crop_width = self.parent.session_dict['crop']['width']
-            self.parent.ui.crop_width_horizontalSlider.setValue(crop_width)
-            self.parent.ui.crop_width_label.setText(str(2*crop_width))
+
+            self.parent.ui.crop_width_horizontalSlider.setValue(crop_width/2)
+            # self.parent.ui.crop_width_label.setText(str(crop_width))
             self.parent.ui.crop_width_horizontalSlider.setMinimum(10)
             o_crop.width_changed()
             o_crop.file_index_changed()
