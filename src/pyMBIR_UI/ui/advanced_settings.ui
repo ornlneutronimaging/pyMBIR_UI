@@ -760,6 +760,13 @@
     </spacer>
    </item>
    <item>
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="text">
+      <string>Export reconstruction dictionary as JSON ...</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout_11">
      <item>
       <widget class="QPushButton" name="pushButton">
@@ -828,7 +835,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>502</x>
-     <y>787</y>
+     <y>887</y>
     </hint>
     <hint type="destinationlabel">
      <x>356</x>
@@ -843,8 +850,8 @@
    <slot>det_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>34</x>
-     <y>235</y>
+     <x>45</x>
+     <y>281</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -859,8 +866,8 @@
    <slot>det_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>32</x>
-     <y>276</y>
+     <x>45</x>
+     <y>321</y>
     </hint>
     <hint type="destinationlabel">
      <x>9</x>
@@ -875,8 +882,8 @@
    <slot>vox_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>32</x>
-     <y>355</y>
+     <x>45</x>
+     <y>400</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -891,8 +898,8 @@
    <slot>vox_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>37</x>
-     <y>397</y>
+     <x>45</x>
+     <y>440</y>
     </hint>
     <hint type="destinationlabel">
      <x>3</x>
@@ -907,8 +914,8 @@
    <slot>reset_button_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>61</x>
-     <y>787</y>
+     <x>73</x>
+     <y>887</y>
     </hint>
     <hint type="destinationlabel">
      <x>124</x>
@@ -924,7 +931,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>60</x>
-     <y>504</y>
+     <y>540</y>
     </hint>
     <hint type="destinationlabel">
      <x>7</x>
@@ -940,7 +947,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>60</x>
-     <y>544</y>
+     <y>580</y>
     </hint>
     <hint type="destinationlabel">
      <x>4</x>
@@ -1044,6 +1051,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_2</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>export_reconstruction_dictionary_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>309</x>
+     <y>835</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>308</x>
+     <y>861</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>det_clicked()</slot>
@@ -1056,5 +1079,6 @@
   <slot>number_of_cores_changed()</slot>
   <slot>number_of_gpus_clicked()</slot>
   <slot>number_of_gpus_changed()</slot>
+  <slot>export_reconstruction_dictionary_clicked()</slot>
  </slots>
 </ui>

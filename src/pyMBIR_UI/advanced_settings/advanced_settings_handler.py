@@ -1,9 +1,13 @@
 import os
-from qtpy.QtWidgets import QMainWindow, QDialog
+from qtpy.QtWidgets import QMainWindow, QDialog, QFileDialog, QApplication
+import logging
+import json
 
 from pyMBIR_UI import load_ui
 from pyMBIR_UI.session_handler import SessionHandler
 from pyMBIR_UI.utilities.get import Get
+from pyMBIR_UI.algorithm_dictionary_creator import AlgorithmDictionaryCreator
+from pyMBIR_UI.general_settings_handler import GeneralSettingsHandler
 
 
 class AdvancedSettingsPasswordHandler(QMainWindow):
@@ -237,6 +241,30 @@ class AdvancedSettingsHandler(QDialog):
         self.local_session_dict["write_output_flag"] = config["write output"]
 
         self.update_widgets()
+
+    def export_reconstruction_dictionary_clicked(self):
+        export_file_name = QFileDialog.getSaveFileName(self.parent,
+                                                       directory=self.parent.homepath,
+                                                       caption="Select the location and the file name ...",
+                                                       filter="reconstruction json (*.json)",
+                                                       initialFilter="reconstruction")
+        QApplication.processEvents()
+        export_file_name = export_file_name[0]
+
+        if export_file_name:
+            o_advanced = GeneralSettingsHandler(parent=self.parent)
+            reconstruction_algorithm_selected = o_advanced.get_reconstruction_algorithm_selected()
+            o_dictionary = AlgorithmDictionaryCreator(parent=self.parent,
+                                                      algorithm_selected=reconstruction_algorithm_selected)
+            o_dictionary.build_dictionary()
+            dictionary_of_arguments = o_dictionary.get_dictionary()
+            logging.info(f"Exporting dictionary into json:")
+            logging.info(f"-> dictionary: {dictionary_of_arguments}")
+            logging.info(f"-> reconstruction algorithm selected: {reconstruction_algorithm_selected}")
+            logging.info(f"-> output file name: {export_file_name}")
+
+            with open(export_file_name, 'w') as outfile:
+                json.dump(dictionary_of_arguments, outfile)
 
     def accept(self):
         self.save_widgets()
