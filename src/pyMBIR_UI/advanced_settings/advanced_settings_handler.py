@@ -63,6 +63,11 @@ class AdvancedSettingsHandler(QDialog):
         nbr_cpu = Get.get_number_of_cpu()
         self.ui.nbr_cores_slider.setMaximum(nbr_cpu)
         self.ui.nbr_cores_label.setText(str(nbr_cpu))
+        if nbr_cpu > 2:
+            nbr_cpu -= 2
+        else:
+            nbr_cpu = 1
+        self.ui.nbr_cores_slider.setValue(nbr_cpu)
 
         # nbr gpu
         nbr_gpu = Get.get_number_of_gpu()
