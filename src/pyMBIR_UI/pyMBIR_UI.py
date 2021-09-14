@@ -248,7 +248,7 @@ class PyMBIRUILauncher(QMainWindow):
 
     def crop_from_slice_changed(self):
         o_crop = CropHandler(parent=self)
-        o_crop.crop_slice_moved()
+        o_crop.crop_slice_moved(widget='from')
 
     def crop_from_slice_spinBox_finished_editing(self):
         o_crop = CropHandler(parent=self)
@@ -260,7 +260,7 @@ class PyMBIRUILauncher(QMainWindow):
 
     def crop_to_slice_changed(self):
         o_crop = CropHandler(parent=self)
-        o_crop.crop_slice_moved()
+        o_crop.crop_slice_moved(widget='to')
 
     # center of rotation
     def center_of_rotation_checkBox_clicked(self):

@@ -154,12 +154,21 @@ class SessionHandler:
             o_crop.initialize_crop()
             self.parent.ui.crop_file_index_horizontalSlider.setValue(self.parent.session_dict['crop']['file index'])
             crop_width = self.parent.session_dict['crop']['width']
+            from_slice = self.parent.session_dict['crop']['from slice']
+            to_slice = self.parent.session_dict['crop']['to slice']
+
+            self.parent.ui.crop_to_slice_spinBox.blockSignals(True)
+            self.parent.ui.crop_from_slice_spinBox.blockSignals(True)
+            self.parent.ui.crop_from_slice_spinBox.setValue(from_slice)
+            self.parent.ui.crop_to_slice_spinBox.setValue(to_slice)
+            self.parent.ui.crop_to_slice_spinBox.blockSignals(False)
+            self.parent.ui.crop_from_slice_spinBox.blockSignals(False)
 
             self.parent.ui.crop_width_horizontalSlider.setValue(crop_width/2)
-            # self.parent.ui.crop_width_label.setText(str(crop_width))
             self.parent.ui.crop_width_horizontalSlider.setMinimum(10)
             o_crop.width_changed()
             o_crop.file_index_changed()
+            o_crop.crop_slice_spinBox_changed(widget='all')
 
             # center of rotation
             o_center = CenterOfRotation(parent=self.parent)

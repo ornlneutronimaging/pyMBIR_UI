@@ -73,21 +73,26 @@ class CropHandler:
         self.parent.ui.crop_image_view.addItem(self.parent.crop_right_region_item)
 
     def crop_slice_spinBox_changed(self, widget='from'):
-        if widget == 'from':
+        """
+        widget can take the values 'from', 'to' and 'all'
+        """
+        if (widget == 'from') or (widget == 'all'):
             from_value = 0
             to_value = self.parent.ui.crop_from_slice_spinBox.value()-1
             value = to_value
             not_movable_red_zone = self.parent.crop_top_region_item
             movable_line = self.parent.crop_from_slice_item
-        else:
+            not_movable_red_zone.setRegion((from_value, to_value))
+            movable_line.setValue(value)
+
+        if (widget == 'to') or (widget == 'all'):
             to_value = self.parent.crop_image_height
             from_value = self.parent.ui.crop_to_slice_spinBox.value()-1
             value = from_value
             not_movable_red_zone = self.parent.crop_bottom_region_item
             movable_line = self.parent.crop_to_slice_item
-
-        not_movable_red_zone.setRegion((from_value, to_value))
-        movable_line.setValue(value)
+            not_movable_red_zone.setRegion((from_value, to_value))
+            movable_line.setValue(value)
 
     def master_checkbox_clicked(self):
         self.parent.ui.crop_frame.setEnabled(self.parent.ui.cropping_checkBox.isChecked())
@@ -162,7 +167,7 @@ class CropHandler:
         self.parent.crop_to_slice_label_item.setPos(self.parent.crop_image_width, to_slice)
         self.parent.ui.crop_image_view.addItem(self.parent.crop_to_slice_label_item)
         self.parent.ui.crop_image_view.addItem(self.parent.crop_to_slice_item)
-        self.parent.crop_to_slice_item.sigPositionChanged.connect(self.parent.crop_from_slice_changed)
+        self.parent.crop_to_slice_item.sigPositionChanged.connect(self.parent.crop_to_slice_changed)
 
         width_value = self.parent.ui.crop_width_horizontalSlider.value()
         max_value = self.parent.ui.crop_width_horizontalSlider.maximum()
@@ -214,24 +219,32 @@ class CropHandler:
             self.parent.crop_right_region_item.setRegion([self.parent.crop_image_width - (max_value - width_value),
                                                           self.parent.crop_image_width])
 
-    def crop_slice_moved(self):
+    def crop_slice_moved(self, widget='from'):
+
         if self.parent.crop_to_slice_label_item:
-            self.parent.ui.crop_image_view.removeItem(self.parent.crop_from_slice_label_item)
-            self.parent.ui.crop_image_view.removeItem(self.parent.crop_to_slice_label_item)
+            if widget == 'from':
+                self.parent.ui.crop_image_view.removeItem(self.parent.crop_from_slice_label_item)
+            else:
+                self.parent.ui.crop_image_view.removeItem(self.parent.crop_to_slice_label_item)
 
-        from_slice_item = self.parent.crop_from_slice_item
-        from_value = np.int(from_slice_item.value())+1
-        self.parent.crop_from_slice_label_item = pg.TextItem(text=f"{from_value}",
-                                                             anchor=(0, 1))
-        self.parent.crop_from_slice_label_item.setPos(self.parent.crop_image_width, from_value)
-        self.parent.ui.crop_image_view.addItem(self.parent.crop_from_slice_label_item)
+        if widget == 'from':
+            from_slice_item = self.parent.crop_from_slice_item
+            from_value = np.int(from_slice_item.value())+1
+            self.parent.crop_from_slice_label_item = pg.TextItem(text=f"{from_value}",
+                                                                 anchor=(0, 1))
+            self.parent.crop_from_slice_label_item.setPos(self.parent.crop_image_width, from_value)
+            self.parent.ui.crop_image_view.addItem(self.parent.crop_from_slice_label_item)
 
-        to_slice_item = self.parent.crop_to_slice_item
-        to_value = np.int(to_slice_item.value())+1
-        self.parent.crop_to_slice_label_item = pg.TextItem(text=f"{to_value}",
-                                                           anchor=(0, 1))
-        self.parent.crop_to_slice_label_item.setPos(self.parent.crop_image_width, to_value)
-        self.parent.ui.crop_image_view.addItem(self.parent.crop_to_slice_label_item)
+        else:
+            to_slice_item = self.parent.crop_to_slice_item
+            to_value = np.int(to_slice_item.value())+1
+            self.parent.crop_to_slice_label_item = pg.TextItem(text=f"{to_value}",
+                                                               anchor=(0, 1))
+            self.parent.crop_to_slice_label_item.setPos(self.parent.crop_image_width, to_value)
+            self.parent.ui.crop_image_view.addItem(self.parent.crop_to_slice_label_item)
+
+        from_value = self.parent.ui.crop_from_slice_spinBox.value()
+        to_value = self.parent.ui.crop_to_slice_spinBox.value()
 
         real_from_value = np.min([from_value, to_value])
         real_to_value = np.max([from_value, to_value])
