@@ -38,7 +38,13 @@ class CropHandler:
 
         # height
         self.parent.ui.crop_from_slice_label.setText("1")
+        self.parent.ui.crop_from_slice_spinBox.setValue(1)
+        self.parent.ui.crop_from_slice_spinBox.setMinimum(1)
         self.parent.ui.crop_to_slice_label.setText(str(image_height))
+        self.parent.ui.crop_to_slice_spinBox.setMaximum(image_height)
+        self.parent.ui.crop_to_slice_spinBox.setValue(image_height)
+        self.parent.ui.crop_from_slice_spinBox.setMaximum(self.parent.ui.crop_to_slice_spinBox.value() - 1)
+        self.parent.ui.crop_to_slice_spinBox.setMinimum(self.parent.ui.crop_from_slice_spinBox.value() + 1)
 
         self.parent.crop_top_region_item = pg.LinearRegionItem(values=(0, 0),
                                                                orientation='horizontal',
@@ -214,6 +220,9 @@ class CropHandler:
 
         real_from_value = np.min([from_value, to_value])
         real_to_value = np.max([from_value, to_value])
+        self.parent.ui.crop_from_slice_spinBox.setValue(real_from_value)
+        self.parent.ui.crop_to_slice_spinBox.setValue(real_to_value)
+
         self.parent.ui.crop_from_slice_label.setText(str(real_from_value))
         self.parent.ui.crop_to_slice_label.setText(str(real_to_value))
 

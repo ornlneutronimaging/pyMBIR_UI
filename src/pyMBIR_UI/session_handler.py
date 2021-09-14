@@ -48,8 +48,8 @@ class SessionHandler:
         # crop_width = 2*self.parent.ui.crop_width_horizontalSlider.value()
         crop_width = int(str(self.parent.ui.crop_width_label.text()))
         try:
-            crop_from_slice = np.int(self.parent.ui.crop_from_slice_label.text())
-            crop_to_slice = np.int(self.parent.ui.crop_to_slice_label.text())
+            crop_from_slice = self.parent.ui.crop_from_slice_spinBox.value()
+            crop_to_slice = self.parent.ui.crop_to_slice_spinBox.value()
         except ValueError:
             crop_from_slice = np.NaN
             crop_to_slice = np.NaN

@@ -24,7 +24,7 @@
        <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideMiddle</enum>
@@ -297,6 +297,9 @@
                   </widget>
                  </item>
                  <item>
+                  <widget class="QSpinBox" name="crop_from_slice_spinBox"/>
+                 </item>
+                 <item>
                   <widget class="QLabel" name="crop_from_slice_label">
                    <property name="minimumSize">
                     <size>
@@ -327,6 +330,9 @@
                     <string>to Slice #</string>
                    </property>
                   </widget>
+                 </item>
+                 <item>
+                  <widget class="QSpinBox" name="crop_to_slice_spinBox"/>
                  </item>
                  <item>
                   <widget class="QLabel" name="crop_to_slice_label">
