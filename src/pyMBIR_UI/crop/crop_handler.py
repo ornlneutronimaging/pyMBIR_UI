@@ -74,6 +74,23 @@ class CropHandler:
                                                                  bounds=[0, image_width])
         self.parent.ui.crop_image_view.addItem(self.parent.crop_right_region_item)
 
+    def crop_slice_spinBox_changed(self, widget='from'):
+        if widget == 'from':
+            from_value = 0
+            to_value = self.parent.ui.crop_from_slice_spinBox.value()-1
+            value = to_value
+            not_movable_red_zone = self.parent.crop_top_region_item
+            movable_line = self.parent.crop_from_slice_item
+        else:
+            to_value = self.parent.crop_image_height
+            from_value = self.parent.ui.crop_to_slice_spinBox.value()-1
+            value = from_value
+            not_movable_red_zone = self.parent.crop_bottom_region_item
+            movable_line = self.parent.crop_to_slice_item
+
+        not_movable_red_zone.setRegion((from_value, to_value))
+        movable_line.setValue(value)
+
     def master_checkbox_clicked(self):
         self.parent.ui.crop_frame.setEnabled(self.parent.ui.cropping_checkBox.isChecked())
 

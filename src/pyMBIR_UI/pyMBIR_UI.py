@@ -250,6 +250,14 @@ class PyMBIRUILauncher(QMainWindow):
         o_crop = CropHandler(parent=self)
         o_crop.crop_slice_moved()
 
+    def crop_from_slice_spinBox_finished_editing(self):
+        o_crop = CropHandler(parent=self)
+        o_crop.crop_slice_spinBox_changed(widget='from')
+
+    def crop_to_slice_spinBox_finished_editing(self):
+        o_crop = CropHandler(parent=self)
+        o_crop.crop_slice_spinBox_changed(widget='to')
+
     def crop_to_slice_changed(self):
         o_crop = CropHandler(parent=self)
         o_crop.crop_slice_moved()
