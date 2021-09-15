@@ -8,8 +8,8 @@ from .session_handler import SessionHandler
 from .general_settings_handler import GeneralSettingsHandler
 from .algorithm_dictionary_creator import AlgorithmDictionaryCreator
 from .fake_reconstruction_script import main as fake_reconstruction_script
-from pyMBIR_UI.venkat_function import TestWorker as Worker
-# from pyMBIR_UI.venkat_function import VenkatWorker as Worker
+# from pyMBIR_UI.venkat_function import TestWorker as Worker
+from pyMBIR_UI.venkat_function import VenkatWorker as Worker
 from .status_message_config import show_status_message, StatusMessageStatus
 from .event_handler import EventHandler
 
