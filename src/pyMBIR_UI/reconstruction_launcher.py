@@ -1,9 +1,11 @@
-import logging
 import os
+import glob
+import logging
 from pathlib import Path
 from qtpy.QtCore import QObject, QThread, Signal
+from abc import abstractmethod
 
-from . import ReconstructionAlgorithm
+from . import DataType, ReconstructionAlgorithm
 from .session_handler import SessionHandler
 from .general_settings_handler import GeneralSettingsHandler
 from .algorithm_dictionary_creator import AlgorithmDictionaryCreator
@@ -17,7 +19,6 @@ from .event_handler import EventHandler
 class ReconstructionLauncher:
 
     reconstruction_algorithm_selected = ReconstructionAlgorithm.pymbir
-    # stop_thread = Signal()
 
     def __init__(self, parent=None):
         self.parent = parent
@@ -26,6 +27,10 @@ class ReconstructionLauncher:
         self.set_reconstruction_algorithm()
         self.save_session_dict()
 
+    def reset_widgets(self):
+        o_event = EventHandler(parent=self.parent)
+        o_event.reset_output_plot()
+
     def set_reconstruction_algorithm(self):
         o_advanced = GeneralSettingsHandler(parent=self.parent)
         self.reconstruction_algorithm_selected = o_advanced.get_reconstruction_algorithm_selected()
@@ -33,6 +38,17 @@ class ReconstructionLauncher:
     def save_session_dict(self):
         o_session = SessionHandler(parent=self.parent)
         o_session.save_from_ui()
+
+    @abstractmethod
+    def run(self):
+        pass
+
+    @abstractmethod
+    def stop(self):
+        pass
+
+
+class ReconstructionLiveLauncher(ReconstructionLauncher):
 
     def run(self):
 
@@ -80,6 +96,40 @@ class ReconstructionLauncher:
     def stop(self):
         self.parent.stop_thread.emit(True)
 
-    def reset_widgets(self):
-        o_event = EventHandler(parent=self.parent)
-        o_event.reset_output_plot()
+
+class ReconstructionBatchLauncher(ReconstructionLauncher):
+
+    def run(self):
+        pass
+
+    def check_output_file(self):
+        # retrieve the latest output file from the folder
+        output_folder = self.parent.session_dict[DataType.output]['folder']
+        list_files = glob.glob(os.path.join(output_folder, '*.tiff'))
+        list_atime = {_file: os.stat(_file).st_atime for _file in list_files}
+        highest_atime = {'time': -1, 'file': None}
+
+        for _file in list_atime.keys():
+            _atime = list_atime[_file]
+            if _atime > highest_atime['time']:
+                highest_atime['time'] = _atime
+                highest_atime['file'] = _file
+
+        # if same timestamp as previous one, do nothing and just inform user
+        if self.parent.batch_mode_last_added_file_time == highest_atime['time']:
+            show_status_message(parent=self.parent,
+                                message=f"No new files found in the output folder!",
+                                status=StatusMessageStatus.warning,
+                                duration_s=10)
+            return
+
+        # display it
+        show_status_message(parent=self.parent,
+                            message=f"New file found: {highest_atime['file']}",
+                            status=StatusMessageStatus.ready,
+                            duration_s=10)
+
+        self.parent.batch_mode_last_added_file_time = highest_atime['time']
+
+    def stop(self):
+        pass

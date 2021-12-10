@@ -1046,10 +1046,32 @@
                 <item>
                  <widget class="QPushButton" name="reconstruction_display_latest_output_file_pushButton">
                   <property name="enabled">
-                   <bool>false</bool>
+                   <bool>true</bool>
                   </property>
                   <property name="text">
                    <string>DISPLAY LATEST OUTPUT FILE</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="reconstruction_batch_stop_pushButton">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>100</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>STOP</string>
                   </property>
                  </widget>
                 </item>

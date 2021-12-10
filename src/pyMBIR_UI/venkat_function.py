@@ -31,7 +31,6 @@ class TestWorker(QObject):
         sleeping_time = 3  # s
         dictionary_of_arguments = self.dictionary_of_arguments
 
-
         # my_function(nbr_iteration, sleeping_time, self.finished, self.progress, self.sent_reconstructed_array)
 
         for _i in np.arange(nbr_iteration):
@@ -104,10 +103,12 @@ def run_venkat_function(parent=None):
 def reportProgress():
     print("in report progress")
 
-def create_circle_mask(y,x,center,rad):
+
+def create_circle_mask(y, x, center, rad):
     mask = (x-center[0])*(x-center[0]) + (y-center[1])*(y-center[1]) <= rad*rad
     return mask
-    
+
+
 def MBIR_fromGUI(input_params, gui_params):
     '''
     2 dictionaries from the GUI interface

@@ -21,7 +21,7 @@ from pyMBIR_UI.crop.crop_handler import CropHandler
 from pyMBIR_UI.tilt.tilt_handler import TiltHandler
 from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
 from .utilities.decorators import wait_cursor
-from pyMBIR_UI.reconstruction_launcher import ReconstructionLauncher
+from pyMBIR_UI.reconstruction_launcher import ReconstructionLiveLauncher, ReconstructionBatchLauncher
 from pyMBIR_UI.advanced_settings.advanced_settings_handler import AdvancedSettingsPasswordHandler
 from pyMBIR_UI.general_settings_handler import GeneralSettingsHandler
 from .status_message_config import show_status_message, StatusMessageStatus
@@ -92,6 +92,9 @@ class PyMBIRUILauncher(QMainWindow):
     full_reconstructed_array = None
 
     stop_thread = Signal(bool)
+
+    # batch mode - last time a file was added to output folder
+    batch_mode_last_added_file_time = None
 
     def __init__(self, parent=None):
         super(PyMBIRUILauncher, self).__init__(parent)
@@ -320,19 +323,22 @@ class PyMBIRUILauncher(QMainWindow):
         o_general.sub_sampling_value_changed()
 
     def run_reconstruction(self):
-        o_reconstruction = ReconstructionLauncher(parent=self)
+        o_reconstruction = ReconstructionLiveLauncher(parent=self)
         o_reconstruction.initialization()
         o_reconstruction.run()
 
     def stop_reconstruction(self):
-        o_reconstruction = ReconstructionLauncher(parent=self)
+        o_reconstruction = ReconstructionLiveLauncher(parent=self)
         o_reconstruction.stop()
 
     def launch_reconstruction(self):
-        print("launching reconstruction")
+        o_reconstruction = ReconstructionBatchLauncher(parent=self)
+        o_reconstruction.initialization()
+        o_reconstruction.run()
 
     def display_latest_output_file_button_clicked(self):
-        print("checking latest output file")
+        o_reconstruction = ReconstructionBatchLauncher(parent=self)
+        o_reconstruction.check_output_file()
 
     def reportProgress(self, iteration, stopping_criteria):
         show_status_message(parent=self,
