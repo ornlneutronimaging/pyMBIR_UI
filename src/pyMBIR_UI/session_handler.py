@@ -1,4 +1,5 @@
 from qtpy.QtWidgets import QFileDialog, QApplication
+from qtpy.QtCore import Qt
 import json
 import logging
 import numpy as np
@@ -153,10 +154,13 @@ class SessionHandler:
             o_crop = CropHandler(parent=self.parent)
             o_crop.initialize_crop()
             self.parent.ui.crop_file_index_horizontalSlider.setValue(self.parent.session_dict['crop']['file index'])
+            crop_state = self.parent.session_dict['crop']['state']
             crop_width = self.parent.session_dict['crop']['width']
             from_slice = self.parent.session_dict['crop']['from slice']
             to_slice = self.parent.session_dict['crop']['to slice']
 
+            _state = Qt.Checked if crop_state else Qt.Unchecked
+            self.parent.ui.cropping_checkBox.setCheckState(_state)
             self.parent.ui.crop_to_slice_spinBox.blockSignals(True)
             self.parent.ui.crop_from_slice_spinBox.blockSignals(True)
             self.parent.ui.crop_from_slice_spinBox.setValue(from_slice)
@@ -169,6 +173,7 @@ class SessionHandler:
             o_crop.width_changed()
             o_crop.file_index_changed()
             o_crop.crop_slice_spinBox_changed(widget='all')
+            self.parent.crop_checkBox_clicked()
 
             # center of rotation
             o_center = CenterOfRotation(parent=self.parent)
