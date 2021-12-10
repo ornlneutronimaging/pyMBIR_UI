@@ -14,6 +14,7 @@ from .fake_reconstruction_script import main as fake_reconstruction_script
 from pyMBIR_UI.venkat_function import VenkatWorker as Worker
 from .status_message_config import show_status_message, StatusMessageStatus
 from .event_handler import EventHandler
+from NeuNorm.normalization import Normalization
 
 
 class ReconstructionLauncher:
@@ -128,6 +129,19 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
                             message=f"New file found: {highest_atime['file']}",
                             status=StatusMessageStatus.ready,
                             duration_s=10)
+
+        # load new file here and add it to the full_reconstructed_array
+        o_norm = Normalization()
+        o_norm.load(file=highest_atime['file'], notebook=False)
+        reconstructed_array = o_norm.data['sample']['data'][0]
+
+        if self.parent.full_reconstructed_array is None:
+            self.parent.full_reconstructed_array = [reconstructed_array]
+        else:
+            self.parent.full_reconstructed_array.append(reconstructed_array)
+
+        o_event = EventHandler(parent=self.parent)
+        o_event.update_output_plot()
 
         self.parent.batch_mode_last_added_file_time = highest_atime['time']
 
