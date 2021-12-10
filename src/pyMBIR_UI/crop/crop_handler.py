@@ -35,6 +35,7 @@ class CropHandler:
         self.parent.ui.crop_width_horizontalSlider.setMaximum(np.int(image_width/2))
         self.parent.ui.crop_width_horizontalSlider.setValue(self.parent.ui.crop_width_horizontalSlider.maximum())
         self.parent.ui.crop_width_horizontalSlider.setMinimum(10)
+        self.parent.ui.crop_width_label.setText(str(image_width))
 
         # height
         self.parent.ui.crop_from_slice_spinBox.setValue(1)

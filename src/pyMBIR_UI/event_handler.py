@@ -30,7 +30,6 @@ class EventHandler:
         logging.info("Full reset of application!")
 
     def update_output_plot(self):
-
         self.parent.ui.output_horizontalSlider.blockSignals(True)
         full_reconstructed_array = self.parent.full_reconstructed_array
 
