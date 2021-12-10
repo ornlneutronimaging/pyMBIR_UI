@@ -4,6 +4,7 @@ import logging
 from pathlib import Path
 from qtpy.QtCore import QObject, QThread, Signal
 from abc import abstractmethod
+import inflect
 
 from . import DataType, ReconstructionAlgorithm
 from .session_handler import SessionHandler
@@ -107,59 +108,76 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         # retrieve the latest output file from the folder
         output_folder = self.parent.session_dict[DataType.output]['folder']
         list_files = glob.glob(os.path.join(output_folder, '*.tiff'))
+        list_files.sort()
 
         if not list_files:
+            # no files found in the output folder
             show_status_message(parent=self.parent,
                                 message=f"No files found in the output folder yet!",
                                 status=StatusMessageStatus.warning,
                                 duration_s=10)
             return
 
-        list_atime = {_file: os.stat(_file).st_atime for _file in list_files}
-        highest_atime = {'time': -1, 'file': None}
+        if not (self.parent.list_file_found_in_output_folder is None):
+            # we already found at least one file in the output folder
 
-        for _file in list_atime.keys():
-            _atime = list_atime[_file]
-            if _atime > highest_atime['time']:
-                highest_atime['time'] = _atime
-                highest_atime['file'] = _file
+            if len(list_files) == len(self.parent.list_file_found_in_output_folder):
+                # no new files found in the output folder
+                show_status_message(parent=self.parent,
+                                    message=f"No new files found in the output folder!",
+                                    status=StatusMessageStatus.warning,
+                                    duration_s=10)
+                return
 
-        # if same timestamp as previous one, do nothing and just inform user
-        if self.parent.batch_mode_last_added_file_time == highest_atime['time']:
-            show_status_message(parent=self.parent,
-                                message=f"No new files found in the output folder!",
-                                status=StatusMessageStatus.warning,
-                                duration_s=10)
-            return
+        if self.parent.list_file_found_in_output_folder is None:
+            self.parent.full_reconstructed_array = []
+            self.parent.list_file_found_in_output_folder = []
 
-        print(f"self.parent.batch_mode_last_added_file_time: {self.parent.batch_mode_last_added_file_time}")
-        print(f"highest_atime['time']: {highest_atime['time']}")
+            # load all files in the folder
+            for _file in list_files:
+                o_norm = Normalization()
+                o_norm.load(file=_file, notebook=False)
+                reconstructed_array = o_norm.data['sample']['data'][0]
+                self.parent.full_reconstructed_array.append(reconstructed_array)
+                self.parent.list_file_found_in_output_folder.append(_file)
+
+        else:
+
+            for _file in list_files:
+                new_file_found = 0
+                if not (_file in self.parent.list_file_found_in_output_folder):
+                    o_norm = Normalization()
+                    o_norm.load(file=_file, notebook=False)
+                    reconstructed_array = o_norm.data['sample']['data'][0]
+
+                    if self.parent.full_reconstructed_array is None:
+                        self.parent.full_reconstructed_array = [reconstructed_array]
+                    else:
+                        self.parent.full_reconstructed_array.append(reconstructed_array)
+
+                    self.parent.list_file_found_in_output_folder.append(_file)
+                    new_file_found += 1
+
+            if new_file_found > 0:
+                p = inflect.engine()
+                show_status_message(parent=self.parent,
+                                    message=f"{new_file_found} new {p.plural('file', new_file_found)} found in the output "
+                                            f"folder!",
+                                    status=StatusMessageStatus.warning,
+                                    duration_s=10)
+
+            else:
+                show_status_message(parent=self.parent,
+                                    message=f"No new files found in the output folder!",
+                                    status=StatusMessageStatus.warning,
+                                    duration_s=10)
+                return
 
         self.parent.ui.tabWidget_2.setTabEnabled(1, True)
         self.parent.ui.tabWidget_2.setCurrentIndex(1)
 
-        # display it
-        show_status_message(parent=self.parent,
-                            message=f"New file found: {highest_atime['file']}",
-                            status=StatusMessageStatus.ready,
-                            duration_s=10)
-
-        # load new file here and add it to the full_reconstructed_array
-        o_norm = Normalization()
-        o_norm.load(file=highest_atime['file'], notebook=False)
-        reconstructed_array = o_norm.data['sample']['data'][0]
-
-
-        if self.parent.full_reconstructed_array is None:
-            self.parent.full_reconstructed_array = [reconstructed_array]
-        else:
-            self.parent.full_reconstructed_array.append(reconstructed_array)
-
         o_event = EventHandler(parent=self.parent)
         o_event.update_output_plot()
-
-        accessed_time = os.stat(highest_atime['file']).st_atime
-        self.parent.batch_mode_last_added_file_time = accessed_time
 
     def stop(self):
         pass
