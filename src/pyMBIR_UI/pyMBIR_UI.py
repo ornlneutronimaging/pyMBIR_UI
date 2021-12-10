@@ -344,7 +344,8 @@ class PyMBIRUILauncher(QMainWindow):
         show_status_message(parent=self,
                             message=f"Iteration {iteration} and stopping criteria: {int(100*stopping_criteria)}",
                             status=StatusMessageStatus.working)
-        self.ui.tabWidget.setTabEnabled(3, True)
+        self.ui.tabWidget_2.setTabEnabled(1, True)
+        self.ui.tabwidget_2.setCurrentIndex(1)
         QGuiApplication.processEvents()
 
     def display_reconstructed_array(self, reconstructed_array):

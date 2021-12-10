@@ -107,6 +107,14 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         # retrieve the latest output file from the folder
         output_folder = self.parent.session_dict[DataType.output]['folder']
         list_files = glob.glob(os.path.join(output_folder, '*.tiff'))
+
+        if not list_files:
+            show_status_message(parent=self.parent,
+                                message=f"No files found in the output folder yet!",
+                                status=StatusMessageStatus.warning,
+                                duration_s=10)
+            return
+
         list_atime = {_file: os.stat(_file).st_atime for _file in list_files}
         highest_atime = {'time': -1, 'file': None}
 
@@ -124,6 +132,12 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
                                 duration_s=10)
             return
 
+        print(f"self.parent.batch_mode_last_added_file_time: {self.parent.batch_mode_last_added_file_time}")
+        print(f"highest_atime['time']: {highest_atime['time']}")
+
+        self.parent.ui.tabWidget_2.setTabEnabled(1, True)
+        self.parent.ui.tabWidget_2.setCurrentIndex(1)
+
         # display it
         show_status_message(parent=self.parent,
                             message=f"New file found: {highest_atime['file']}",
@@ -135,6 +149,7 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         o_norm.load(file=highest_atime['file'], notebook=False)
         reconstructed_array = o_norm.data['sample']['data'][0]
 
+
         if self.parent.full_reconstructed_array is None:
             self.parent.full_reconstructed_array = [reconstructed_array]
         else:
@@ -143,7 +158,8 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         o_event = EventHandler(parent=self.parent)
         o_event.update_output_plot()
 
-        self.parent.batch_mode_last_added_file_time = highest_atime['time']
+        accessed_time = os.stat(highest_atime['file']).st_atime
+        self.parent.batch_mode_last_added_file_time = accessed_time
 
     def stop(self):
         pass

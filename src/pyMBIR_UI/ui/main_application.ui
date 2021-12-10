@@ -1326,7 +1326,7 @@
    <slot>projections_select_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1117</x>
+     <x>1450</x>
      <y>120</y>
     </hint>
     <hint type="destinationlabel">
@@ -1342,7 +1342,7 @@
    <slot>ob_select_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1117</x>
+     <x>1450</x>
      <y>155</y>
     </hint>
     <hint type="destinationlabel">
@@ -1358,7 +1358,7 @@
    <slot>df_select_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1117</x>
+     <x>1450</x>
      <y>190</y>
     </hint>
     <hint type="destinationlabel">
@@ -1390,7 +1390,7 @@
    <slot>output_folder_select_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1123</x>
+     <x>1456</x>
      <y>302</y>
     </hint>
     <hint type="destinationlabel">
@@ -1519,7 +1519,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>376</x>
-     <y>626</y>
+     <y>711</y>
     </hint>
     <hint type="destinationlabel">
      <x>9</x>
@@ -1535,7 +1535,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>399</x>
-     <y>626</y>
+     <y>711</y>
     </hint>
     <hint type="destinationlabel">
      <x>6</x>
@@ -1551,7 +1551,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>370</x>
-     <y>679</y>
+     <y>764</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -1567,7 +1567,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>277</x>
-     <y>679</y>
+     <y>764</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -1614,8 +1614,8 @@
    <slot>tilt_correction_file_index_moved()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>152</y>
+     <x>210</x>
+     <y>145</y>
     </hint>
     <hint type="destinationlabel">
      <x>7</x>
@@ -1630,8 +1630,8 @@
    <slot>tilt_correction_file_index_pressed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>152</y>
+     <x>210</x>
+     <y>145</y>
     </hint>
     <hint type="destinationlabel">
      <x>1035</x>
@@ -1662,8 +1662,8 @@
    <slot>center_of_rotation_file_index_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>152</y>
+     <x>291</x>
+     <y>148</y>
     </hint>
     <hint type="destinationlabel">
      <x>1064</x>
@@ -1678,8 +1678,8 @@
    <slot>center_of_rotation_file_index_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>152</y>
+     <x>291</x>
+     <y>178</y>
     </hint>
     <hint type="destinationlabel">
      <x>1065</x>
@@ -1710,8 +1710,8 @@
    <slot>center_of_rotation_algorithm_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>224</y>
+     <x>249</x>
+     <y>230</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -1726,8 +1726,8 @@
    <slot>center_of_rotation_user_value_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>224</y>
+     <x>280</x>
+     <y>268</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -1758,8 +1758,8 @@
    <slot>tilt_correction_algorithm_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>192</y>
+     <x>232</x>
+     <y>234</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -1774,8 +1774,8 @@
    <slot>tilt_correction_algorithm_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>192</y>
+     <x>382</x>
+     <y>234</y>
     </hint>
     <hint type="destinationlabel">
      <x>282</x>
@@ -1790,8 +1790,8 @@
    <slot>tilt_correction_algorithm_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>192</y>
+     <x>519</x>
+     <y>234</y>
     </hint>
     <hint type="destinationlabel">
      <x>1063</x>
@@ -1822,8 +1822,8 @@
    <slot>tilt_refresh_calculation_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>192</y>
+     <x>637</x>
+     <y>239</y>
     </hint>
     <hint type="destinationlabel">
      <x>1187</x>
@@ -1838,8 +1838,8 @@
    <slot>tilt_correction_show_tilt_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>192</y>
+     <x>695</x>
+     <y>274</y>
     </hint>
     <hint type="destinationlabel">
      <x>1070</x>
@@ -1855,7 +1855,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>478</x>
-     <y>786</y>
+     <y>871</y>
     </hint>
     <hint type="destinationlabel">
      <x>1188</x>
@@ -1886,8 +1886,8 @@
    <slot>sub_sampling_value_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>174</x>
-     <y>211</y>
+     <x>197</x>
+     <y>243</y>
     </hint>
     <hint type="destinationlabel">
      <x>4</x>
@@ -1918,8 +1918,8 @@
    <slot>stop_reconstruction()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>580</x>
-     <y>786</y>
+     <x>747</x>
+     <y>871</y>
     </hint>
     <hint type="destinationlabel">
      <x>889</x>
@@ -1934,8 +1934,8 @@
    <slot>launch_reconstruction()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>874</x>
-     <y>786</y>
+     <x>1041</x>
+     <y>871</y>
     </hint>
     <hint type="destinationlabel">
      <x>1191</x>
@@ -1951,7 +1951,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>169</x>
-     <y>712</y>
+     <y>797</y>
     </hint>
     <hint type="destinationlabel">
      <x>9</x>
@@ -1967,7 +1967,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>329</x>
-     <y>715</y>
+     <y>800</y>
     </hint>
     <hint type="destinationlabel">
      <x>297</x>
@@ -1982,12 +1982,60 @@
    <slot>display_latest_output_file_button_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1003</x>
-     <y>767</y>
+     <x>1202</x>
+     <y>852</y>
     </hint>
     <hint type="destinationlabel">
      <x>1192</x>
      <y>758</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>output_horizontalSlider</sender>
+   <signal>sliderPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>output_slider_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>220</x>
+     <y>708</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>240</x>
+     <y>925</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>output_horizontalSlider</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>output_slider_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>735</x>
+     <y>704</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1521</x>
+     <y>789</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>output_checkBox</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>output_checkbox_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>89</x>
+     <y>678</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>9</x>
+     <y>740</y>
     </hint>
    </hints>
   </connection>
