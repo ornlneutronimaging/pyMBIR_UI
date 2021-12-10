@@ -24,7 +24,7 @@
        <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideMiddle</enum>
@@ -1022,13 +1022,13 @@
               <widget class="QGroupBox" name="groupBox_5">
                <property name="minimumSize">
                 <size>
-                 <width>200</width>
+                 <width>0</width>
                  <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>200</width>
+                 <width>16777215</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -1040,6 +1040,16 @@
                  <widget class="QPushButton" name="reconstruction_launch_pushButton">
                   <property name="text">
                    <string>LAUNCH</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="reconstruction_display_latest_output_file_pushButton">
+                  <property name="enabled">
+                   <bool>false</bool>
+                  </property>
+                  <property name="text">
+                   <string>DISPLAY LATEST OUTPUT FILE</string>
                   </property>
                  </widget>
                 </item>
@@ -1562,8 +1572,8 @@
    <slot>tilt_correction_file_index_moved()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>210</x>
-     <y>145</y>
+     <x>146</x>
+     <y>152</y>
     </hint>
     <hint type="destinationlabel">
      <x>7</x>
@@ -1578,8 +1588,8 @@
    <slot>tilt_correction_file_index_pressed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>210</x>
-     <y>145</y>
+     <x>146</x>
+     <y>152</y>
     </hint>
     <hint type="destinationlabel">
      <x>1035</x>
@@ -1610,8 +1620,8 @@
    <slot>center_of_rotation_file_index_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>291</x>
-     <y>148</y>
+     <x>146</x>
+     <y>152</y>
     </hint>
     <hint type="destinationlabel">
      <x>1064</x>
@@ -1626,8 +1636,8 @@
    <slot>center_of_rotation_file_index_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>291</x>
-     <y>178</y>
+     <x>146</x>
+     <y>152</y>
     </hint>
     <hint type="destinationlabel">
      <x>1065</x>
@@ -1658,8 +1668,8 @@
    <slot>center_of_rotation_algorithm_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>249</x>
-     <y>230</y>
+     <x>146</x>
+     <y>224</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -1674,8 +1684,8 @@
    <slot>center_of_rotation_user_value_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>280</x>
-     <y>268</y>
+     <x>146</x>
+     <y>224</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -1706,8 +1716,8 @@
    <slot>tilt_correction_algorithm_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>232</x>
-     <y>234</y>
+     <x>146</x>
+     <y>192</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -1722,8 +1732,8 @@
    <slot>tilt_correction_algorithm_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>382</x>
-     <y>234</y>
+     <x>146</x>
+     <y>192</y>
     </hint>
     <hint type="destinationlabel">
      <x>282</x>
@@ -1738,8 +1748,8 @@
    <slot>tilt_correction_algorithm_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>519</x>
-     <y>234</y>
+     <x>146</x>
+     <y>192</y>
     </hint>
     <hint type="destinationlabel">
      <x>1063</x>
@@ -1770,8 +1780,8 @@
    <slot>tilt_refresh_calculation_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>637</x>
-     <y>239</y>
+     <x>146</x>
+     <y>192</y>
     </hint>
     <hint type="destinationlabel">
      <x>1187</x>
@@ -1786,8 +1796,8 @@
    <slot>tilt_correction_show_tilt_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>695</x>
-     <y>274</y>
+     <x>146</x>
+     <y>192</y>
     </hint>
     <hint type="destinationlabel">
      <x>1070</x>
@@ -1802,7 +1812,7 @@
    <slot>run_reconstruction()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>684</x>
+     <x>478</x>
      <y>786</y>
     </hint>
     <hint type="destinationlabel">
@@ -1914,8 +1924,8 @@
    <slot>stop_reconstruction()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>868</x>
-     <y>776</y>
+     <x>580</x>
+     <y>786</y>
     </hint>
     <hint type="destinationlabel">
      <x>889</x>
@@ -1930,8 +1940,8 @@
    <slot>launch_reconstruction()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1092</x>
-     <y>766</y>
+     <x>874</x>
+     <y>786</y>
     </hint>
     <hint type="destinationlabel">
      <x>1191</x>
@@ -1962,12 +1972,28 @@
    <slot>crop_to_slice_spinBox_finished_editing()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>352</x>
-     <y>704</y>
+     <x>329</x>
+     <y>715</y>
     </hint>
     <hint type="destinationlabel">
      <x>297</x>
      <y>836</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>reconstruction_display_latest_output_file_pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>display_latest_output_file_button_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1003</x>
+     <y>767</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1192</x>
+     <y>758</y>
     </hint>
    </hints>
   </connection>
@@ -2015,5 +2041,6 @@
   <slot>crop_to_slice_spinBox_finished_editing()</slot>
   <slot>crop_from_slice_spinBox_valueChanged()</slot>
   <slot>crop_to_slice_spinBox_valueChanged()</slot>
+  <slot>display_latest_output_file_button_clicked()</slot>
  </slots>
 </ui>

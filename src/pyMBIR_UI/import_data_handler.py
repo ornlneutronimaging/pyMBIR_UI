@@ -36,6 +36,8 @@ class ImportDataHandler:
         if len(folder_name) > 0:
             logging.info(f"browse {self.data_type} via file dialog: {folder_name}")
             self.update_widgets_with_name_of_folder(folder_name=folder_name)
+            if self.data_type == DataType.projections:
+                self.parent.homepath = os.path.dirname(folder_name)
         else:
             logging.info(f"User cancel browsing for {self.data_type}")
 

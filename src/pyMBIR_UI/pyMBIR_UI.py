@@ -331,6 +331,9 @@ class PyMBIRUILauncher(QMainWindow):
     def launch_reconstruction(self):
         print("launching reconstruction")
 
+    def display_latest_output_file_button_clicked(self):
+        print("checking latest output file")
+
     def reportProgress(self, iteration, stopping_criteria):
         show_status_message(parent=self,
                             message=f"Iteration {iteration} and stopping criteria: {int(100*stopping_criteria)}",
