@@ -231,6 +231,7 @@ class CropHandler:
         if widget == 'from':
             from_slice_item = self.parent.crop_from_slice_item
             from_value = np.int(from_slice_item.value())+1
+            self.parent.ui.crop_from_slice_spinBox.setValue(from_value)
             self.parent.crop_from_slice_label_item = pg.TextItem(text=f"{from_value}",
                                                                  anchor=(0, 1))
             self.parent.crop_from_slice_label_item.setPos(self.parent.crop_image_width, from_value)
@@ -239,6 +240,7 @@ class CropHandler:
         else:
             to_slice_item = self.parent.crop_to_slice_item
             to_value = np.int(to_slice_item.value())+1
+            self.parent.ui.crop_to_slice_spinBox.setValue(to_value)
             self.parent.crop_to_slice_label_item = pg.TextItem(text=f"{to_value}",
                                                                anchor=(0, 1))
             self.parent.crop_to_slice_label_item.setPos(self.parent.crop_image_width, to_value)
