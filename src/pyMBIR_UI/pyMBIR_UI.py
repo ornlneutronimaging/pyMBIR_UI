@@ -97,6 +97,7 @@ class PyMBIRUILauncher(QMainWindow):
     list_file_found_in_output_folder = None
 
     def __init__(self, parent=None):
+
         super(PyMBIRUILauncher, self).__init__(parent)
 
         ui_full_path = os.path.join(os.path.dirname(__file__),

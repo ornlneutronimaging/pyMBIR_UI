@@ -101,23 +101,40 @@ class CropHandler:
         if self.parent.ui.cropping_checkBox.isChecked():
             self.slice_range()
         else:
-            if self.parent.crop_from_slice_item:
-                self.parent.ui.crop_image_view.removeItem(self.parent.crop_from_slice_item)
-                self.parent.crop_from_slice_item = None
-                self.parent.ui.crop_image_view.removeItem(self.parent.crop_to_slice_item)
-                self.parent.crop_to_slice_item = None
-                self.parent.ui.crop_image_view.removeItem(self.parent.crop_from_slice_label_item)
-                self.parent.crop_from_slice_label_item = None
-                self.parent.ui.crop_image_view.removeItem(self.parent.crop_to_slice_label_item)
-                self.parent.crop_to_slice_label_item = None
-                self.parent.ui.crop_image_view.removeItem(self.parent.crop_top_region_item)
-                self.parent.crop_top_region_item = None
-                self.parent.ui.crop_image_view.removeItem(self.parent.crop_bottom_region_item)
-                self.parent.crop_bottom_region_item = None
-                self.parent.ui.crop_image_view.removeItem(self.parent.crop_left_region_item)
-                self.parent.crop_left_region_item = None
-                self.parent.ui.crop_image_view.removeItem(self.parent.crop_right_region_item)
-                self.parent.crop_right_region_item = None
+            self.clean_all_items()
+
+    def clean_all_items(self):
+        if self.parent.crop_from_slice_item:
+            self.parent.ui.crop_image_view.removeItem(self.parent.crop_from_slice_item)
+            self.parent.crop_from_slice_item = None
+
+        if self.parent.crop_to_slice_item:
+            self.parent.ui.crop_image_view.removeItem(self.parent.crop_to_slice_item)
+            self.parent.crop_to_slice_item = None
+
+        if self.parent.crop_from_slice_label_item:
+            self.parent.ui.crop_image_view.removeItem(self.parent.crop_from_slice_label_item)
+            self.parent.crop_from_slice_label_item = None
+
+        if self.parent.crop_to_slice_label_item:
+            self.parent.ui.crop_image_view.removeItem(self.parent.crop_to_slice_label_item)
+            self.parent.crop_to_slice_label_item = None
+
+        if self.parent.crop_top_region_item:
+            self.parent.ui.crop_image_view.removeItem(self.parent.crop_top_region_item)
+            self.parent.crop_top_region_item = None
+
+        if self.parent.crop_bottom_region_item:
+            self.parent.ui.crop_image_view.removeItem(self.parent.crop_bottom_region_item)
+            self.parent.crop_bottom_region_item = None
+
+        if self.parent.crop_left_region_item:
+            self.parent.ui.crop_image_view.removeItem(self.parent.crop_left_region_item)
+            self.parent.crop_left_region_item = None
+
+        if self.parent.crop_right_region_item:
+            self.parent.ui.crop_image_view.removeItem(self.parent.crop_right_region_item)
+            self.parent.crop_right_region_item = None
 
     def file_index_changed(self):
         file_index_selected = self.parent.ui.crop_file_index_horizontalSlider.value()
@@ -128,6 +145,8 @@ class CropHandler:
         self.parent.crop_image_view.setImage(transpose_image)
 
     def slice_range(self):
+        self.clean_all_items()
+
         from_slice = self.parent.ui.crop_from_slice_spinBox.value()
         to_slice = self.parent.ui.crop_to_slice_spinBox.value()
 
@@ -193,6 +212,8 @@ class CropHandler:
             brush = pg.mkBrush(pen)
             from_slice_item = self.parent.crop_from_slice_item
             from_value = np.int(from_slice_item.value()) + 1
+            if self.parent.crop_top_region_item:
+                self.parent.ui.crop_image_view.removeItem(self.parent.crop_top_region_item)
             self.parent.crop_top_region_item = pg.LinearRegionItem(values=(0, from_value),
                                                                    orientation='horizontal',
                                                                    movable=False,
@@ -202,6 +223,8 @@ class CropHandler:
 
             to_slice_item = self.parent.crop_to_slice_item
             to_value = np.int(to_slice_item.value()) + 1
+            if self.parent.crop_bottom_region_item:
+                self.parent.ui.crop_image_view.removeItem(self.parent.crop_bottom_region_item)
             self.parent.crop_bottom_region_item = pg.LinearRegionItem(values=(to_value,
                                                                               self.parent.crop_image_height),
                                                                       orientation='horizontal',
@@ -231,6 +254,7 @@ class CropHandler:
         if widget == 'from':
             from_slice_item = self.parent.crop_from_slice_item
             from_value = np.int(from_slice_item.value())+1
+            self.parent.ui.crop_from_slice_spinBox.setValue(from_value)
             self.parent.crop_from_slice_label_item = pg.TextItem(text=f"{from_value}",
                                                                  anchor=(0, 1))
             self.parent.crop_from_slice_label_item.setPos(self.parent.crop_image_width, from_value)
@@ -239,6 +263,7 @@ class CropHandler:
         else:
             to_slice_item = self.parent.crop_to_slice_item
             to_value = np.int(to_slice_item.value())+1
+            self.parent.ui.crop_to_slice_spinBox.setValue(to_value)
             self.parent.crop_to_slice_label_item = pg.TextItem(text=f"{to_value}",
                                                                anchor=(0, 1))
             self.parent.crop_to_slice_label_item.setPos(self.parent.crop_image_width, to_value)
