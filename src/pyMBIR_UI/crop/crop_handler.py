@@ -193,6 +193,8 @@ class CropHandler:
             brush = pg.mkBrush(pen)
             from_slice_item = self.parent.crop_from_slice_item
             from_value = np.int(from_slice_item.value()) + 1
+            if self.parent.crop_top_region_item:
+                self.parent.ui.crop_image_view.removeItem(self.parent.crop_top_region_item)
             self.parent.crop_top_region_item = pg.LinearRegionItem(values=(0, from_value),
                                                                    orientation='horizontal',
                                                                    movable=False,
@@ -202,6 +204,8 @@ class CropHandler:
 
             to_slice_item = self.parent.crop_to_slice_item
             to_value = np.int(to_slice_item.value()) + 1
+            if self.parent.crop_bottom_region_item:
+                self.parent.ui.crop_image_view.removeItem(self.parent.crop_bottom_region_item)
             self.parent.crop_bottom_region_item = pg.LinearRegionItem(values=(to_value,
                                                                               self.parent.crop_image_height),
                                                                       orientation='horizontal',
