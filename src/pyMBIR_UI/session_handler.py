@@ -171,9 +171,9 @@ class SessionHandler:
             self.parent.ui.crop_width_horizontalSlider.setValue(crop_width/2)
             self.parent.ui.crop_width_horizontalSlider.setMinimum(10)
             # o_crop.width_changed()
-            # o_crop.file_index_changed()
+            o_crop.file_index_changed()
             o_crop.crop_slice_spinBox_changed(widget='all')
-            # self.parent.crop_checkBox_clicked()
+            self.parent.crop_checkBox_clicked()
 
             # center of rotation
             o_center = CenterOfRotation(parent=self.parent)
