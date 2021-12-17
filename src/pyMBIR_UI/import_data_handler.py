@@ -206,6 +206,7 @@ class ImportDataHandler:
 
         if index_data_type == 0:
             o_crop = CropHandler(parent=self.parent)
+            o_crop.clean_all_items()
             o_crop.initialize_crop()
             o_crop.master_checkbox_clicked()
 
