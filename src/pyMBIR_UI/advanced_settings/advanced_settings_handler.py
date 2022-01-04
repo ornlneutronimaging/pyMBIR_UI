@@ -88,6 +88,7 @@ class AdvancedSettingsHandler(QDialog):
                                        "number_of_cores"         : session["number of cores"],
                                        "number_of_gpus"          : session["number of gpus"],
                                        "stop_threshold"          : session["stop threshold"],
+                                       "exporting_file_frequency": session["exporting file frequency"],
                                        "median_filter_size"      : session.get("median filter size",
                                                                                self.parent.config["default widgets values"]['median filter size']),
                                        "det_x_y_linked"          : session["det_x, det_y"]["linked"],
@@ -180,6 +181,8 @@ class AdvancedSettingsHandler(QDialog):
         self.ui.stop_threshold_lineEdit.setText(stop_threshold)
         median_filter_size = local_session_dict["median_filter_size"]
         self.ui.median_filter_spinBox.setValue(median_filter_size)
+        exporting_file_frequency = local_session_dict["exporting_file_frequency"]
+        self.ui.exporting_file_frequency_spinBox.setValue(exporting_file_frequency)
 
         det_x_det_y_linked = local_session_dict["det_x_y_linked"]
         self.ui.det_x_y_radioButton.setChecked(det_x_det_y_linked)
@@ -220,6 +223,7 @@ class AdvancedSettingsHandler(QDialog):
         self.local_session_dict["max_number_of_iterations"] = config["max number of iterations"]
         self.local_session_dict["stop_threshold"] = str(config["stop threshold"])
         self.local_session_dict["median_filter_size"] = config["median filter size"]
+        self.local_session_dict["exporting_file_frequency"] = config["exporting file frequency"]
 
         self.local_session_dict["det_x_y_linked"] = config["det_x, det_y"]["linked"]
         self.local_session_dict["det_x_y_value"] = config["det_x, det_y"]["value"]
@@ -282,6 +286,7 @@ class AdvancedSettingsHandler(QDialog):
         number_of_gpus = self.ui.nbr_gpu_slider.value()
         stop_threshold = self.ui.stop_threshold_lineEdit.text()
         median_filter_size = self.ui.median_filter_spinBox.value()
+        exporting_file_frequency = self.ui.exporting_file_frequency_spinBox.value()
 
         det_x_y_linked = self.ui.det_x_y_radioButton.isChecked()
         det_x_y_value = self.ui.det_x_y_doubleSpinBox.value()
@@ -328,6 +333,7 @@ class AdvancedSettingsHandler(QDialog):
                                                          "number of cores": number_of_cores,
                                                          "number of gpus": number_of_gpus,
                                                          "median filter size": median_filter_size,
+                                                         "exporting file frequency": exporting_file_frequency,
                                                          "det_x, det_y": {"linked": det_x_y_linked,
                                                                           "det_x_y": det_x_y_value,
                                                                           "det_x": det_x,
@@ -352,5 +358,3 @@ class AdvancedSettingsHandler(QDialog):
                                                          "n_vox_z": n_vox_z,
                                                          "write output": write_output_flag,
                                                          }
-
-

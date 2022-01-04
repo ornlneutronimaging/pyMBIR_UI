@@ -20,6 +20,8 @@ class AdvancedSettingsInitialization:
 
         median_filter_size = config['median filter size']
 
+        exporting_file_frequency = config['exporting file frequency']
+
         det_x_y_linked = config['det_x, det_y']['linked']
         det_x_y_value = config['det_x, det_y']['value']
         det_x = config['det_x, det_y']['det_x']
@@ -72,6 +74,7 @@ class AdvancedSettingsInitialization:
                                                          "number of cores": number_of_cores,
                                                          "number of gpus": number_of_gpus,
                                                          "median filter size": median_filter_size,
+                                                         "exporting file frequency": exporting_file_frequency,
                                                          "det_x, det_y": {"linked": det_x_y_linked,
                                                                           "det_x_y": det_x_y_value,
                                                                           "det_x": det_x,

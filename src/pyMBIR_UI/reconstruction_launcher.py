@@ -63,6 +63,7 @@ class ReconstructionLiveLauncher(ReconstructionLauncher):
                                                   algorithm_selected=self.reconstruction_algorithm_selected)
         o_dictionary.build_dictionary()
         dictionary_of_arguments = o_dictionary.get_dictionary()
+        dictionary_of_arguments['running_mode'] = 'live'
         logging.info(f"-> Dictionary of arguments: {dictionary_of_arguments}")
 
         # os.system(command_line)
@@ -102,7 +103,15 @@ class ReconstructionLiveLauncher(ReconstructionLauncher):
 class ReconstructionBatchLauncher(ReconstructionLauncher):
 
     def run(self):
-        pass
+        logging.info("Running reconstruction in Batch mode")
+        logging.info(f"-> algorithm selected: {self.reconstruction_algorithm_selected}")
+
+        o_dictionary = AlgorithmDictionaryCreator(parent=self.parent,
+                                                  algorithm_selected=self.reconstruction_algorithm_selected)
+        o_dictionary.build_dictionary()
+        dictionary_of_arguments = o_dictionary.get_dictionary()
+        dictionary_of_arguments['running_mode'] = 'batch'
+        logging.info(f"-> Dictionary of arguments: {dictionary_of_arguments}")
 
     def check_output_file(self):
         # retrieve the latest output file from the folder

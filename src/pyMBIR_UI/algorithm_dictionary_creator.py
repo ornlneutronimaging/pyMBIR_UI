@@ -1,3 +1,6 @@
+import os
+import json
+
 from . import ReconstructionAlgorithm, DataType
 from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
 from pyMBIR_UI.advanced_settings.advanced_settings_initialization import AdvancedSettingsInitialization
@@ -32,9 +35,20 @@ class PyMBIRDictionaryCreator:
     def __init__(self, parent=None):
         self.parent = parent
 
-    def build_dictionary(self):
+    def build_dictionary(self, session_dict=None, config_file_name=None):
 
-        session_dict = self.parent.session_dict
+        if config_file_name:
+            if not os.path.exists(config_file_name):
+                raise FileNotFoundError("Config file name does not exist!")
+
+            try:
+                with open(config_file_name, "r") as read_file:
+                    session_dict = json.load(read_file)
+            except json.JSONDecodeError:
+                raise json.JSONDecodeError("The config file is not a valid JSON file!")
+
+        elif session_dict is None:
+            session_dict = self.parent.session_dict
 
         # adding arguments
         arguments = {}
@@ -85,8 +99,13 @@ class PyMBIRDictionaryCreator:
 
         # number of wavelet levels for tomopy based stripe suppression filter routines
         if session_dict.get('advanced settings', None) is None:
+            if config_file_name:
+                raise ValueError("Config file name is missing the advanced settings required!")
+
             o_init = AdvancedSettingsInitialization(parent=self.parent)
             o_init.from_config_to_session_dict()
+
+            session_dict = self.parent.session_dict
 
         wavelet_level = session_dict['advanced settings']['wavelet level']
         arguments['wav_level'] = wavelet_level
@@ -119,6 +138,10 @@ class PyMBIRDictionaryCreator:
         stop_thresh = session_dict['advanced settings']['stop threshold']
         arguments['stop_thresh'] = float(stop_thresh)
 
+        # Frequency of iterations to use to write out the files
+        emit_freq = session_dict['advanced settings']['exporting file frequency']
+        arguments['emit_freq'] = emit_freq
+
         # det pix size along x and y
         det_x = session_dict['advanced settings']['det_x, det_y']['det_x_to_use']
         det_y = session_dict['advanced settings']['det_x, det_y']['det_y_to_use']
@@ -148,6 +171,8 @@ class PyMBIRDictionaryCreator:
         # output folder
         output_folder = session_dict[DataType.output]['folder']
         arguments['op_path'] = output_folder
+
+        arguments['running_mode'] = ''  # ['live', 'batch']
 
         self.dictionary = arguments
 
