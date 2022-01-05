@@ -16,6 +16,7 @@ from pyMBIR_UI.venkat_function import VenkatWorker as Worker
 from .status_message_config import show_status_message, StatusMessageStatus
 from .event_handler import EventHandler
 from NeuNorm.normalization import Normalization
+from .venkat_function import MBIR_fromGUI
 
 
 class ReconstructionLauncher:
@@ -112,6 +113,7 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         dictionary_of_arguments = o_dictionary.get_dictionary()
         dictionary_of_arguments['running_mode'] = 'batch'
         logging.info(f"-> Dictionary of arguments: {dictionary_of_arguments}")
+        MBIR_fromGUI(input_params=dictionary_of_arguments)
 
     def check_output_file(self):
         # retrieve the latest output file from the folder

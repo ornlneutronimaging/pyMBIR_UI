@@ -275,6 +275,7 @@ def MBIR_fromGUI(input_params=None, gui_params=None):
     tot_col = input_params['tot_col']
     num_col = input_params['num_col']
     rot_center = input_params['rot_center']
+    running_mode = input_params['running_mode']
 
     rec_params = {}
     rec_params['debug'] = False
@@ -286,11 +287,20 @@ def MBIR_fromGUI(input_params=None, gui_params=None):
     rec_params['stop_thresh'] = float(input_params['stop_thresh'])
     rec_params['emit_freq'] = input_params['emit_freq']
 
-    # GUI related params
-    rec_params['gui_emit'] = True
-    rec_params['sent_recon_array'] = gui_params['sent_recon_array']
-    rec_params['progress'] = gui_params['progress']
-    rec_params['finished'] = gui_params['finished']
+    if running_mode == 'live':
+
+        # GUI related params
+        rec_params['gui_emit'] = True
+        rec_params['sent_recon_array'] = gui_params['sent_recon_array']
+        rec_params['progress'] = gui_params['progress']
+        rec_params['finished'] = gui_params['finished']
+
+    elif running_mode == 'batch':
+
+        pass
+
+
+
 
     # rec_params['filt_type']='Ram-Lak'
     # rec_params['filt_cutoff']=f_c

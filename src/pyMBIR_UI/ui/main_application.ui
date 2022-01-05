@@ -1126,7 +1126,7 @@
                 <item>
                  <widget class="QPushButton" name="reconstruction_display_latest_output_file_pushButton">
                   <property name="enabled">
-                   <bool>true</bool>
+                   <bool>false</bool>
                   </property>
                   <property name="text">
                    <string>DISPLAY LATEST OUTPUT FILE</string>
