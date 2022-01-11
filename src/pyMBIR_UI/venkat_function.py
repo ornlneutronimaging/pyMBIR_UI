@@ -75,11 +75,6 @@ class VenkatWorker(QObject):
     def init(self, dictionary_of_arguments=None):
         self.dictionary_of_arguments = dictionary_of_arguments
 
-        import json
-        with open("~/config_to_test_batch_mode.json", 'w') as json_file:
-            json.dump(self.dictionary_of_arguments, json_file)
-
-
     def run(self):
         #venkat_my_function(self.progress, self.finished)
         # MBIR_fromGUI(input_params=self.dictionary_of_arguments,

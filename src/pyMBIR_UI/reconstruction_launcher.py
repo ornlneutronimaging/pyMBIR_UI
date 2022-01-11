@@ -111,6 +111,11 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
                                                   algorithm_selected=self.reconstruction_algorithm_selected)
         o_dictionary.build_dictionary()
         dictionary_of_arguments = o_dictionary.get_dictionary()
+
+        import json
+        with open("~/config_to_test_batch_mode.json", 'w') as json_file:
+            json.dump(dictionary_of_arguments, json_file)
+
         dictionary_of_arguments['running_mode'] = 'batch'
         logging.info(f"-> Dictionary of arguments: {dictionary_of_arguments}")
         MBIR_fromGUI(input_params=dictionary_of_arguments)
