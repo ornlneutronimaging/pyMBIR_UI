@@ -121,6 +121,13 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         dictionary_of_arguments['running_mode'] = 'batch'
         logging.info(f"-> Dictionary of arguments: {dictionary_of_arguments}")
 
+        dictionary_of_arguments["use_det_tilt"] = False
+        dictionary_of_arguments["temp_op_dir"] = "/home/j35/temp_folder/temp/"
+        dictionary_of_arguments["write_op"] = True
+        dictionary_of_arguments["n_vox_x"] = 960
+        dictionary_of_arguments["n_vox_y"] = 960
+        dictionary_of_arguments["n_vox_z"] = 8
+
         recon_HFIR_script_launcher(dictionary_of_arguments)
 
         #MBIR_fromGUI(input_params=dictionary_of_arguments)
