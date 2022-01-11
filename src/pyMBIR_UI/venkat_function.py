@@ -288,7 +288,6 @@ def MBIR_fromGUI(input_params=None, gui_params=None):
     rec_params['emit_freq'] = input_params['emit_freq']
 
     if running_mode == 'live':
-
         # GUI related params
         rec_params['gui_emit'] = True
         rec_params['sent_recon_array'] = gui_params['sent_recon_array']
@@ -296,11 +295,10 @@ def MBIR_fromGUI(input_params=None, gui_params=None):
         rec_params['finished'] = gui_params['finished']
 
     elif running_mode == 'batch':
-
-        pass
-
-
-
+        rec_params['gui_emit'] = False
+        rec_params['sent_recon_array'] = None
+        rec_params['progress'] = None
+        rec_params['finished'] = None
 
     # rec_params['filt_type']='Ram-Lak'
     # rec_params['filt_cutoff']=f_c
@@ -316,7 +314,7 @@ def MBIR_fromGUI(input_params=None, gui_params=None):
     filt_size = input_params['med_filt_win']  # window of median filter
     print(os.path.join(input_params['brt_path'], '*.tiff'))
     # Read data
-    print('Reading slices from %d to %d with %d cores' % (z_start, z_numSlice, max_core))
+    print('Reading slices from %d + %d with %d cores' % (z_start, z_numSlice, max_core))
     brights = readMedianTifDir(os.path.join(input_params['brt_path'], '*.tiff'), z_start, z_numSlice, filt_size)
     darks = readMedianTifDir(os.path.join(input_params['drk_path'], '*.tiff'), z_start, z_numSlice, filt_size)
     count_data = readRadiographTifDir2(input_params['data_path'], z_start, z_numSlice)
