@@ -75,6 +75,11 @@ class VenkatWorker(QObject):
     def init(self, dictionary_of_arguments=None):
         self.dictionary_of_arguments = dictionary_of_arguments
 
+        import json
+        with open("~/config_to_test_batch_mode.json", 'w') as json_file:
+            json.dump(self.dictionary_of_arguments, json_file)
+
+
     def run(self):
         #venkat_my_function(self.progress, self.finished)
         # MBIR_fromGUI(input_params=self.dictionary_of_arguments,
@@ -314,7 +319,7 @@ def MBIR_fromGUI(input_params=None, gui_params=None):
     filt_size = input_params['med_filt_win']  # window of median filter
     print(os.path.join(input_params['brt_path'], '*.tiff'))
     # Read data
-    print('Reading slices from %d + %d with %d cores' % (z_start, z_numSlice, max_core))
+    print('Reading slices from %d to %d with %d cores' % (z_start, z_start + z_numSlice, max_core))
     brights = readMedianTifDir(os.path.join(input_params['brt_path'], '*.tiff'), z_start, z_numSlice, filt_size)
     darks = readMedianTifDir(os.path.join(input_params['drk_path'], '*.tiff'), z_start, z_numSlice, filt_size)
     count_data = readRadiographTifDir2(input_params['data_path'], z_start, z_numSlice)
