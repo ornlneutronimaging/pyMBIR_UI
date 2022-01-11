@@ -113,7 +113,8 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         dictionary_of_arguments = o_dictionary.get_dictionary()
 
         import json
-        with open("~/config_to_test_batch_mode.json", 'w') as json_file:
+        print("hdfdfddfddfdfdfdfdfdfdfdffd")
+        with open("/home/j35/config_to_test_batch_mode.json", 'w') as json_file:
             json.dump(dictionary_of_arguments, json_file)
 
         dictionary_of_arguments['running_mode'] = 'batch'
