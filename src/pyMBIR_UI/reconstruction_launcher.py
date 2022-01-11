@@ -16,6 +16,7 @@ from pyMBIR_UI.venkat_function import VenkatWorker as Worker
 from .status_message_config import show_status_message, StatusMessageStatus
 from .event_handler import EventHandler
 from NeuNorm.normalization import Normalization
+from .utilities.file_utilities import make_or_reset_folder
 from .venkat_function import MBIR_fromGUI
 from .recon_HFIR_script_batch import recon_HFIR_script_launcher
 
@@ -115,22 +116,24 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
 
         import json
         logging.info(f"-> Saving temporary dictionary file for Venkat")
-        with open("/home/j35/config_to_test_batch_mode.json", 'w') as json_file:
+        with open("/Users/j35/Desktop/config_to_test_batch_mode.json", 'w') as json_file:
             json.dump(dictionary_of_arguments, json_file)
 
         dictionary_of_arguments['running_mode'] = 'batch'
         logging.info(f"-> Dictionary of arguments: {dictionary_of_arguments}")
 
-        dictionary_of_arguments["use_det_tilt"] = False
-        dictionary_of_arguments["temp_op_dir"] = "/home/j35/temp_folder/temp/"
-        dictionary_of_arguments["write_op"] = True
-        dictionary_of_arguments["n_vox_x"] = 960
-        dictionary_of_arguments["n_vox_y"] = 960
-        dictionary_of_arguments["n_vox_z"] = 8
+        logging.info(f"-> reset folder: {dictionary_of_arguments['temp_op_dir']}")
+        make_or_reset_folder(dictionary_of_arguments['temp_op_dir'])
 
-        recon_HFIR_script_launcher(dictionary_of_arguments)
+        # dictionary_of_arguments["write_op"] = True
+        # dictionary_of_arguments["n_vox_x"] = 960
+        # dictionary_of_arguments["n_vox_y"] = 960
+        # dictionary_of_arguments["n_vox_z"] = 8
 
-        #MBIR_fromGUI(input_params=dictionary_of_arguments)
+
+
+        # recon_HFIR_script_launcher(dictionary_of_arguments)
+
 
     def check_output_file(self):
         # retrieve the latest output file from the folder

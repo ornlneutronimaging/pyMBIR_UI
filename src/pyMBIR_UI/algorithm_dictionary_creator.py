@@ -4,6 +4,7 @@ import json
 from . import ReconstructionAlgorithm, DataType
 from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
 from pyMBIR_UI.advanced_settings.advanced_settings_initialization import AdvancedSettingsInitialization
+from .utilities.get import Get
 
 
 class AlgorithmDictionaryCreator:
@@ -171,6 +172,11 @@ class PyMBIRDictionaryCreator:
         # output folder
         output_folder = session_dict[DataType.output]['folder']
         arguments['op_path'] = output_folder
+
+        # temp output folder
+        temp_output_folder = self.parent.config['temp_local_output_folder']
+        full_home_file_name = Get.full_home_file_name(temp_output_folder)
+        arguments['temp_op_dir'] = full_home_file_name
 
         arguments['running_mode'] = ''  # ['live', 'batch']
 

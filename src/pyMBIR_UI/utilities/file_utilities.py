@@ -2,6 +2,7 @@ import glob
 import os
 from pathlib import Path
 import ntpath
+import shutil
 
 
 def get_list_files(directory="./", file_extension=["*.fits"]):
@@ -68,3 +69,9 @@ def get_list_file_extensions(list_filename):
         list_extension.append(_extension)
 
     return list(set(list_extension))
+
+
+def make_or_reset_folder(folder_name):
+    if os.path.exists(folder_name):
+        shutil.rmtree(folder_name)
+    os.makedirs(folder_name)

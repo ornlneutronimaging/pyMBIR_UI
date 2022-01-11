@@ -18,7 +18,7 @@ class Get:
 
     def get_log_file_name(self):
         log_file_name = self.parent.config['log_file_name']
-        full_log_file_name = Get.get_full_home_file_name(log_file_name)
+        full_log_file_name = Get.full_home_file_name(log_file_name)
         return full_log_file_name
 
     def get_main_tab_selected(self):
@@ -31,7 +31,7 @@ class Get:
 
     def get_automatic_config_file_name(self):
         config_file_name = self.parent.config['session_file_name']
-        full_config_file_name = Get.get_full_home_file_name(config_file_name)
+        full_config_file_name = Get.full_home_file_name(config_file_name)
         return full_config_file_name
 
     def tilt_algorithm_selected(self):
@@ -159,7 +159,7 @@ class Get:
             return 0
 
     @staticmethod
-    def get_full_home_file_name(base_file_name):
+    def full_home_file_name(base_file_name):
         home_folder = expanduser("~")
         full_log_file_name = os.path.join(home_folder, base_file_name)
         return full_log_file_name
