@@ -221,7 +221,11 @@ class AdvancedSettingsHandler(QDialog):
         self.ui.exporting_file_frequency_spinBox.setValue(exporting_file_frequency)
 
         det_x_det_y_linked = local_session_dict["det_x_y_linked"]
-        self.ui.det_x_y_radioButton.setChecked(det_x_det_y_linked)
+        if det_x_det_y_linked:
+            self.ui.det_x_y_radioButton.setChecked(True)
+        else:
+            self.ui.det_x_det_x_radioButton.setChecked(True)
+        self.det_clicked()
         det_x_y_value = local_session_dict["det_x_y_value"]
         self.ui.det_x_y_doubleSpinBox.setValue(det_x_y_value)
         det_x_value = local_session_dict["det_x_value"]
@@ -230,6 +234,11 @@ class AdvancedSettingsHandler(QDialog):
         self.ui.det_y_doubleSpinBox.setValue(det_y_value)
 
         vox_xy_z_linked = local_session_dict["vox_xy_z_linked"]
+        if vox_xy_z_linked:
+            self.ui.vox_xy_z_radioButton.setChecked(True)
+        else:
+            self.ui.vox_xy_vox_z_radioButton.setChecked(True)
+        self.vox_clicked()
         self.ui.vox_xy_z_radioButton.setChecked(vox_xy_z_linked)
         vox_xy_z_value = local_session_dict["vox_xy_z_value"]
         self.ui.vox_xy_z_doubleSpinBox.setValue(vox_xy_z_value)
@@ -245,6 +254,7 @@ class AdvancedSettingsHandler(QDialog):
             self.ui.n_vox_x_y_user_radioButton.setChecked(True)
         else:
             self.ui.n_vox_x_n_vox_y_radioButton.setChecked(True)
+        self.nbr_vox_xy_clicked()
         n_vox_x_y_value = local_session_dict["n_vox_x_y_value"]
         self.ui.n_vox_x_n_vox_y_linked_spinBox.setValue(n_vox_x_y_value)
         n_vox_x = local_session_dict["n_vox_x_value"]
@@ -257,6 +267,7 @@ class AdvancedSettingsHandler(QDialog):
             self.ui.n_vox_z_fixed_radioButton.setChecked(True)
         else:
             self.ui.n_vox_z_user_radioButton.setChecked(True)
+        self.nbr_vox_z_clicked()
         n_vox_z_value = local_session_dict["n_vox_z_value"]
         self.ui.n_vox_z_user_spinBox.setValue(n_vox_z_value)
 
