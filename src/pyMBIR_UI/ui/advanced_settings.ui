@@ -10,19 +10,19 @@
     <x>0</x>
     <y>0</y>
     <width>515</width>
-    <height>900</height>
+    <height>1000</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>500</width>
-    <height>900</height>
+    <height>1000</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>515</width>
-    <height>900</height>
+    <height>1000</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -330,7 +330,7 @@
         <item>
          <widget class="QLabel" name="det_x_y_label">
           <property name="text">
-           <string>det_x, det_y</string>
+           <string>det_x,  det_y</string>
           </property>
          </widget>
         </item>
@@ -466,7 +466,7 @@
         <item>
          <widget class="QLabel" name="vox_xy_z_label">
           <property name="text">
-           <string>Vox_xy, Vox_z</string>
+           <string>Vox_xy,  Vox_z</string>
           </property>
          </widget>
         </item>
@@ -594,9 +594,9 @@
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_5">
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_12">
+          <layout class="QHBoxLayout" name="horizontalLayout_17">
            <item>
-            <widget class="QRadioButton" name="n_vox_x_y_radioButton">
+            <widget class="QRadioButton" name="n_vox_x_y_fixed_radioButton">
              <property name="text">
               <string/>
              </property>
@@ -606,14 +606,61 @@
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="n_vox_x_n_vox_y_label">
+            <widget class="QLabel" name="n_vox_x_n_vox_y_fixed_label">
              <property name="text">
-              <string>n_vox_x,  n_vox_y</string>
+              <string>n_vox_x,  n_vox_y:</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="n_vox_x_n_vox_y_spinBox">
+            <widget class="QLabel" name="n_vox_x_n_vox_y_fixed_value">
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_17">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_12">
+           <item>
+            <widget class="QRadioButton" name="n_vox_x_y_user_radioButton">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="checked">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="n_vox_x_n_vox_y_linked_label">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>n_vox_x,   n_vox_y</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="n_vox_x_n_vox_y_linked_spinBox">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="maximum">
               <number>10000</number>
              </property>
@@ -644,7 +691,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="n_vox_x_label">
+            <widget class="QLabel" name="n_vox_x_user_not_linked_label">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -654,7 +701,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="n_vox_x_spinBox">
+            <widget class="QSpinBox" name="n_vox_x_user_not_linked_spinBox">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -677,7 +724,7 @@
             </spacer>
            </item>
            <item>
-            <widget class="QLabel" name="n_vox_y_label">
+            <widget class="QLabel" name="n_vox_y_user_not_linked_label">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -687,7 +734,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="n_vox_y_spinBox">
+            <widget class="QSpinBox" name="n_vox_y_user_not_linked_spinBox">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -719,36 +766,91 @@
         <property name="title">
          <string>Z</string>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_14">
+        <layout class="QVBoxLayout" name="verticalLayout_6">
          <item>
-          <widget class="QLabel" name="n_vox_z_label">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="text">
-            <string>n_vox_z</string>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout" name="horizontalLayout_18">
+           <item>
+            <widget class="QRadioButton" name="n_vox_z_fixed_radioButton">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="n_vox_z_fixed_label">
+             <property name="text">
+              <string>n_vox_z:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="n_vox_z_fixed_value">
+             <property name="text">
+              <string>0</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_18">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
          </item>
          <item>
-          <widget class="QSpinBox" name="n_vox_z_spinBox">
-           <property name="maximum">
-            <number>10000</number>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>40</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
+          <layout class="QHBoxLayout" name="horizontalLayout_14">
+           <item>
+            <widget class="QRadioButton" name="n_vox_z_user_radioButton">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="n_vox_z_user_label">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>n_vox_z</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="n_vox_z_user_spinBox">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="maximum">
+              <number>10000</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
          </item>
         </layout>
        </widget>
@@ -852,12 +954,12 @@
   <tabstop>vox_xy_vox_z_radioButton</tabstop>
   <tabstop>vox_xy_doubleSpinBox</tabstop>
   <tabstop>vox_z_doubleSpinBox</tabstop>
-  <tabstop>n_vox_x_y_radioButton</tabstop>
-  <tabstop>n_vox_x_n_vox_y_spinBox</tabstop>
+  <tabstop>n_vox_x_y_user_radioButton</tabstop>
+  <tabstop>n_vox_x_n_vox_y_linked_spinBox</tabstop>
   <tabstop>n_vox_x_n_vox_y_radioButton</tabstop>
-  <tabstop>n_vox_x_spinBox</tabstop>
-  <tabstop>n_vox_y_spinBox</tabstop>
-  <tabstop>n_vox_z_spinBox</tabstop>
+  <tabstop>n_vox_x_user_not_linked_spinBox</tabstop>
+  <tabstop>n_vox_y_user_not_linked_spinBox</tabstop>
+  <tabstop>n_vox_z_user_spinBox</tabstop>
   <tabstop>write_output_checkBox</tabstop>
   <tabstop>close_button</tabstop>
   <tabstop>pushButton</tabstop>
@@ -872,7 +974,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>502</x>
-     <y>887</y>
+     <y>987</y>
     </hint>
     <hint type="destinationlabel">
      <x>356</x>
@@ -888,7 +990,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>45</x>
-     <y>281</y>
+     <y>317</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -904,7 +1006,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>45</x>
-     <y>321</y>
+     <y>357</y>
     </hint>
     <hint type="destinationlabel">
      <x>9</x>
@@ -920,7 +1022,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>45</x>
-     <y>400</y>
+     <y>436</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -936,7 +1038,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>45</x>
-     <y>440</y>
+     <y>476</y>
     </hint>
     <hint type="destinationlabel">
      <x>3</x>
@@ -951,8 +1053,8 @@
    <slot>reset_button_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>73</x>
-     <y>887</y>
+     <x>85</x>
+     <y>987</y>
     </hint>
     <hint type="destinationlabel">
      <x>124</x>
@@ -961,14 +1063,14 @@
    </hints>
   </connection>
   <connection>
-   <sender>n_vox_x_y_radioButton</sender>
+   <sender>n_vox_x_y_user_radioButton</sender>
    <signal>clicked()</signal>
    <receiver>Dialog</receiver>
-   <slot>nbr_vox_clicked()</slot>
+   <slot>nbr_vox_xy_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>60</x>
-     <y>540</y>
+     <y>612</y>
     </hint>
     <hint type="destinationlabel">
      <x>7</x>
@@ -980,11 +1082,11 @@
    <sender>n_vox_x_n_vox_y_radioButton</sender>
    <signal>clicked()</signal>
    <receiver>Dialog</receiver>
-   <slot>nbr_vox_clicked()</slot>
+   <slot>nbr_vox_xy_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>60</x>
-     <y>580</y>
+     <y>652</y>
     </hint>
     <hint type="destinationlabel">
      <x>4</x>
@@ -1095,12 +1197,60 @@
    <slot>export_reconstruction_dictionary_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>309</x>
-     <y>835</y>
+     <x>315</x>
+     <y>949</y>
     </hint>
     <hint type="destinationlabel">
      <x>308</x>
      <y>861</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>n_vox_z_fixed_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>nbr_vox_z_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>48</x>
+     <y>723</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1</x>
+     <y>738</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>n_vox_z_user_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>nbr_vox_z_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>51</x>
+     <y>760</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>9</x>
+     <y>811</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>n_vox_x_y_fixed_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>Dialog</receiver>
+   <slot>nbr_vox_xy_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>46</x>
+     <y>569</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>7</x>
+     <y>619</y>
     </hint>
    </hints>
   </connection>
@@ -1109,7 +1259,7 @@
   <slot>det_clicked()</slot>
   <slot>vox_clicked()</slot>
   <slot>reset_button_clicked()</slot>
-  <slot>nbr_vox_clicked()</slot>
+  <slot>nbr_vox_xy_clicked()</slot>
   <slot>wavelet_level_changed()</slot>
   <slot>wavelet_level_clicked()</slot>
   <slot>number_of_cores_clicked()</slot>
@@ -1117,5 +1267,6 @@
   <slot>number_of_gpus_clicked()</slot>
   <slot>number_of_gpus_changed()</slot>
   <slot>export_reconstruction_dictionary_clicked()</slot>
+  <slot>nbr_vox_z_clicked()</slot>
  </slots>
 </ui>

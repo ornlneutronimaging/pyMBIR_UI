@@ -46,25 +46,36 @@ class AdvancedSettingsInitialization:
             vox_xy_to_use = vox_xy
             vox_z_to_use = vox_z
 
-        n_vox_x_y_linked = config['n_vox_x, n_vox_y']['linked']
-
-        session_dict = self.parent.session_dict
-        if session_dict.get('crop', None) is None:
-            n_vox_x_y_value = np.NaN
-            n_vox_x = np.NaN
-            n_vox_y = np.NaN
-            n_vox_x_to_use = np.NaN
-            n_vox_y_to_use = np.NaN
-            n_vox_z = np.NaN
+        n_vox_x_y_mode = config['n_vox_x, n_vox_y']['mode']
+        if n_vox_x_y_mode == "user_linked":
+            n_vox_x = config['n_vox_x, n_vox_y']['user_linked_value']
+            n_vox_y = n_vox_x
+        elif n_vox_x_y_mode == "user_not_linked":
+            n_vox_x, n_vox_y = config['n_vox_x, n_vox_y']['user_not_linked_value']
         else:
-            crop_width = session_dict['crop']['width']
-            n_vox_x_y_value = int(crop_width / vox_xy_to_use)
-            n_vox_x = n_vox_x_y_value
-            n_vox_y = n_vox_x_y_value
-            n_vox_x_to_use = n_vox_x
-            n_vox_y_to_use = n_vox_y
-            crop_height = session_dict['crop']['to slice - from slice']
-            n_vox_z = int(crop_height / vox_xy_z_value)
+            session_dict = self.parent.session_dict
+            if session_dict.get('crop', None) is None:
+                n_vox_x = np.NaN
+                n_vox_y = np.NaN
+                n_vox_x_y_value = np.NaN
+            else:
+                crop_width = session_dict['crop']['width']
+                n_vox_x_y_value = int(crop_width / vox_xy_to_use)
+                n_vox_x = n_vox_x_y_value
+                n_vox_y = n_vox_x_y_value
+        n_vox_x_to_use = n_vox_x
+        n_vox_y_to_use = n_vox_y
+
+        n_vox_z_mode = config['n_vox_z']["mode"]
+        if n_vox_z_mode == "user":
+            n_vox_z = config['n_vox_z']['user_value']
+        else:
+            if session_dict.get('crop', None) is None:
+                n_vox_z = np.NaN
+            else:
+                crop_height = session_dict['crop']['to slice - from slice']
+                n_vox_z = int(crop_height / vox_xy_z_value)
+        n_vox_z_to_use = n_vox_z
 
         write_output_flag = config['write output']
 
@@ -89,13 +100,16 @@ class AdvancedSettingsInitialization:
                                                                            "vox_xy_to_use": vox_xy_to_use,
                                                                            "vox_z_to_use": vox_z_to_use,
                                                                            },
-                                                         "n_vox_x, n_vox_y": {"linked": n_vox_x_y_linked,
+                                                         "n_vox_x, n_vox_y": {"mode": n_vox_x_y_mode,
                                                                               "n_vox_x_y": n_vox_x_y_value,
                                                                               "n_vox_x": n_vox_x,
                                                                               "n_vox_y": n_vox_y,
                                                                               "n_vox_x_to_use": n_vox_x_to_use,
                                                                               "n_vox_y_to_use": n_vox_y_to_use,
                                                                               },
-                                                         "n_vox_z": n_vox_z,
+                                                         "n_vox_z": {"mode": n_vox_z_mode,
+                                                                     "n_vox_z": n_vox_z,
+                                                                     "n_vox_z_to_use": n_vox_z_to_use,
+                                                                     },
                                                          "write output": write_output_flag,
                                                          }

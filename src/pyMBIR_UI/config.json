@@ -26,7 +26,15 @@
       "vox_z": 1.00
     },
     "n_vox_x, n_vox_y": {
-      "linked": true
+      "mode": "fixed",
+      "list_mode": ["fixed", "user_linked", "user_not_linked"],
+      "user_not_linked_value": [0, 0],
+      "user_linked_value": 0
+    },
+    "n_vox_z": {
+      "mode": "fixed",
+      "list_mode": ["fixed", "user"],
+      "user_value": 0
     },
     "write output": true
   }

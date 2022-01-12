@@ -90,7 +90,7 @@ class AdvancedSettingsHandler(QDialog):
                                        "stop_threshold"          : session["stop threshold"],
                                        "exporting_file_frequency": session["exporting file frequency"],
                                        "median_filter_size"      : session.get("median filter size",
-                                                                               self.parent.config["default widgets values"]['median filter size']),
+                                            self.parent.config["default widgets values"]['median filter size']),
                                        "det_x_y_linked"          : session["det_x, det_y"]["linked"],
                                        "det_x_y_value"           : session["det_x, det_y"]["det_x_y"],
                                        "det_x_value"             : session["det_x, det_y"]["det_x"],
@@ -99,11 +99,12 @@ class AdvancedSettingsHandler(QDialog):
                                        "vox_xy_z_value"          : session["vox_xy, vox_z"]["vox_xy_z"],
                                        "vox_xy_value"            : session["vox_xy, vox_z"]["vox_xy"],
                                        "vox_z_value"             : session["vox_xy, vox_z"]["vox_z"],
-                                       "n_vox_x_y_linked"        : session["n_vox_x, n_vox_y"]["linked"],
+                                       "n_vox_x_n_vox_y_mode"    : session["n_vox_x, n_vox_y"]["mode"],
                                        "n_vox_x_y_value"         : session["n_vox_x, n_vox_y"]["n_vox_x_y"],
                                        "n_vox_x_value"           : session["n_vox_x, n_vox_y"]["n_vox_x"],
                                        "n_vox_y_value"           : session["n_vox_x, n_vox_y"]["n_vox_y"],
-                                       "n_vox_z_value"           : session["n_vox_z"],
+                                       "n_vox_z_mode"            : session["n_vox_z"]["mode"],
+                                       "n_vox_z_value"           : session["n_vox_z"]["n_vox_z"],
                                        "write_output_flag"       : session["write output"],
                                        }
             self.update_widgets()
@@ -135,19 +136,54 @@ class AdvancedSettingsHandler(QDialog):
         for _ui in not_same_behavior_widgets:
             _ui.setEnabled(not same_behavior_state)
 
-    def nbr_vox_clicked(self):
-        same_behavior_state = self.ui.n_vox_x_y_radioButton.isChecked()
-        same_behavior_widgets = [self.ui.n_vox_x_n_vox_y_label,
-                                 self.ui.n_vox_x_n_vox_y_spinBox]
-        not_same_behavior_widgets = [self.ui.n_vox_x_label,
-                                     self.ui.n_vox_x_spinBox,
-                                     self.ui.n_vox_y_label,
-                                     self.ui.n_vox_y_spinBox,
-                                     ]
-        for _ui in same_behavior_widgets:
-            _ui.setEnabled(same_behavior_state)
-        for _ui in not_same_behavior_widgets:
-            _ui.setEnabled(not same_behavior_state)
+    def nbr_vox_xy_clicked(self):
+        if self.ui.n_vox_x_y_fixed_radioButton.isChecked():
+            mode = "fixed"
+        elif self.ui.n_vox_x_y_user_radioButton.isChecked():
+            mode = "user_linked"
+        else:
+            mode = "user_not_linked"
+
+        widgets_dict = {'fixed': {'list_ui': [self.ui.n_vox_x_n_vox_y_fixed_label,
+                                              self.ui.n_vox_x_n_vox_y_fixed_value,
+                                             ],
+                                  'state': True if mode == 'fixed' else False,
+                                  },
+                        'user_linked': {'list_ui': [self.ui.n_vox_x_n_vox_y_linked_label,
+                                                    self.ui.n_vox_x_n_vox_y_linked_spinBox],
+                                        'state': True if mode == 'user_linked' else False,
+                                        },
+                        'user_not_linked': {'list_ui': [self.ui.n_vox_x_user_not_linked_label,
+                                                        self.ui.n_vox_x_user_not_linked_spinBox,
+                                                        self.ui.n_vox_y_user_not_linked_label,
+                                                        self.ui.n_vox_y_user_not_linked_spinBox],
+                                            'state': True if mode == 'user_not_linked' else False,
+                                            },
+                        }
+
+        for _key in widgets_dict.keys():
+            for _ui in widgets_dict[_key]['list_ui']:
+                _ui.setEnabled(widgets_dict[_key]['state'])
+
+    def nbr_vox_z_clicked(self):
+        if self.ui.n_vox_z_fixed_radioButton.isChecked():
+            mode = 'fixed'
+        else:
+            mode = 'user'
+
+        widgets_dict = {'fixed': {'list_ui': [self.ui.n_vox_z_fixed_label,
+                                              self.ui.n_vox_z_fixed_value],
+                                  'state': True if mode == 'fixed' else False,
+                                  },
+                        'user': {'list_ui': [self.ui.n_vox_z_user_label,
+                                             self.ui.n_vox_z_user_spinBox],
+                                 'state': True if mode == 'user' else False,
+                                 }
+                        }
+
+        for _key in widgets_dict.keys():
+            for _ui in widgets_dict[_key]['list_ui']:
+                _ui.setEnabled(widgets_dict[_key]['state'])
 
     def wavelet_level_changed(self, value):
         self.ui.wavelet_level_label.setText(str(value))
@@ -202,16 +238,27 @@ class AdvancedSettingsHandler(QDialog):
         vox_z_value = local_session_dict["vox_z_value"]
         self.ui.vox_z_doubleSpinBox.setValue(vox_z_value)
 
-        n_vox_x_y_linked = local_session_dict["n_vox_x_y_linked"]
-        self.ui.n_vox_x_y_radioButton.setChecked(n_vox_x_y_linked)
+        n_vox_x_n_vox_y_mode = local_session_dict["n_vox_x_n_vox_y_mode"]
+        if n_vox_x_n_vox_y_mode == "fixed":
+            self.ui.n_vox_x_y_fixed_radioButton.setChecked(True)
+        elif n_vox_x_n_vox_y_mode == "user_linked":
+            self.ui.n_vox_x_y_user_radioButton.setChecked(True)
+        else:
+            self.ui.n_vox_x_n_vox_y_radioButton.setChecked(True)
         n_vox_x_y_value = local_session_dict["n_vox_x_y_value"]
-        self.ui.n_vox_x_n_vox_y_spinBox.setValue(n_vox_x_y_value)
+        self.ui.n_vox_x_n_vox_y_linked_spinBox.setValue(n_vox_x_y_value)
         n_vox_x = local_session_dict["n_vox_x_value"]
-        self.ui.n_vox_x_spinBox.setValue(n_vox_x)
+        self.ui.n_vox_x_user_not_linked_spinBox.setValue(n_vox_x)
         n_vox_y = local_session_dict["n_vox_y_value"]
-        self.ui.n_vox_y_spinBox.setValue(n_vox_y)
-        n_vox_z = local_session_dict["n_vox_z_value"]
-        self.ui.n_vox_z_spinBox.setValue(n_vox_z)
+        self.ui.n_vox_y_user_not_linked_spinBox.setValue(n_vox_y)
+
+        n_vox_z_mode = local_session_dict["n_vox_z_mode"]
+        if n_vox_z_mode == "fixed":
+            self.ui.n_vox_z_fixed_radioButton.setChecked(True)
+        else:
+            self.ui.n_vox_z_user_radioButton.setChecked(True)
+        n_vox_z_value = local_session_dict["n_vox_z_value"]
+        self.ui.n_vox_z_user_spinBox.setValue(n_vox_z_value)
 
         output_flag = local_session_dict["write_output_flag"]
         self.ui.write_output_checkBox.setChecked(output_flag)
@@ -238,18 +285,23 @@ class AdvancedSettingsHandler(QDialog):
         session_dict = self.parent.session_dict
         crop_width = session_dict['crop']['width']
         n_vox_x = crop_width / self.local_session_dict["vox_xy_z_value"]
-        self.local_session_dict["n_vox_x_y_linked"] = config["n_vox_x, n_vox_y"]["linked"]
+        self.local_session_dict["n_vox_x_n_vox_y_mode"] = config["n_vox_x, n_vox_y"]["mode"]
         self.local_session_dict["n_vox_x_y_value"] = n_vox_x
         self.local_session_dict["n_vox_x_value"] = n_vox_x
         self.local_session_dict["n_vox_y_value"] = n_vox_x
 
         crop_height = session_dict['crop']['to slice - from slice']
-        n_vox_z = (crop_height) / self.local_session_dict["vox_xy_z_value"]
+        n_vox_z = crop_height / self.local_session_dict["vox_xy_z_value"]
         self.local_session_dict["n_vox_z_value"] = n_vox_z
+        self.local_session_dict["n_vox_z_mode"] = config["n_vox_z"]["mode"]
 
         self.local_session_dict["write_output_flag"] = config["write output"]
 
         self.update_widgets()
+        self.nbr_vox_xy_clicked()
+        self.nbr_vox_z_clicked()
+        self.det_clicked()
+        self.vox_clicked()
 
     def export_reconstruction_dictionary_clicked(self):
         export_file_name = QFileDialog.getSaveFileName(self.parent,
@@ -312,18 +364,29 @@ class AdvancedSettingsHandler(QDialog):
             vox_xy_to_use = vox_xy
             vox_z_to_use = vox_z
 
-        n_vox_x_y_linked = self.ui.n_vox_x_y_radioButton.isChecked()
-        n_vox_x_y_value = self.ui.n_vox_x_n_vox_y_spinBox.value()
-        n_vox_x = self.ui.n_vox_x_spinBox.value()
-        n_vox_y = self.ui.n_vox_y_spinBox.value()
-        n_vox_z = self.ui.n_vox_z_spinBox.value()
-
-        if n_vox_x_y_linked:
-            n_vox_y_to_use = n_vox_x_y_value
+        n_vox_x_y_value = self.ui.n_vox_x_n_vox_y_linked_spinBox.value()
+        n_vox_x = self.ui.n_vox_x_user_not_linked_spinBox.value()
+        n_vox_y = self.ui.n_vox_y_user_not_linked_spinBox.value()
+        if self.ui.n_vox_x_y_fixed_radioButton.isChecked():
+            n_vox_x_y_mode = "fixed"
+            n_vox_x_to_use = int(self.ui.n_vox_x_n_vox_y_fixed_value.text())
+            n_vox_y_to_use = n_vox_x_to_use
+        elif self.ui.n_vox_x_y_user_radioButton.isChecked():
+            n_vox_x_y_mode = "user_linked"
             n_vox_x_to_use = n_vox_x_y_value
+            n_vox_y_to_use = n_vox_x_to_use
         else:
+            n_vox_x_y_mode = "user_not_linked"
             n_vox_x_to_use = n_vox_x
             n_vox_y_to_use = n_vox_y
+
+        n_vox_z = self.ui.n_vox_z_user_spinBox.value()
+        if self.ui.n_vox_z_fixed_radioButton.isChecked():
+            n_vox_z_mode = "fixed"
+            n_vox_z_to_use = int(self.ui.n_vox_z_fixed_value.text())
+        else:
+            n_vox_z_mode = "user"
+            n_vox_z_to_use = n_vox_z
 
         write_output_flag = self.ui.write_output_checkBox.isChecked()
 
@@ -348,13 +411,15 @@ class AdvancedSettingsHandler(QDialog):
                                                                            "vox_xy_to_use": vox_xy_to_use,
                                                                            "vox_z_to_use": vox_z_to_use,
                                                                            },
-                                                         "n_vox_x, n_vox_y": {"linked": n_vox_x_y_linked,
+                                                         "n_vox_x, n_vox_y": {"mode": n_vox_x_y_mode,
                                                                               "n_vox_x_y": n_vox_x_y_value,
                                                                               "n_vox_x": n_vox_x,
                                                                               "n_vox_y": n_vox_y,
                                                                               "n_vox_x_to_use": n_vox_x_to_use,
                                                                               "n_vox_y_to_use": n_vox_y_to_use,
                                                                               },
-                                                         "n_vox_z": n_vox_z,
+                                                         "n_vox_z": {"mode": n_vox_z_mode,
+                                                                     "n_vox_z": n_vox_z,
+                                                                     "n_vox_z_to_use": n_vox_z_to_use},
                                                          "write output": write_output_flag,
                                                          }
