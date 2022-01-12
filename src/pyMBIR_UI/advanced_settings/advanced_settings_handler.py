@@ -220,6 +220,18 @@ class AdvancedSettingsHandler(QDialog):
         exporting_file_frequency = local_session_dict["exporting_file_frequency"]
         self.ui.exporting_file_frequency_spinBox.setValue(exporting_file_frequency)
 
+        number_of_cores = local_session_dict["number_of_cores"]
+        number_of_cores_on_this_machine = self.ui.nbr_cores_slider.maximum()
+        if number_of_cores <= number_of_cores_on_this_machine:
+            self.ui.nbr_cores_slider.setValue(number_of_cores)
+            self.ui.nbr_cores_label.setText(str(number_of_cores))
+
+        number_of_gpus = local_session_dict["number_of_gpus"]
+        number_of_gpus_on_this_machine = self.ui.nbr_gpu_slider.maximum()
+        if number_of_gpus <= number_of_gpus_on_this_machine:
+            self.ui.nbr_gpu_slider.setValue(number_of_gpus)
+            self.ui.nbr_gpu_label.setText(str(number_of_gpus))
+
         det_x_det_y_linked = local_session_dict["det_x_y_linked"]
         if det_x_det_y_linked:
             self.ui.det_x_y_radioButton.setChecked(True)
