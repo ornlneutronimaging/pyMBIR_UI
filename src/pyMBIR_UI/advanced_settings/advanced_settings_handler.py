@@ -307,14 +307,14 @@ class AdvancedSettingsHandler(QDialog):
 
         session_dict = self.parent.session_dict
         crop_width = session_dict['crop']['width']
-        n_vox_x = crop_width / self.local_session_dict["vox_xy_z_value"]
+        n_vox_x = (crop_width / self.local_session_dict["vox_xy_z_value"]) * config["det_x, det_y"]["det_x_to_use"]
         self.local_session_dict["n_vox_x_n_vox_y_mode"] = config["n_vox_x, n_vox_y"]["mode"]
         self.local_session_dict["n_vox_x_y_value"] = n_vox_x
         self.local_session_dict["n_vox_x_value"] = n_vox_x
         self.local_session_dict["n_vox_y_value"] = n_vox_x
 
         crop_height = session_dict['crop']['to slice - from slice']
-        n_vox_z = crop_height / self.local_session_dict["vox_xy_z_value"]
+        n_vox_z = (crop_height / self.local_session_dict["vox_xy_z_value"]) * config["det_x, det_y"]["det_y_to_use"]
         self.local_session_dict["n_vox_z_value"] = n_vox_z
         self.local_session_dict["n_vox_z_mode"] = config["n_vox_z"]["mode"]
 

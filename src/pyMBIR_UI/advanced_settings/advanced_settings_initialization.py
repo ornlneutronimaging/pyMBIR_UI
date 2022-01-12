@@ -48,19 +48,21 @@ class AdvancedSettingsInitialization:
 
         n_vox_x_y_mode = config['n_vox_x, n_vox_y']['mode']
         if n_vox_x_y_mode == "user_linked":
-            n_vox_x = config['n_vox_x, n_vox_y']['user_linked_value']
+            n_vox_x = config['n_vox_x, n_vox_y']['n_vox_x_y_value']
             n_vox_y = n_vox_x
         elif n_vox_x_y_mode == "user_not_linked":
-            n_vox_x, n_vox_y = config['n_vox_x, n_vox_y']['user_not_linked_value']
+            n_vox_x = config['n_vox_x, n_vox_y']['n_vox_x']
+            n_vox_y = config['n_vox_x, n_vox_y']['n_vox_y']
         else:
             session_dict = self.parent.session_dict
             if session_dict.get('crop', None) is None:
-                n_vox_x = np.NaN
-                n_vox_y = np.NaN
-                n_vox_x_y_value = np.NaN
+                image_width = self.parent.image_size['width']
+                n_vox_x = int(image_width / vox_xy_to_use) * det_x_to_use
+                n_vox_y = int(image_width / vox_xy_to_use) * det_x_to_use
+                n_vox_x_y_value = n_vox_x
             else:
                 crop_width = session_dict['crop']['width']
-                n_vox_x_y_value = int(crop_width / vox_xy_to_use)
+                n_vox_x_y_value = int(crop_width / vox_xy_to_use) * det_x_to_use
                 n_vox_x = n_vox_x_y_value
                 n_vox_y = n_vox_x_y_value
         n_vox_x_to_use = n_vox_x
@@ -71,10 +73,11 @@ class AdvancedSettingsInitialization:
             n_vox_z = config['n_vox_z']['user_value']
         else:
             if session_dict.get('crop', None) is None:
-                n_vox_z = np.NaN
+                image_height = self.parent.image_size['height']
+                n_vox_z = int(image_height / vox_z_to_use) * det_y_to_use
             else:
                 crop_height = session_dict['crop']['to slice - from slice']
-                n_vox_z = int(crop_height / vox_xy_z_value)
+                n_vox_z = int(crop_height / vox_z_to_use) * det_y_to_use
         n_vox_z_to_use = n_vox_z
 
         write_output_flag = config['write output']
