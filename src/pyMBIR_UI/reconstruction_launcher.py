@@ -134,16 +134,16 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         self.parent.ui.reconstruction_display_latest_output_file_pushButton.setEnabled(True)
         self.parent.ui.reconstruction_batch_stop_pushButton.setEnabled(True)
 
-        
+        current_location = os.path.abspath(os.path.dirname(__file__))
+        script = 'recon_HFIR_script_batch.py'
+        script_exe = os.path.abspath(os.path.join(current_location, script))
         proc = subprocess.Popen(['python',
-                                 '/Users/j35/git/pyMBIR_UI/src/pyMBIR_UI/recon_HFIR_script_batch.py',
+                                 script_exe,
                                  '--input_json',
                                  "/Users/j35/Desktop/config_to_test_batch_mode.json",
                                  ],
                                 shell=False)
         self.batch_process_id = proc
-
-        # recon_HFIR_script_launcher(dictionary_of_arguments)
 
     def kill(self):
         logging.info("Batch process has been stopped by user!")
