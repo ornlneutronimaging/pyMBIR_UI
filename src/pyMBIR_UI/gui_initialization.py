@@ -50,6 +50,10 @@ class GuiInitialization:
         self.parent.ui.tabWidget.setTabEnabled(2, False)
         self.parent.ui.tabWidget.setTabEnabled(3, False)
 
+        self.parent.ui.tabWidget_2.setTabEnabled(1, False)
+        self.parent.ui.tabWidget_2.setCurrentIndex(0)
+        self.parent.ui.tabWidget_3.setCurrentIndex(0)
+
     def statusbar(self):
         self.parent.eventProgress = QProgressBar(self.parent.ui.statusbar)
         self.parent.eventProgress.setMinimumSize(20, 14)

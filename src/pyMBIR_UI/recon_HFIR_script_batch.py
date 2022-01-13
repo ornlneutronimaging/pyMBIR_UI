@@ -36,9 +36,6 @@ def main():
     with open(args.input_json, "r") as read_file:
          input_dict = json.load(read_file)
 
-    import pprint
-    pprint.pprint(f"input_dict: {input_dict}")
-
     # for testing only
     import glob
     list_files = glob.glob("/Volumes/G-DRIVE/IPTS/IPTS-25967-pymbir/output_folder/real_output_folder/*.tiff")
@@ -47,8 +44,10 @@ def main():
     import shutil
     for _file in list_files:
         time.sleep(5)
-        print(f"copying {_file} to {input_dict['temp_op_dir']}")
         shutil.copy(_file, input_dict['temp_op_dir'])
+
+    for _file in list_files:
+        shutil.copy(_file, input_dict['op_path'])
 
     return   # just for testing
 
@@ -154,9 +153,7 @@ def main():
     pg.image(rec_mbir);
     pg.QtGui.QApplication.exec_()
     if input_dict.write_op == True:
-        temp_str = 'mbir'
-        temp_path = os.path.join(input_dict.op_path, temp_str)
-        dxchange.write_tiff_stack(rec_mbir, fname=temp_path, start=z_start, overwrite=True)
+        dxchange.write_tiff_stack(rec_mbir, fname=input_dict["op_path"], start=z_start, overwrite=True)
 
 
 if __name__ == "__main__":

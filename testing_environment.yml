@@ -12,7 +12,7 @@ dependencies:
   - pyqt=5.*
   - astropy
   - numpy
-  - dxchange
+  - dxchange=0.1.*
   - h5py=3.3.0
   - tomopy
   - pip:

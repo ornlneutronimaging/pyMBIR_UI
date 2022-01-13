@@ -339,6 +339,7 @@ class PyMBIRUILauncher(QMainWindow):
 
     def display_latest_output_file_button_clicked(self):
         self.o_reconstruction.check_output_file()
+        self.o_reconstruction.check_output_3d_volume()
 
     def stop_batch_reconstruction_clicked(self):
         self.o_reconstruction.kill()

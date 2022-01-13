@@ -1,3 +1,4 @@
+import numpy as np
 import os
 import glob
 import logging
@@ -6,6 +7,8 @@ from qtpy.QtCore import QObject, QThread, Signal
 from abc import abstractmethod
 import inflect
 import subprocess
+import json
+import dxchange
 
 from . import DataType, ReconstructionAlgorithm
 from .session_handler import SessionHandler
@@ -107,7 +110,8 @@ class ReconstructionLiveLauncher(ReconstructionLauncher):
 class ReconstructionBatchLauncher(ReconstructionLauncher):
 
     batch_process_id = None
-    tmp_output_folder = None # where the images will be saved
+    tmp_output_folder = None  # where the images will be saved
+    dictionary_of_arguments = {}
 
     def run(self):
         logging.info("Running reconstruction in Batch mode")
@@ -117,22 +121,31 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
                                                   algorithm_selected=self.reconstruction_algorithm_selected)
         o_dictionary.build_dictionary()
         dictionary_of_arguments = o_dictionary.get_dictionary()
-
-        import json
-        logging.info(f"-> Saving temporary dictionary file for Venkat")
-        with open("/Users/j35/Desktop/config_to_test_batch_mode.json", 'w') as json_file:
-            json.dump(dictionary_of_arguments, json_file)
-
         dictionary_of_arguments['running_mode'] = 'batch'
+
+        base_output_folder = os.path.basename(dictionary_of_arguments['data_path'])
+        full_output_folder = os.path.join(dictionary_of_arguments['op_path'], base_output_folder +
+                                          "_pymbir_reconstructed")
+        dictionary_of_arguments['op_path'] = full_output_folder
+        logging.info(f"Final image will be output in {full_output_folder}")
+        make_or_reset_folder(dictionary_of_arguments['op_path'])
+        logging.info(f"Reset output folder: {full_output_folder}")
+
         logging.info(f"-> Dictionary of arguments: {dictionary_of_arguments}")
 
-        logging.info(f"-> reset folder: {dictionary_of_arguments['temp_op_dir']}")
+        logging.info(f"-> reset temporary folder: {dictionary_of_arguments['temp_op_dir']}")
         make_or_reset_folder(dictionary_of_arguments['temp_op_dir'])
         self.tmp_output_folder = dictionary_of_arguments['temp_op_dir']
 
         self.parent.ui.reconstruction_launch_pushButton.setEnabled(False)
         self.parent.ui.reconstruction_display_latest_output_file_pushButton.setEnabled(True)
         self.parent.ui.reconstruction_batch_stop_pushButton.setEnabled(True)
+
+        self.dictionary_of_arguments = dictionary_of_arguments
+
+        logging.info(f"-> Saving config file to be called from command line script")
+        with open("/Users/j35/Desktop/config_to_test_batch_mode.json", 'w') as json_file:
+            json.dump(dictionary_of_arguments, json_file)
 
         current_location = os.path.abspath(os.path.dirname(__file__))
         script = 'recon_HFIR_script_batch.py'
@@ -163,7 +176,7 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
             show_status_message(parent=self.parent,
                                 message=f"No files found in the output folder yet!",
                                 status=StatusMessageStatus.warning,
-                                duration_s=10)
+                                duration_s=5)
             return
 
         if not (self.parent.list_file_found_in_output_folder is None):
@@ -174,7 +187,7 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
                 show_status_message(parent=self.parent,
                                     message=f"No new files found in the output folder!",
                                     status=StatusMessageStatus.warning,
-                                    duration_s=10)
+                                    duration_s=5)
                 return
 
         if self.parent.list_file_found_in_output_folder is None:
@@ -184,7 +197,15 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
             # load all files in the folder
             for _file in list_files:
                 o_norm = Normalization()
-                o_norm.load(file=_file, notebook=False)
+                try:
+                    o_norm.load(file=_file, notebook=False)
+                except OSError:
+                    show_status_message(parent=self.parent,
+                                        message=f"No new files found in the output folder!",
+                                        status=StatusMessageStatus.warning,
+                                        duration_s=5)
+                    return
+
                 reconstructed_array = o_norm.data['sample']['data'][0]
                 self.parent.full_reconstructed_array.append(reconstructed_array)
                 self.parent.list_file_found_in_output_folder.append(_file)
@@ -194,8 +215,16 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
             for _file in list_files:
                 new_file_found = 0
                 if not (_file in self.parent.list_file_found_in_output_folder):
-                    o_norm = Normalization()
-                    o_norm.load(file=_file, notebook=False)
+                    try:
+                        o_norm = Normalization()
+                        o_norm.load(file=_file, notebook=False)
+                    except OSError:
+                        show_status_message(parent=self.parent,
+                                            message=f"No new files found in the output folder!",
+                                            status=StatusMessageStatus.warning,
+                                            duration_s=5)
+                        return
+
                     reconstructed_array = o_norm.data['sample']['data'][0]
 
                     if self.parent.full_reconstructed_array is None:
@@ -209,23 +238,64 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
             if new_file_found > 0:
                 p = inflect.engine()
                 show_status_message(parent=self.parent,
-                                    message=f"{new_file_found} new {p.plural('file', new_file_found)} found in the output "
+                                    message=f"{new_file_found} new {p.plural('file', new_file_found)} found in the "
+                                            f"output "
                                             f"folder!",
-                                    status=StatusMessageStatus.warning,
-                                    duration_s=10)
+                                    status=StatusMessageStatus.ready,
+                                    duration_s=5)
 
             else:
                 show_status_message(parent=self.parent,
                                     message=f"No new files found in the output folder!",
                                     status=StatusMessageStatus.warning,
-                                    duration_s=10)
+                                    duration_s=5)
                 return
 
         self.parent.ui.tabWidget_2.setTabEnabled(1, True)
         self.parent.ui.tabWidget_2.setCurrentIndex(1)
+        self.parent.ui.tabWidget_3.setCurrentIndex(0)
 
         o_event = EventHandler(parent=self.parent)
         o_event.update_output_plot()
+
+    def check_output_3d_volume(self):
+        output_folder = self.dictionary_of_arguments["op_path"]
+        list_tiff_files_in_output_folder = glob.glob(os.path.join(output_folder, "*.tif?"))
+        if len(list_tiff_files_in_output_folder) == 0:
+            self.parent.ui.tabWidget_3.setTabEnabled(1, False)
+
+        else:
+            # load and display 3D volume
+            volume_data = []
+
+            show_status_message(parent=self.parent,
+                                message=f"Loading reconstructed volume ...",
+                                status=StatusMessageStatus.working)
+
+            self.parent.eventProgress.setMaximum(len(list_tiff_files_in_output_folder))
+            self.parent.eventProgress.setValue(0)
+            self.parent.eventProgress.setVisible(True)
+
+            for _index, _file in enumerate(list_tiff_files_in_output_folder):
+                volume_data.append(dxchange.reader.read_tiff(_file))
+                self.parent.eventProgress.setValue(_index+1)
+
+            volume_data = np.array(volume_data)
+            print(f"np.shape(volume_data): {np.shape(volume_data)}")
+
+            self.parent.eventProgress.setVisible(False)
+
+            self.parent.ui.tabWidget_3.setTabEnabled(1, True)
+            self.parent.ui.tabWidget_3.setCurrentIndex(1)
+
+            self.parent.ui.reconstruction_batch_stop_pushButton.setEnabled(False)
+            self.parent.ui.reconstruction_display_latest_output_file_pushButton.setEnabled(False)
+            self.parent.ui.reconstruction_launch_pushButton.setEnabled(True)
+
+            show_status_message(parent=self.parent,
+                                message=f"Loading reconstructed volume ... Done !",
+                                status=StatusMessageStatus.ready,
+                                duration_s=10)
 
     def stop(self):
         pass
