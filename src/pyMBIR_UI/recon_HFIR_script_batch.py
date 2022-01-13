@@ -17,24 +17,40 @@ try:
     from dxchange.writer import write_tiff_stack
     from pyMBIR.reconEngine import analytic, MBIR
     from pyMBIR.utils import apply_proj_tilt
+    from readNeutronData import *
+    import dxchange
 except ModuleNotFoundError:
     pass
-from readNeutronData import *
 from tomopy.misc.corr import median_filter
 import os
-import dxchange
 import json
-import pprint
 
 
-def recon_HFIR_script_launcher(input_dict):
+def main():
+
     # Parameters associated with the acquired data
-    # parser = argparse.ArgumentParser()
-    # parser.add_argument("--input_json", help="Full path to the JSON file containig all the inputs")
-    # args = parser.parse_args()
-    #
-    # with open(args.input_json, "r") as read_file:
-    #     input_dict = json.load(read_file)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--input_json", help="Full path to the JSON file containig all the inputs")
+    args = parser.parse_args()
+
+    with open(args.input_json, "r") as read_file:
+         input_dict = json.load(read_file)
+
+    import pprint
+    pprint.pprint(f"input_dict: {input_dict}")
+
+    # for testing only
+    import glob
+    list_files = glob.glob("/Volumes/G-DRIVE/IPTS/IPTS-25967-pymbir/output_folder/real_output_folder/*.tiff")
+
+    import time
+    import shutil
+    for _file in list_files:
+        time.sleep(5)
+        print(f"copying {_file} to {input_dict['temp_op_dir']}")
+        shutil.copy(_file, input_dict['temp_op_dir'])
+
+    return   # just for testing
 
     pprint.pprint(input_dict)
     max_core = input_dict['max_core']
@@ -143,4 +159,5 @@ def recon_HFIR_script_launcher(input_dict):
         dxchange.write_tiff_stack(rec_mbir, fname=temp_path, start=z_start, overwrite=True)
 
 
-
+if __name__ == "__main__":
+    main()

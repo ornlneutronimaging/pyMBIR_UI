@@ -341,6 +341,12 @@ class PyMBIRUILauncher(QMainWindow):
         o_reconstruction = ReconstructionBatchLauncher(parent=self)
         o_reconstruction.check_output_file()
 
+    def stop_batch_reconstruction_clicked(self):
+        self.batch_process_id.terminate()
+        self.ui.reconstruction_batch_stop_pushButton.setEnabled(False)
+        self.ui.reconstruction_display_latest_output_file_pushButton.setEnabled(False)
+        self.ui.reconstruction_launch_pushButton.setEnabled(True)
+
     def reportProgress(self, iteration, stopping_criteria):
         show_status_message(parent=self,
                             message=f"Iteration {iteration} and stopping criteria: {int(100*stopping_criteria)}",

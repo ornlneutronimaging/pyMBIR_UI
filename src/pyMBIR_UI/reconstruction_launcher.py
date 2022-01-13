@@ -5,6 +5,7 @@ from pathlib import Path
 from qtpy.QtCore import QObject, QThread, Signal
 from abc import abstractmethod
 import inflect
+import subprocess
 
 from . import DataType, ReconstructionAlgorithm
 from .session_handler import SessionHandler
@@ -18,7 +19,7 @@ from .event_handler import EventHandler
 from NeuNorm.normalization import Normalization
 from .utilities.file_utilities import make_or_reset_folder
 from .venkat_function import MBIR_fromGUI
-from .recon_HFIR_script_batch import recon_HFIR_script_launcher
+# from .recon_HFIR_script_batch import recon_HFIR_script_launcher
 
 
 class ReconstructionLauncher:
@@ -130,10 +131,24 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         # dictionary_of_arguments["n_vox_y"] = 960
         # dictionary_of_arguments["n_vox_z"] = 8
 
+        # os.system("python /Users/j35/git/pyMBIR_UI/src/pyMBIR_UI/recon_HFIR_script_batch.py --input_json {}".format(
+        #         "/Users/j35/Desktop/config_to_test_batch_mode.json &"))
 
+        self.parent.ui.reconstruction_launch_pushButton.setEnabled(False)
+        self.parent.ui.reconstruction_display_latest_output_file_pushButton.setEnabled(True)
+        self.parent.ui.reconstruction_batch_stop_pushButton.setEnabled(True)
+
+        proc = subprocess.Popen(['python',
+                                 '/Users/j35/git/pyMBIR_UI/src/pyMBIR_UI/recon_HFIR_script_batch.py',
+                                 '--input_json',
+                                 "/Users/j35/Desktop/config_to_test_batch_mode.json",
+                                 ],
+                                shell=False)
+
+        self.parent.batch_process_id = proc
+        print(f"process id is: {proc.pid}")
 
         # recon_HFIR_script_launcher(dictionary_of_arguments)
-
 
     def check_output_file(self):
         # retrieve the latest output file from the folder
