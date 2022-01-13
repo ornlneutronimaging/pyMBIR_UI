@@ -60,7 +60,7 @@ class SessionHandler:
                      # 'width / 2': np.int(crop_width/2),
                      'from slice': crop_from_slice,
                      'to slice': crop_to_slice,
-                     'to slice - from slice': crop_to_slice - crop_from_slice + 1,
+                     'to slice - from slice': int(np.abs(crop_to_slice - crop_from_slice + 1)),
                      'file index': file_index}
         session_dict['crop'] = crop_dict
 

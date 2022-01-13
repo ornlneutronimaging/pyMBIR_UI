@@ -2,6 +2,7 @@ import os
 from qtpy.QtWidgets import QMainWindow, QDialog, QFileDialog, QApplication
 import logging
 import json
+import numpy as np
 
 from pyMBIR_UI import load_ui
 from pyMBIR_UI.session_handler import SessionHandler
@@ -80,10 +81,15 @@ class AdvancedSettingsHandler(QDialog):
         self.ui.nbr_gpu_label.setEnabled(widget_state)
         self.ui.nbr_gpu_label.setText(str(nbr_gpu))
 
+        det_col_to_use = self.parent.session_dict['crop']['width']
+        det_row_to_use = self.parent.session_dict['crop']['from slice'] - self.parent.session_dict['crop']['to slice']
+
         if session is None:
             self.reset_button_clicked()
         else:
             self.local_session_dict = {"wavelet_level"           : session["wavelet level"],
+                                       "det_col_to_use"          : det_col_to_use,
+                                       "det_row_to_use"          : det_row_to_use,
                                        "max_number_of_iterations": session["max number of iterations"],
                                        "number_of_cores"         : session["number of cores"],
                                        "number_of_gpus"          : session["number of gpus"],
@@ -108,6 +114,23 @@ class AdvancedSettingsHandler(QDialog):
                                        "write_output_flag"       : session["write output"],
                                        }
             self.update_widgets()
+            self.update_fixed_values_of_n_vox_x_y_z()
+
+    def update_fixed_values_of_n_vox_x_y_z(self):
+        self.save_widgets()
+        det_col = self.local_session_dict["det_col_to_use"]
+        det_x_to_use = self.parent.session_dict["advanced settings"]["det_x, det_y"]["det_x_to_use"]
+        vox_xy_to_use = self.parent.session_dict["advanced settings"]["vox_xy, vox_z"]["vox_xy_to_use"]
+        n_vox_x = int(det_col * det_x_to_use / vox_xy_to_use)
+
+        det_y_to_use = self.parent.session_dict["advanced settings"]["det_x, det_y"]["det_y_to_use"]
+        vox_z_to_use = self.parent.session_dict["advanced settings"]["vox_xy, vox_z"]["vox_z_to_use"]
+        det_row = np.abs(self.local_session_dict["det_row_to_use"]) + 1
+
+        n_vox_z = int((det_row * det_y_to_use) / vox_z_to_use)
+
+        self.ui.n_vox_x_n_vox_y_fixed_value.setText(str(n_vox_x))
+        self.ui.n_vox_z_fixed_value.setText(str(n_vox_z))
 
     def vox_clicked(self):
         same_behavior_state = self.ui.vox_xy_z_radioButton.isChecked()
@@ -122,6 +145,8 @@ class AdvancedSettingsHandler(QDialog):
         for _ui in not_same_behavior_widgets:
             _ui.setEnabled(not same_behavior_state)
 
+        self.update_fixed_values_of_n_vox_x_y_z()
+
     def det_clicked(self):
         same_behavior_state = self.ui.det_x_y_radioButton.isChecked()
         same_behavior_widgets = [self.ui.det_x_y_label,
@@ -135,6 +160,11 @@ class AdvancedSettingsHandler(QDialog):
             _ui.setEnabled(same_behavior_state)
         for _ui in not_same_behavior_widgets:
             _ui.setEnabled(not same_behavior_state)
+
+        self.update_fixed_values_of_n_vox_x_y_z()
+
+    def det_xy_value_changed(self, new_value):
+        self.det_clicked()
 
     def nbr_vox_xy_clicked(self):
         if self.ui.n_vox_x_y_fixed_radioButton.isChecked():
@@ -165,6 +195,11 @@ class AdvancedSettingsHandler(QDialog):
             for _ui in widgets_dict[_key]['list_ui']:
                 _ui.setEnabled(widgets_dict[_key]['state'])
 
+        self.update_fixed_values_of_n_vox_x_y_z()
+
+    def vox_xy_z_value_changed(self, new_value):
+        self.vox_clicked()
+
     def nbr_vox_z_clicked(self):
         if self.ui.n_vox_z_fixed_radioButton.isChecked():
             mode = 'fixed'
@@ -184,6 +219,8 @@ class AdvancedSettingsHandler(QDialog):
         for _key in widgets_dict.keys():
             for _ui in widgets_dict[_key]['list_ui']:
                 _ui.setEnabled(widgets_dict[_key]['state'])
+
+        self.update_fixed_values_of_n_vox_x_y_z()
 
     def wavelet_level_changed(self, value):
         self.ui.wavelet_level_label.setText(str(value))
@@ -268,6 +305,7 @@ class AdvancedSettingsHandler(QDialog):
             self.ui.n_vox_x_n_vox_y_radioButton.setChecked(True)
         self.nbr_vox_xy_clicked()
         n_vox_x_y_value = local_session_dict["n_vox_x_y_value"]
+        self.ui.n_vox_x_n_vox_y_fixed_value.setText(str(n_vox_x_y_value))
         self.ui.n_vox_x_n_vox_y_linked_spinBox.setValue(n_vox_x_y_value)
         n_vox_x = local_session_dict["n_vox_x_value"]
         self.ui.n_vox_x_user_not_linked_spinBox.setValue(n_vox_x)
@@ -281,6 +319,7 @@ class AdvancedSettingsHandler(QDialog):
             self.ui.n_vox_z_user_radioButton.setChecked(True)
         self.nbr_vox_z_clicked()
         n_vox_z_value = local_session_dict["n_vox_z_value"]
+        self.ui.n_vox_z_fixed_value.setText(str(n_vox_z_value))
         self.ui.n_vox_z_user_spinBox.setValue(n_vox_z_value)
 
         output_flag = local_session_dict["write_output_flag"]
@@ -288,6 +327,13 @@ class AdvancedSettingsHandler(QDialog):
 
     def reset_button_clicked(self):
         config = self.parent.config["default widgets values"]
+
+        o_get = Get(parent=self.parent)
+        number_of_cores = o_get.get_number_of_cpu()
+        number_of_gpus = o_get.get_number_of_gpu()
+
+        self.local_session_dict["number_of_cores"] = number_of_cores
+        self.local_session_dict["number_of_gpus"] = number_of_gpus
 
         self.local_session_dict["wavelet_level"] = config["wavelet level"]
         self.local_session_dict["max_number_of_iterations"] = config["max number of iterations"]
@@ -307,14 +353,19 @@ class AdvancedSettingsHandler(QDialog):
 
         session_dict = self.parent.session_dict
         crop_width = session_dict['crop']['width']
-        n_vox_x = (crop_width / self.local_session_dict["vox_xy_z_value"]) * config["det_x, det_y"]["det_x_to_use"]
+        det_x_to_use = config["det_x, det_y"]["value"]
+        vox_xy_value = config["vox_xy, vox_z"]["value"]
+        n_vox_x = int((crop_width / vox_xy_value) * det_x_to_use)
         self.local_session_dict["n_vox_x_n_vox_y_mode"] = config["n_vox_x, n_vox_y"]["mode"]
         self.local_session_dict["n_vox_x_y_value"] = n_vox_x
         self.local_session_dict["n_vox_x_value"] = n_vox_x
         self.local_session_dict["n_vox_y_value"] = n_vox_x
 
         crop_height = session_dict['crop']['to slice - from slice']
-        n_vox_z = (crop_height / self.local_session_dict["vox_xy_z_value"]) * config["det_x, det_y"]["det_y_to_use"]
+        det_y_to_use = config["det_x, det_y"]["value"]
+        vox_z_value = config["vox_xy, vox_z"]["value"]
+        n_vox_z = int((crop_height / vox_z_value) * det_y_to_use)
+
         self.local_session_dict["n_vox_z_value"] = n_vox_z
         self.local_session_dict["n_vox_z_mode"] = config["n_vox_z"]["mode"]
 
@@ -392,7 +443,7 @@ class AdvancedSettingsHandler(QDialog):
         n_vox_y = self.ui.n_vox_y_user_not_linked_spinBox.value()
         if self.ui.n_vox_x_y_fixed_radioButton.isChecked():
             n_vox_x_y_mode = "fixed"
-            n_vox_x_to_use = int(self.ui.n_vox_x_n_vox_y_fixed_value.text())
+            n_vox_x_to_use = int(float(self.ui.n_vox_x_n_vox_y_fixed_value.text()))
             n_vox_y_to_use = n_vox_x_to_use
         elif self.ui.n_vox_x_y_user_radioButton.isChecked():
             n_vox_x_y_mode = "user_linked"
@@ -406,7 +457,7 @@ class AdvancedSettingsHandler(QDialog):
         n_vox_z = self.ui.n_vox_z_user_spinBox.value()
         if self.ui.n_vox_z_fixed_radioButton.isChecked():
             n_vox_z_mode = "fixed"
-            n_vox_z_to_use = int(self.ui.n_vox_z_fixed_value.text())
+            n_vox_z_to_use = int(float(self.ui.n_vox_z_fixed_value.text()))
         else:
             n_vox_z_mode = "user"
             n_vox_z_to_use = n_vox_z

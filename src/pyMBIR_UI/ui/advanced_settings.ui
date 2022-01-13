@@ -1254,6 +1254,102 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>det_x_y_doubleSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>Dialog</receiver>
+   <slot>det_xy_value_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>178</x>
+     <y>308</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>504</x>
+     <y>250</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>det_x_doubleSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>Dialog</receiver>
+   <slot>det_xy_value_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>134</x>
+     <y>347</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>512</x>
+     <y>355</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>det_y_doubleSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>Dialog</receiver>
+   <slot>det_xy_value_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>354</x>
+     <y>347</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>510</x>
+     <y>310</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vox_xy_z_doubleSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>Dialog</receiver>
+   <slot>vox_xy_z_value_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>197</x>
+     <y>425</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>512</x>
+     <y>442</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vox_xy_doubleSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>Dialog</receiver>
+   <slot>vox_xy_z_value_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>127</x>
+     <y>464</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>512</x>
+     <y>548</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vox_z_doubleSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>Dialog</receiver>
+   <slot>vox_xy_z_value_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>371</x>
+     <y>464</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>510</x>
+     <y>519</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>det_clicked()</slot>
@@ -1268,5 +1364,7 @@
   <slot>number_of_gpus_changed()</slot>
   <slot>export_reconstruction_dictionary_clicked()</slot>
   <slot>nbr_vox_z_clicked()</slot>
+  <slot>det_xy_value_changed()</slot>
+  <slot>vox_xy_z_value_changed()</slot>
  </slots>
 </ui>
