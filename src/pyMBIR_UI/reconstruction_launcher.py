@@ -106,6 +106,8 @@ class ReconstructionLiveLauncher(ReconstructionLauncher):
 
 class ReconstructionBatchLauncher(ReconstructionLauncher):
 
+    batch_process_id = None
+
     def run(self):
         logging.info("Running reconstruction in Batch mode")
         logging.info(f"-> algorithm selected: {self.reconstruction_algorithm_selected}")
@@ -144,11 +146,16 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
                                  "/Users/j35/Desktop/config_to_test_batch_mode.json",
                                  ],
                                 shell=False)
-
-        self.parent.batch_process_id = proc
-        print(f"process id is: {proc.pid}")
+        self.batch_process_id = proc
 
         # recon_HFIR_script_launcher(dictionary_of_arguments)
+
+    def kill(self):
+        logging.info("Batch process has been stopped by user!")
+        self.batch_process_id.terminate()
+        self.parent.ui.reconstruction_batch_stop_pushButton.setEnabled(False)
+        self.parent.ui.reconstruction_display_latest_output_file_pushButton.setEnabled(False)
+        self.parent.ui.reconstruction_launch_pushButton.setEnabled(True)
 
     def check_output_file(self):
         # retrieve the latest output file from the folder
