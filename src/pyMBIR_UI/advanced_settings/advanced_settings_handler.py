@@ -387,6 +387,7 @@ class AdvancedSettingsHandler(QDialog):
         export_file_name = export_file_name[0]
 
         if export_file_name:
+            self.save_widgets()
             o_advanced = GeneralSettingsHandler(parent=self.parent)
             reconstruction_algorithm_selected = o_advanced.get_reconstruction_algorithm_selected()
             o_dictionary = AlgorithmDictionaryCreator(parent=self.parent,
