@@ -114,7 +114,6 @@ class Get:
         show_status_message(parent=self.parent,
                             message="",
                             status=StatusMessageStatus.working)
-
         return _dict
 
     @staticmethod

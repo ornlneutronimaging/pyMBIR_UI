@@ -123,6 +123,13 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         dictionary_of_arguments = o_dictionary.get_dictionary()
         dictionary_of_arguments['running_mode'] = 'batch'
 
+
+
+        # for debugging only !!! remove me
+        dictionary_of_arguments['n_vox_z'] = 6
+
+
+
         base_output_folder = os.path.basename(dictionary_of_arguments['data_path'])
         full_output_folder = os.path.join(dictionary_of_arguments['op_path'], base_output_folder +
                                           "_pymbir_reconstructed")
@@ -171,7 +178,7 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         list_files = glob.glob(os.path.join(output_folder, '*.tiff'))
         list_files.sort()
 
-        if not list_files:
+        if list_files == []:
             # no files found in the output folder
             show_status_message(parent=self.parent,
                                 message=f"No files found in the output folder yet!",
@@ -261,8 +268,20 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
     def check_output_3d_volume(self):
         output_folder = self.dictionary_of_arguments["op_path"]
         list_tiff_files_in_output_folder = glob.glob(os.path.join(output_folder, "*.tif?"))
-        if len(list_tiff_files_in_output_folder) == 0:
+        number_of_files_in_output_folder = len(list_tiff_files_in_output_folder)
+        if number_of_files_in_output_folder == 0:
             self.parent.ui.tabWidget_3.setTabEnabled(1, False)
+            return
+
+        if (number_of_files_in_output_folder > 0) and \
+                (number_of_files_in_output_folder < self.dictionary_of_arguments['n_vox_z']):
+            self.parent.ui.tabWidget_3.setTabEnabled(1, True)
+
+            show_status_message(parent=self.parent,
+                                message=f"Reconstructed volume is about to be available ... check back in a few "
+                                        f"seconds",
+                                status=StatusMessageStatus.warning)
+            return
 
         else:
             # load and display 3D volume
@@ -276,12 +295,23 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
             self.parent.eventProgress.setValue(0)
             self.parent.eventProgress.setVisible(True)
 
-            for _index, _file in enumerate(list_tiff_files_in_output_folder):
-                volume_data.append(dxchange.reader.read_tiff(_file))
-                self.parent.eventProgress.setValue(_index+1)
+            try:
+
+                for _index, _file in enumerate(list_tiff_files_in_output_folder):
+                    _data = dxchange.reader.read_tiff(_file)
+                    volume_data.append(_data)
+                    self.parent.eventProgress.setValue(_index+1)
+
+            except OSError:
+                self.parent.eventProgress.setVisible(False)
+
+                logging.info("Error while loading the stack")
+                show_status_message(parent=self.parent,
+                                    message=f"Give it another try in a few seconds ...",
+                                    status=StatusMessageStatus.warning)
+                return
 
             volume_data = np.array(volume_data)
-            print(f"np.shape(volume_data): {np.shape(volume_data)}")
 
             self.parent.eventProgress.setVisible(False)
 
