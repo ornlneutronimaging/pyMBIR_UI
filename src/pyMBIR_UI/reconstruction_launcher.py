@@ -107,6 +107,7 @@ class ReconstructionLiveLauncher(ReconstructionLauncher):
 class ReconstructionBatchLauncher(ReconstructionLauncher):
 
     batch_process_id = None
+    tmp_output_folder = None # where the images will be saved
 
     def run(self):
         logging.info("Running reconstruction in Batch mode")
@@ -127,19 +128,13 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
 
         logging.info(f"-> reset folder: {dictionary_of_arguments['temp_op_dir']}")
         make_or_reset_folder(dictionary_of_arguments['temp_op_dir'])
-
-        # dictionary_of_arguments["write_op"] = True
-        # dictionary_of_arguments["n_vox_x"] = 960
-        # dictionary_of_arguments["n_vox_y"] = 960
-        # dictionary_of_arguments["n_vox_z"] = 8
-
-        # os.system("python /Users/j35/git/pyMBIR_UI/src/pyMBIR_UI/recon_HFIR_script_batch.py --input_json {}".format(
-        #         "/Users/j35/Desktop/config_to_test_batch_mode.json &"))
+        self.tmp_output_folder = dictionary_of_arguments['temp_op_dir']
 
         self.parent.ui.reconstruction_launch_pushButton.setEnabled(False)
         self.parent.ui.reconstruction_display_latest_output_file_pushButton.setEnabled(True)
         self.parent.ui.reconstruction_batch_stop_pushButton.setEnabled(True)
 
+        
         proc = subprocess.Popen(['python',
                                  '/Users/j35/git/pyMBIR_UI/src/pyMBIR_UI/recon_HFIR_script_batch.py',
                                  '--input_json',
@@ -159,7 +154,7 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
 
     def check_output_file(self):
         # retrieve the latest output file from the folder
-        output_folder = self.parent.session_dict[DataType.output]['folder']
+        output_folder = self.tmp_output_folder
         list_files = glob.glob(os.path.join(output_folder, '*.tiff'))
         list_files.sort()
 

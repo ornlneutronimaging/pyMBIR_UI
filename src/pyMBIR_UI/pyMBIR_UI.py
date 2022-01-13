@@ -338,8 +338,7 @@ class PyMBIRUILauncher(QMainWindow):
         self.o_reconstruction.run()
 
     def display_latest_output_file_button_clicked(self):
-        o_reconstruction = ReconstructionBatchLauncher(parent=self)
-        o_reconstruction.check_output_file()
+        self.o_reconstruction.check_output_file()
 
     def stop_batch_reconstruction_clicked(self):
         self.o_reconstruction.kill()
@@ -383,9 +382,7 @@ class PyMBIRUILauncher(QMainWindow):
         if value:
             max_slider_value = self.ui.output_horizontalSlider.maximum()
             self.ui.output_horizontalSlider.setValue(max_slider_value)
-
-    # def stop_thread(self, state):
-    #     print("state")
+            self.ui.output_slider_label.setText(str(max_slider_value))
 
     # leaving ui
     def closeEvent(self, c):
