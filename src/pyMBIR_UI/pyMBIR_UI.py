@@ -94,6 +94,10 @@ class PyMBIRUILauncher(QMainWindow):
     reconstructed_view_array = None
     reconstructed_view_histogram = None
 
+    # output temporary data
+    temporary_output_view_array = None
+    temporary_output_view_histogram = None
+
     stop_thread = Signal(bool)
 
     # batch mode - last time a file was added to output folder

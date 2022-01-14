@@ -54,7 +54,25 @@ class EventHandler:
         self.parent.ui.output_slider_label.setText(f"{array_index_to_show}")
         full_reconstructed_array = self.parent.full_reconstructed_array
         data_to_display = np.transpose(full_reconstructed_array[array_index_to_show])
+
+        _view = self.parent.ui.output_image_view.getView()
+        _view_box = _view.getViewBox()
+        _state = _view_box.getState()
+
+        first_update = False
+        if self.parent.temporary_output_view_histogram is None:
+            first_update = True
+
+        _histo_widget = self.parent.ui.output_image_view.getHistogramWidget()
+        self.parent.temporary_output_view_histogram = _histo_widget.getLevels()
+
         self.parent.ui.output_image_view.setImage(data_to_display)
+
+        _view_box.setState(_state)
+
+        if not first_update:
+            histogram = self.parent.temporary_output_view_histogram
+            _histo_widget.setLevels(histogram[0], histogram[1])
 
     def reset_output_plot(self):
         self.parent.ui.tabWidget.setTabEnabled(3, False)
