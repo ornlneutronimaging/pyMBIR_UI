@@ -399,7 +399,6 @@ class PyMBIRUILauncher(QMainWindow):
         o_session.save_from_ui()
         o_session.automatic_save()
         logging.info(" #### Leaving pyMBIR_UI ####")
-
         self.close()
 
 

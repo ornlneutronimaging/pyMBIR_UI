@@ -43,7 +43,7 @@ def main():
     import time
     import shutil
     for _file in list_files:
-        time.sleep(5)
+        time.sleep(.5)
         shutil.copy(_file, input_dict['temp_op_dir'])
 
     for _file in list_files:

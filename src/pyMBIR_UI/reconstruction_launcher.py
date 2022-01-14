@@ -304,7 +304,7 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
             o_reconstruction = ReconstructedOutputHandler(parent=self.parent)
             o_reconstruction.load_reconstructed_slices(list_tiff_files=list_tiff_files_in_output_folder)
 
-            if o_reconstruction.reconstructed_slices is None:
+            if not o_reconstruction.loading_worked:
                 self.parent.eventProgress.setVisible(False)
 
                 logging.info("Error while loading the stack")
@@ -312,8 +312,9 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
                                     message=f"Give it another try in a few seconds ...",
                                     status=StatusMessageStatus.warning)
 
-
             else:
+
+                o_reconstruction.initialize_widgets()
                 self.parent.eventProgress.setVisible(False)
 
                 self.parent.ui.tabWidget_3.setTabEnabled(1, True)
