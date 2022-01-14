@@ -182,6 +182,7 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         list_files.sort()
 
         if not list_files:
+
             # no files found in the output folder
             show_status_message(parent=self.parent,
                                 message=f"No files found in the output folder yet!",
@@ -193,6 +194,7 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
             # we already found at least one file in the output folder
 
             if len(list_files) == len(self.parent.list_file_found_in_output_folder):
+
                 # no new files found in the output folder
                 show_status_message(parent=self.parent,
                                     message=f"No new files found in the output folder!",
@@ -220,10 +222,19 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
                 self.parent.full_reconstructed_array.append(reconstructed_array)
                 self.parent.list_file_found_in_output_folder.append(_file)
 
+                nbr_files = len(list_files)
+                p = inflect.engine()
+                show_status_message(parent=self.parent,
+                                    message=f"{nbr_files} new {p.plural('file', nbr_files)} found in the "
+                                            f"output "
+                                            f"folder!",
+                                    status=StatusMessageStatus.ready,
+                                    duration_s=5)
+
         else:
 
+            new_file_found = 0
             for _file in list_files:
-                new_file_found = 0
                 if not (_file in self.parent.list_file_found_in_output_folder):
                     try:
                         o_norm = Normalization()
@@ -246,6 +257,7 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
                     new_file_found += 1
 
             if new_file_found > 0:
+
                 p = inflect.engine()
                 show_status_message(parent=self.parent,
                                     message=f"{new_file_found} new {p.plural('file', new_file_found)} found in the "
@@ -255,6 +267,7 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
                                     duration_s=5)
 
             else:
+
                 show_status_message(parent=self.parent,
                                     message=f"No new files found in the output folder!",
                                     status=StatusMessageStatus.warning,
