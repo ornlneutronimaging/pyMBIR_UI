@@ -36,8 +36,16 @@ class ReconstructionLauncher:
         self.parent = parent
 
     def initialization(self):
+        self.init_widgets()
         self.set_reconstruction_algorithm()
         self.save_session_dict()
+
+    def init_widgets(self):
+        self.parent.ui.tabWidget_3.setTabEnabled(1, False)
+        self.parent.ui.tabWidget_3.setCurrentIndex(0)
+
+        self.parent.ui.tabWidget_2.setTabEnabled(1, False)
+        self.parent.ui.tabWidget_2.setCurrentIndex(0)
 
     def reset_widgets(self):
         o_event = EventHandler(parent=self.parent)
@@ -116,6 +124,10 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
     tmp_output_folder = None  # where the images will be saved
     dictionary_of_arguments = {}
 
+    def initialization(self):
+        ReconstructionLauncher.initialization(self)
+        self.parent.list_file_found_in_output_folder = None
+
     def run(self):
         logging.info("Running reconstruction in Batch mode")
         logging.info(f"-> algorithm selected: {self.reconstruction_algorithm_selected}")
@@ -126,10 +138,10 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         dictionary_of_arguments = o_dictionary.get_dictionary()
         dictionary_of_arguments['running_mode'] = 'batch'
 
-
-
         # for debugging only !!! remove me
         dictionary_of_arguments['n_vox_z'] = 6
+
+
 
 
 

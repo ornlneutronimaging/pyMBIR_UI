@@ -91,11 +91,15 @@ class PyMBIRUILauncher(QMainWindow):
 
     # reconstructed full array
     full_reconstructed_array = None
+    reconstructed_view_array = None
+    reconstructed_view_histogram = None
 
     stop_thread = Signal(bool)
 
     # batch mode - last time a file was added to output folder
     list_file_found_in_output_folder = None
+
+
 
     def __init__(self, parent=None):
 

@@ -1,5 +1,7 @@
-from .status_message_config import show_status_message, StatusMessageStatus
 import dxchange
+import numpy as np
+
+from .status_message_config import show_status_message, StatusMessageStatus
 
 
 class ReconstructedOutputHandler:
@@ -51,5 +53,24 @@ class ReconstructedOutputHandler:
         self.display_selected_slice(file_index=slider_value-1)
 
     def display_selected_slice(self, file_index=0):
+
+        _view = self.parent.ui.reconstructed_image_view.getView()
+        _view_box = _view.getViewBox()
+        _state = _view_box.getState()
+
+        first_update = False
+        if self.parent.reconstructed_view_histogram is None:
+            first_update = True
+
+        _histo_widget = self.parent.ui.reconstructed_image_view.getHistogramWidget()
+        self.parent.reconstructed_view_histogram = _histo_widget.getLevels()
+
         data = self.parent.reconstructed_slices[file_index]
+        data = np.transpose(data)
         self.parent.ui.reconstructed_image_view.setImage(data)
+
+        _view_box.setState(_state)
+
+        if not first_update:
+            histogram = self.parent.reconstructed_view_histogram
+            _histo_widget.setLevels(histogram[0], histogram[1])
