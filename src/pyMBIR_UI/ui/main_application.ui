@@ -951,7 +951,7 @@
                <bool>true</bool>
               </property>
               <property name="currentIndex">
-               <number>0</number>
+               <number>1</number>
               </property>
               <widget class="QWidget" name="tab_6">
                <attribute name="title">
@@ -1017,6 +1017,36 @@
                <attribute name="title">
                 <string>Reconstructed Volume</string>
                </attribute>
+               <layout class="QVBoxLayout" name="verticalLayout_17">
+                <item>
+                 <widget class="QWidget" name="final_reconstructed_widget" native="true">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_17">
+                  <item>
+                   <widget class="QSlider" name="final_reconstructed_slider">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="final_reconstructed_label">
+                    <property name="text">
+                     <string>0</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
               </widget>
              </widget>
             </item>
@@ -1348,8 +1378,8 @@
    <slot>projections_select_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>134</x>
-     <y>85</y>
+     <x>1478</x>
+     <y>120</y>
     </hint>
     <hint type="destinationlabel">
      <x>903</x>
@@ -1364,8 +1394,8 @@
    <slot>ob_select_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>134</x>
-     <y>85</y>
+     <x>1478</x>
+     <y>155</y>
     </hint>
     <hint type="destinationlabel">
      <x>901</x>
@@ -1380,8 +1410,8 @@
    <slot>df_select_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>134</x>
-     <y>85</y>
+     <x>1478</x>
+     <y>190</y>
     </hint>
     <hint type="destinationlabel">
      <x>906</x>
@@ -1396,8 +1426,8 @@
    <slot>preview_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>134</x>
-     <y>85</y>
+     <x>158</x>
+     <y>233</y>
     </hint>
     <hint type="destinationlabel">
      <x>903</x>
@@ -1412,8 +1442,8 @@
    <slot>output_folder_select_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>134</x>
-     <y>92</y>
+     <x>1484</x>
+     <y>302</y>
     </hint>
     <hint type="destinationlabel">
      <x>904</x>
@@ -1428,8 +1458,8 @@
    <slot>projections_text_field_returned()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>134</x>
-     <y>85</y>
+     <x>241</x>
+     <y>113</y>
     </hint>
     <hint type="destinationlabel">
      <x>902</x>
@@ -1444,8 +1474,8 @@
    <slot>ob_text_field_returned()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>134</x>
-     <y>85</y>
+     <x>241</x>
+     <y>148</y>
     </hint>
     <hint type="destinationlabel">
      <x>903</x>
@@ -1460,8 +1490,8 @@
    <slot>df_text_field_returned()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>134</x>
-     <y>85</y>
+     <x>241</x>
+     <y>183</y>
     </hint>
     <hint type="destinationlabel">
      <x>901</x>
@@ -1476,8 +1506,8 @@
    <slot>output_folder_text_field_returned()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>134</x>
-     <y>92</y>
+     <x>211</x>
+     <y>295</y>
     </hint>
     <hint type="destinationlabel">
      <x>902</x>
@@ -1540,8 +1570,8 @@
    <slot>crop_file_index_moved()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>684</y>
+     <x>224</x>
+     <y>711</y>
     </hint>
     <hint type="destinationlabel">
      <x>9</x>
@@ -1556,8 +1586,8 @@
    <slot>crop_file_index_pressed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>684</y>
+     <x>224</x>
+     <y>711</y>
     </hint>
     <hint type="destinationlabel">
      <x>6</x>
@@ -1572,8 +1602,8 @@
    <slot>crop_width_moved()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>724</y>
+     <x>215</x>
+     <y>764</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -1588,8 +1618,8 @@
    <slot>crop_width_pressed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>724</y>
+     <x>215</x>
+     <y>764</y>
     </hint>
     <hint type="destinationlabel">
      <x>5</x>
@@ -1604,8 +1634,8 @@
    <slot>crop_checkBox_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>103</x>
-     <y>96</y>
+     <x>117</x>
+     <y>130</y>
     </hint>
     <hint type="destinationlabel">
      <x>7</x>
@@ -1636,8 +1666,8 @@
    <slot>tilt_correction_file_index_moved()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>152</y>
+     <x>224</x>
+     <y>145</y>
     </hint>
     <hint type="destinationlabel">
      <x>7</x>
@@ -1652,8 +1682,8 @@
    <slot>tilt_correction_file_index_pressed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>152</y>
+     <x>224</x>
+     <y>145</y>
     </hint>
     <hint type="destinationlabel">
      <x>1035</x>
@@ -1684,8 +1714,8 @@
    <slot>center_of_rotation_file_index_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>152</y>
+     <x>305</x>
+     <y>148</y>
     </hint>
     <hint type="destinationlabel">
      <x>1064</x>
@@ -1700,8 +1730,8 @@
    <slot>center_of_rotation_file_index_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>152</y>
+     <x>305</x>
+     <y>178</y>
     </hint>
     <hint type="destinationlabel">
      <x>1065</x>
@@ -1732,8 +1762,8 @@
    <slot>center_of_rotation_algorithm_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>224</y>
+     <x>249</x>
+     <y>230</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -1748,8 +1778,8 @@
    <slot>center_of_rotation_user_value_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>224</y>
+     <x>280</x>
+     <y>268</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -1780,8 +1810,8 @@
    <slot>tilt_correction_algorithm_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>192</y>
+     <x>246</x>
+     <y>234</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -1796,8 +1826,8 @@
    <slot>tilt_correction_algorithm_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>192</y>
+     <x>396</x>
+     <y>234</y>
     </hint>
     <hint type="destinationlabel">
      <x>282</x>
@@ -1812,8 +1842,8 @@
    <slot>tilt_correction_algorithm_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>192</y>
+     <x>519</x>
+     <y>234</y>
     </hint>
     <hint type="destinationlabel">
      <x>1063</x>
@@ -1844,8 +1874,8 @@
    <slot>tilt_refresh_calculation_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>192</y>
+     <x>651</x>
+     <y>241</y>
     </hint>
     <hint type="destinationlabel">
      <x>1187</x>
@@ -1860,8 +1890,8 @@
    <slot>tilt_correction_show_tilt_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>192</y>
+     <x>695</x>
+     <y>274</y>
     </hint>
     <hint type="destinationlabel">
      <x>1070</x>
@@ -1908,8 +1938,8 @@
    <slot>sub_sampling_value_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>197</x>
-     <y>243</y>
+     <x>88</x>
+     <y>105</y>
     </hint>
     <hint type="destinationlabel">
      <x>4</x>
@@ -1972,8 +2002,8 @@
    <slot>crop_from_slice_spinBox_finished_editing()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>724</y>
+     <x>206</x>
+     <y>800</y>
     </hint>
     <hint type="destinationlabel">
      <x>9</x>
@@ -1988,8 +2018,8 @@
    <slot>crop_to_slice_spinBox_finished_editing()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>724</y>
+     <x>329</x>
+     <y>800</y>
     </hint>
     <hint type="destinationlabel">
      <x>297</x>
@@ -2020,8 +2050,8 @@
    <slot>output_slider_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>157</x>
-     <y>138</y>
+     <x>178</x>
+     <y>693</y>
     </hint>
     <hint type="destinationlabel">
      <x>240</x>
@@ -2036,8 +2066,8 @@
    <slot>output_slider_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>157</x>
-     <y>138</y>
+     <x>178</x>
+     <y>693</y>
     </hint>
     <hint type="destinationlabel">
      <x>1521</x>
@@ -2052,8 +2082,8 @@
    <slot>output_checkbox_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>107</x>
-     <y>102</y>
+     <x>128</x>
+     <y>664</y>
     </hint>
     <hint type="destinationlabel">
      <x>9</x>
@@ -2074,6 +2104,38 @@
     <hint type="destinationlabel">
      <x>1521</x>
      <y>904</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>final_reconstructed_slider</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>final_reconstructed_slider_moved()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1012</x>
+     <y>680</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1521</x>
+     <y>673</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>final_reconstructed_slider</sender>
+   <signal>sliderPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>final_reconstructed_slider_clicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1025</x>
+     <y>680</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1524</x>
+     <y>606</y>
     </hint>
    </hints>
   </connection>
@@ -2123,5 +2185,7 @@
   <slot>crop_to_slice_spinBox_valueChanged()</slot>
   <slot>display_latest_output_file_button_clicked()</slot>
   <slot>stop_batch_reconstruction_clicked()</slot>
+  <slot>final_reconstructed_slider_moved()</slot>
+  <slot>final_reconstructed_slider_clicked()</slot>
  </slots>
 </ui>

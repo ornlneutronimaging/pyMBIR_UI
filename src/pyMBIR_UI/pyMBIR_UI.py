@@ -25,6 +25,7 @@ from pyMBIR_UI.reconstruction_launcher import ReconstructionLiveLauncher, Recons
 from pyMBIR_UI.advanced_settings.advanced_settings_handler import AdvancedSettingsPasswordHandler
 from pyMBIR_UI.general_settings_handler import GeneralSettingsHandler
 from .status_message_config import show_status_message, StatusMessageStatus
+from pyMBIR_UI.reconstructed_output_handler import ReconstructedOutputHandler
 
 # warnings.filterwarnings('ignore')
 
@@ -384,6 +385,13 @@ class PyMBIRUILauncher(QMainWindow):
             max_slider_value = self.ui.output_horizontalSlider.maximum()
             self.ui.output_horizontalSlider.setValue(max_slider_value)
             self.ui.output_slider_label.setText(str(max_slider_value))
+
+    def final_reconstructed_slider_moved(self, value):
+        self.final_reconstructed_slider_clicked()
+
+    def final_reconstructed_slider_clicked(self):
+        o_reconstructed = ReconstructedOutputHandler(parent=self)
+        o_reconstructed.slider_changed()
 
     # leaving ui
     def closeEvent(self, c):

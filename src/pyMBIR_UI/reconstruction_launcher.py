@@ -9,6 +9,8 @@ import inflect
 import subprocess
 import json
 import dxchange
+from mpl_toolkits import mplot3d
+import matplotlib.pyplot as plt
 
 from . import DataType, ReconstructionAlgorithm
 from .session_handler import SessionHandler
@@ -23,6 +25,7 @@ from NeuNorm.normalization import Normalization
 from .utilities.file_utilities import make_or_reset_folder
 from .venkat_function import MBIR_fromGUI
 # from .recon_HFIR_script_batch import recon_HFIR_script_launcher
+from .reconstructed_output_handler import ReconstructedOutputHandler
 
 
 class ReconstructionLauncher:
@@ -178,7 +181,7 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         list_files = glob.glob(os.path.join(output_folder, '*.tiff'))
         list_files.sort()
 
-        if list_files == []:
+        if not list_files:
             # no files found in the output folder
             show_status_message(parent=self.parent,
                                 message=f"No files found in the output folder yet!",
@@ -284,48 +287,33 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
             return
 
         else:
-            # load and display 3D volume
-            volume_data = []
 
-            show_status_message(parent=self.parent,
-                                message=f"Loading reconstructed volume ...",
-                                status=StatusMessageStatus.working)
+            o_reconstruction = ReconstructedOutputHandler(parent=self.parent)
+            o_reconstruction.load_reconstructed_slices(list_tiff_files=list_tiff_files_in_output_folder)
 
-            self.parent.eventProgress.setMaximum(len(list_tiff_files_in_output_folder))
-            self.parent.eventProgress.setValue(0)
-            self.parent.eventProgress.setVisible(True)
-
-            try:
-
-                for _index, _file in enumerate(list_tiff_files_in_output_folder):
-                    _data = dxchange.reader.read_tiff(_file)
-                    volume_data.append(_data)
-                    self.parent.eventProgress.setValue(_index+1)
-
-            except OSError:
+            if o_reconstruction.reconstructed_slices is None:
                 self.parent.eventProgress.setVisible(False)
 
                 logging.info("Error while loading the stack")
                 show_status_message(parent=self.parent,
                                     message=f"Give it another try in a few seconds ...",
                                     status=StatusMessageStatus.warning)
-                return
 
-            volume_data = np.array(volume_data)
 
-            self.parent.eventProgress.setVisible(False)
+            else:
+                self.parent.eventProgress.setVisible(False)
 
-            self.parent.ui.tabWidget_3.setTabEnabled(1, True)
-            self.parent.ui.tabWidget_3.setCurrentIndex(1)
+                self.parent.ui.tabWidget_3.setTabEnabled(1, True)
+                self.parent.ui.tabWidget_3.setCurrentIndex(1)
 
-            self.parent.ui.reconstruction_batch_stop_pushButton.setEnabled(False)
-            self.parent.ui.reconstruction_display_latest_output_file_pushButton.setEnabled(False)
-            self.parent.ui.reconstruction_launch_pushButton.setEnabled(True)
+                self.parent.ui.reconstruction_batch_stop_pushButton.setEnabled(False)
+                self.parent.ui.reconstruction_display_latest_output_file_pushButton.setEnabled(False)
+                self.parent.ui.reconstruction_launch_pushButton.setEnabled(True)
 
-            show_status_message(parent=self.parent,
-                                message=f"Loading reconstructed volume ... Done !",
-                                status=StatusMessageStatus.ready,
-                                duration_s=10)
+                show_status_message(parent=self.parent,
+                                    message=f"Loading reconstructed volume ... Done !",
+                                    status=StatusMessageStatus.ready,
+                                    duration_s=10)
 
     def stop(self):
         pass

@@ -94,3 +94,10 @@ class GuiInitialization:
         image_layout = QVBoxLayout()
         image_layout.addWidget(self.parent.ui.output_image_view)
         self.parent.ui.output_widget.setLayout(image_layout)
+
+        self.parent.ui.reconstructed_image_view = pg.ImageView(view=pg.PlotItem())
+        self.parent.ui.reconstructed_image_view.ui.roiBtn.hide()
+        self.parent.ui.reconstructed_image_view.ui.menuBtn.hide()
+        image_layout = QVBoxLayout()
+        image_layout.addWidget(self.parent.ui.reconstructed_image_view)
+        self.parent.ui.final_reconstructed_widget.setLayout(image_layout)
