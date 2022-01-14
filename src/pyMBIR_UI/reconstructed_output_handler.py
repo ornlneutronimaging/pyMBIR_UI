@@ -51,4 +51,5 @@ class ReconstructedOutputHandler:
         self.display_selected_slice(file_index=slider_value-1)
 
     def display_selected_slice(self, file_index=0):
-        pass
+        data = self.parent.reconstructed_slices[file_index]
+        self.parent.ui.reconstructed_image_view.setImage(data)
