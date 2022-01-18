@@ -28,7 +28,14 @@ class UseCenter(BaseAlgorithm):
         rows1 = rows[w]
         centers1 = centers[w]
         from scipy import stats
-        tilt, intercept, r, p, std_err = stats.linregress(rows1, centers1)
+        try:
+            tilt, intercept, r, p, std_err = stats.linregress(rows1, centers1)
+        except ValueError:
+            show_status_message(parent=self.parent,
+                                message=f"Tilt calculation use center failed!",
+                                status=StatusMessageStatus.error,
+                                duration_s=10)
+            return np.NaN
 
         show_status_message(parent=self.parent,
                             message=f"",
