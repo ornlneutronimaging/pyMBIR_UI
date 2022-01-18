@@ -2,6 +2,7 @@ import logging
 import numpy as np
 from scipy import ndimage
 from scipy.optimize import curve_fit
+import time
 
 from ..status_message_config import StatusMessageStatus, show_status_message
 from .base_algorithm import BaseAlgorithm
@@ -17,10 +18,12 @@ class PhaseCorrelation(BaseAlgorithm):
     bins = 360
 
     def compute(self):
-        logging.info("Running tilt calculation - phase correlation")
+        logging.info("Running 'phase correlation' tilt calculation ... ")
         show_status_message(parent=self.parent,
-                            message=f"Running tilt calculation - direct minimization",
+                            message=f"Running direct minimization tilt calculation ...",
                             status=StatusMessageStatus.working)
+
+        time.sleep(1)
 
         # implementation details:
         #  * the signal lines in the freq domain may overlap with
@@ -46,7 +49,8 @@ class PhaseCorrelation(BaseAlgorithm):
 
         show_status_message(parent=self.parent,
                             message=f"",
-                            status=StatusMessageStatus.ready)
+                            status=StatusMessageStatus.ready,
+                            duration_s=5)
 
         # tilt is the rotation angle divided by 2
         # return tilt / 2, weight

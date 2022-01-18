@@ -1,6 +1,7 @@
 import logging
 import numpy as np
 from skimage import feature
+import time
 
 from ..status_message_config import StatusMessageStatus, show_status_message
 from .base_algorithm import BaseAlgorithm
@@ -10,10 +11,11 @@ class UseCenter(BaseAlgorithm):
 
     def compute(self, **kwds):
 
-        logging.info("Running tilt calculation - use center")
+        logging.info("Running 'use center' tilt correction ...")
         show_status_message(parent=self.parent,
                             message=f"Running tilt calculation - use center",
                             status=StatusMessageStatus.working)
+        time.sleep(1)
 
         centers = np.array(
                     [item for item
@@ -30,7 +32,8 @@ class UseCenter(BaseAlgorithm):
 
         show_status_message(parent=self.parent,
                             message=f"",
-                            status=StatusMessageStatus.ready)
+                            status=StatusMessageStatus.ready,
+                            duration_s=5)
         logging.info(f"-> tilt: {tilt}")
 
         return tilt

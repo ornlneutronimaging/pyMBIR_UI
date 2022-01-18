@@ -1,6 +1,7 @@
 import logging
 import numpy as np
 from skimage.transform import rotate
+import time
 
 from ..status_message_config import StatusMessageStatus, show_status_message
 from .base_algorithm import BaseAlgorithm
@@ -11,10 +12,11 @@ MAX_SHIFT = 400
 class DirectMinimization(BaseAlgorithm):
 
     def compute(self):
-        logging.info("Running tilt calculation - direct minimization")
+        logging.info("Running 'direct minimization' tilt calculation ...")
         show_status_message(parent=self.parent,
-                            message=f"Running tilt calculation - direct minimization",
+                            message=f"Running direct minimization tilt calculation ...",
                             status=StatusMessageStatus.working)
+        time.sleep(1)
 
         flipped_img180 = np.fliplr(self.image_180_degree)
         shift = self.find_shift(self.image_0_degree, flipped_img180)
@@ -26,7 +28,7 @@ class DirectMinimization(BaseAlgorithm):
         show_status_message(parent=self.parent,
                             message=f"",
                             status=StatusMessageStatus.ready,
-                            duration_s=10)
+                            duration_s=5)
         logging.info(f"-> tilt: {tilt}")
 
         return tilt
