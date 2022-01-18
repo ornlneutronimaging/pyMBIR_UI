@@ -40,6 +40,7 @@ class TiltAlgorithm:
     direct_minimization = "direct minimization"
     phase_correlation = "phase correlation"
     use_center = "use center"
+    user_defined = "user defined"
 
 
 class ReconstructionAlgorithm:

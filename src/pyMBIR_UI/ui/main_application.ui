@@ -24,7 +24,7 @@
        <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="elideMode">
        <enum>Qt::ElideMiddle</enum>
@@ -181,7 +181,7 @@
         <item>
          <widget class="QToolBox" name="toolBox">
           <property name="currentIndex">
-           <number>0</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="page">
            <property name="geometry">
@@ -340,8 +340,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>313</width>
-             <height>227</height>
+             <width>1459</width>
+             <height>725</height>
             </rect>
            </property>
            <attribute name="label">
@@ -512,8 +512,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>686</width>
-             <height>236</height>
+             <width>1459</width>
+             <height>725</height>
             </rect>
            </property>
            <attribute name="label">
@@ -611,6 +611,20 @@
                   </widget>
                  </item>
                  <item>
+                  <widget class="QRadioButton" name="tilt_user_defined_radioButton">
+                   <property name="text">
+                    <string>User Defined</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QDoubleSpinBox" name="tilt_user_defined_doubleSpinBox">
+                   <property name="maximum">
+                    <double>360.000000000000000</double>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
                   <spacer name="horizontalSpacer_3">
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>
@@ -668,13 +682,6 @@
                    </property>
                   </spacer>
                  </item>
-                 <item>
-                  <widget class="QCheckBox" name="show_tilt_checkBox">
-                   <property name="text">
-                    <string>Show tilt</string>
-                   </property>
-                  </widget>
-                 </item>
                 </layout>
                </item>
               </layout>
@@ -700,7 +707,7 @@
            </size>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="tab_4">
            <attribute name="title">
@@ -951,7 +958,7 @@
                <bool>true</bool>
               </property>
               <property name="currentIndex">
-               <number>1</number>
+               <number>0</number>
               </property>
               <widget class="QWidget" name="tab_6">
                <attribute name="title">
@@ -1702,7 +1709,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>109</x>
-     <y>96</y>
+     <y>198</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -1718,7 +1725,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>224</x>
-     <y>145</y>
+     <y>732</y>
     </hint>
     <hint type="destinationlabel">
      <x>7</x>
@@ -1734,7 +1741,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>224</x>
-     <y>145</y>
+     <y>732</y>
     </hint>
     <hint type="destinationlabel">
      <x>1035</x>
@@ -1750,7 +1757,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>97</x>
-     <y>96</y>
+     <y>164</y>
     </hint>
     <hint type="destinationlabel">
      <x>11</x>
@@ -1765,8 +1772,8 @@
    <slot>center_of_rotation_file_index_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>305</x>
-     <y>148</y>
+     <x>316</x>
+     <y>714</y>
     </hint>
     <hint type="destinationlabel">
      <x>1064</x>
@@ -1781,8 +1788,8 @@
    <slot>center_of_rotation_file_index_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>305</x>
-     <y>178</y>
+     <x>316</x>
+     <y>744</y>
     </hint>
     <hint type="destinationlabel">
      <x>1065</x>
@@ -1798,7 +1805,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>146</x>
-     <y>224</y>
+     <y>790</y>
     </hint>
     <hint type="destinationlabel">
      <x>6</x>
@@ -1814,7 +1821,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>249</x>
-     <y>230</y>
+     <y>796</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -1830,7 +1837,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>280</x>
-     <y>268</y>
+     <y>834</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -1862,7 +1869,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>246</x>
-     <y>234</y>
+     <y>823</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -1878,7 +1885,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>396</x>
-     <y>234</y>
+     <y>823</y>
     </hint>
     <hint type="destinationlabel">
      <x>282</x>
@@ -1894,7 +1901,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>519</x>
-     <y>234</y>
+     <y>823</y>
     </hint>
     <hint type="destinationlabel">
      <x>1063</x>
@@ -1910,7 +1917,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>146</x>
-     <y>192</y>
+     <y>779</y>
     </hint>
     <hint type="destinationlabel">
      <x>1063</x>
@@ -1925,28 +1932,12 @@
    <slot>tilt_refresh_calculation_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>651</x>
-     <y>241</y>
+     <x>1424</x>
+     <y>830</y>
     </hint>
     <hint type="destinationlabel">
      <x>1187</x>
      <y>813</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>show_tilt_checkBox</sender>
-   <signal>clicked()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>tilt_correction_show_tilt_clicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>695</x>
-     <y>274</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1070</x>
-     <y>838</y>
     </hint>
    </hints>
   </connection>
@@ -1989,8 +1980,8 @@
    <slot>sub_sampling_value_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>88</x>
-     <y>105</y>
+     <x>199</x>
+     <y>233</y>
     </hint>
     <hint type="destinationlabel">
      <x>4</x>
@@ -2102,7 +2093,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>178</x>
-     <y>693</y>
+     <y>652</y>
     </hint>
     <hint type="destinationlabel">
      <x>240</x>
@@ -2118,7 +2109,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>178</x>
-     <y>693</y>
+     <y>652</y>
     </hint>
     <hint type="destinationlabel">
      <x>1521</x>
@@ -2134,7 +2125,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>128</x>
-     <y>664</y>
+     <y>623</y>
     </hint>
     <hint type="destinationlabel">
      <x>9</x>
@@ -2222,6 +2213,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>tilt_user_defined_radioButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tilt_correction_algorithm_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>590</x>
+     <y>811</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>672</x>
+     <y>922</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>tilt_user_defined_doubleSpinBox</sender>
+   <signal>valueChanged(double)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>tilt_correction_user_defined_value_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>677</x>
+     <y>816</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1000</x>
+     <y>926</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>projections_select_clicked()</slot>
@@ -2270,5 +2293,6 @@
   <slot>stop_batch_reconstruction_clicked()</slot>
   <slot>final_reconstructed_slider_moved()</slot>
   <slot>final_reconstructed_slider_clicked()</slot>
+  <slot>tilt_correction_user_defined_value_changed()</slot>
  </slots>
 </ui>

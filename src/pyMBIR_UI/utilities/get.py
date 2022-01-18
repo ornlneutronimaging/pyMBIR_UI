@@ -41,6 +41,8 @@ class Get:
             return TiltAlgorithm.phase_correlation
         elif self.parent.ui.tilt_correction_use_center_radioButton.isChecked():
             return TiltAlgorithm.use_center
+        elif self.parent.ui.tilt_user_defined_radioButton.isChecked():
+            return TiltAlgorithm.user_defined
         else:
             NotImplementedError("Tilt algorithm not implemented!")
 

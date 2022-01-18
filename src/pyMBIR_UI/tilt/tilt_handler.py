@@ -44,11 +44,14 @@ class TiltHandler:
         self.parent.ui.tilt_correction_file_index_horizontalSlider.setValue(session['file index'])
         self.parent.tilt_correction_index_dict['180_degree'] = session['image 180 file index']
         self.parent.tilt_correction_index_dict['0_degree'] = session['image 0 file index']
+        if TiltAlgorithm.user_defined:
+            self.parent.tilt_user_defined_doubleSpinBox.setValue(session[TiltAlgorithm.user_defined])
         self.set_algorithm(algorithm=session['algorithm selected'])
 
         tilt_calculation = {TiltAlgorithm.phase_correlation: session[TiltAlgorithm.phase_correlation],
                             TiltAlgorithm.direct_minimization: session[TiltAlgorithm.direct_minimization],
-                            TiltAlgorithm.use_center: session[TiltAlgorithm.use_center]}
+                            TiltAlgorithm.use_center: session[TiltAlgorithm.use_center],
+                            TiltAlgorithm.user_defined: session[TiltAlgorithm.user_defined]}
         self.parent.tilt_calculation = tilt_calculation
         self.correction_algorithm_changed()
         self.parent.ui.tilt_refresh_calculation_pushButton.setEnabled(False)
@@ -63,45 +66,53 @@ class TiltHandler:
         transpose_image = np.transpose(image)
         self.parent.tilt_correction_image_view.setImage(transpose_image)
 
-        # show or not tilt calculated
-        if self.parent.ui.show_tilt_checkBox.isChecked():
-            tilt_value = self.parent.ui.tilt_correcton_value_label.text()
-            tilt_value_float = np.float(tilt_value)
-            if np.isfinite(tilt_value_float):
+        if not (self.parent.tilt_grid_item is None):
+            self.parent.tilt_correction_image_view.removeItem(self.parent.tilt_grid_item)
+            self.parent.tilt_grid_item = None
 
-                _pen = QtGui.QPen()
-                _pen.setColor(QtGui.QColor(255, 0, 0))
-                _pen.setWidth(10)
+        # show tilt calculated
+        tilt_value = self.parent.ui.tilt_correcton_value_label.text()
+        tilt_value_float = np.float(tilt_value)
+        if np.isfinite(tilt_value_float):
 
-                self.parent.tilt_grid_item = pg.InfiniteLine([512, 512],
-                                                             angle=90-tilt_value_float,
-                                                             movable=True,
-                                                             pen=_pen)
-                self.parent.tilt_correction_image_view.addItem(self.parent.tilt_grid_item)
+            _pen = QtGui.QPen()
+            _pen.setColor(QtGui.QColor(255, 0, 0))
+            _pen.setWidth(10)
 
-            else:
-                self.parent.tilt_correction_image_view.removeItem(self.parent.tilt_grid_item)
-                self.parent.tilt_grid_item = None
-
-        else:
-            if not (self.parent.tilt_grid_item is None):
-                self.parent.tilt_correction_image_view.removeItem(self.parent.tilt_grid_item)
-                self.parent.tilt_grid_item = None
+            self.parent.tilt_grid_item = pg.InfiniteLine([512, 512],
+                                                         angle=90-tilt_value_float,
+                                                         movable=True,
+                                                         pen=_pen)
+            self.parent.tilt_correction_image_view.addItem(self.parent.tilt_grid_item)
 
     def master_checkBox_clicked(self):
         master_value = self.parent.ui.tilt_correction_checkBox.isChecked()
         self.parent.ui.tilt_correction_frame.setEnabled(master_value)
+        if not master_value:
+            if not (self.parent.tilt_grid_item is None):
+                self.parent.tilt_correction_image_view.removeItem(self.parent.tilt_grid_item)
+                self.parent.tilt_grid_item = None
+        else:
+            self.file_index_changed()
 
     def correction_algorithm_changed(self):
-        tilt_calculation = self.parent.tilt_calculation
         o_get = Get(parent=self.parent)
         algo_selected = o_get.tilt_algorithm_selected()
-        tilt_value = tilt_calculation[algo_selected]
+        if algo_selected == TiltAlgorithm.user_defined:
+            tilt_value = self.parent.ui.tilt_user_defined_doubleSpinBox.value()
+            self.parent.tilt_calculation[algo_selected] = tilt_value
+        tilt_value = self.parent.tilt_calculation[algo_selected]
         if tilt_value is None:
             self.parent.ui.tilt_correcton_value_label.setText("NaN")
         else:
             self.parent.ui.tilt_correcton_value_label.setText("{:.2f}".format(tilt_value))
         self.parent.ui.tilt_refresh_calculation_pushButton.setEnabled(True)
+
+        if algo_selected == TiltAlgorithm.user_defined:
+            self.parent.ui.tilt_user_defined_doubleSpinBox.setEnabled(True)
+        else:
+            self.parent.ui.tilt_user_defined_doubleSpinBox.setEnabled(False)
+        self.file_index_changed()
 
     def refresh_calculation(self):
         o_get = Get(parent=self.parent)
@@ -113,6 +124,8 @@ class TiltHandler:
             tilt_value = self.phase_correlation()
         elif algo_selected == TiltAlgorithm.use_center:
             tilt_value = self.use_center()
+        elif algo_selected == TiltAlgorithm.user_defined:
+            tilt_value = self.ui.tilt_user_defined_doubleSpinBox.value()
         self.parent.tilt_calculation[algo_selected] = tilt_value
         self.correction_algorithm_changed()
         self.parent.ui.tilt_refresh_calculation_pushButton.setEnabled(False)
@@ -146,11 +159,16 @@ class TiltHandler:
         return self.parent.tilt_calculation[algo_selected]
 
     def set_algorithm(self, algorithm=TiltAlgorithm.direct_minimization):
+        state_of_user_defined_checkbox = False
         if algorithm == TiltAlgorithm.direct_minimization:
             self.parent.ui.tilt_correction_direct_minimization_radioButton.setChecked(True)
         elif algorithm == TiltAlgorithm.phase_correlation:
             self.parent.ui.tilt_correction_phase_correlation_radioButton.setChecked(True)
         elif algorithm == TiltAlgorithm.use_center:
             self.parent.ui.tilt_correction_use_center_radioButton.setChecked(True)
+        elif algorithm == TiltAlgorithm.user_defined:
+            self.parent.ui.tilt_user_defined_radioButton.setChecked(True)
+            state_of_user_defined_checkbox = True
         else:
-            raise NotImplementedError("Algorithm not implemened!")
+            raise NotImplementedError("Algorithm not implemented!")
+        self.parent.ui.tilt_user_defined_doubleSpinBox.setEnabled(state_of_user_defined_checkbox)
