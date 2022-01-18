@@ -79,11 +79,21 @@ class TiltHandler:
             _pen.setColor(QtGui.QColor(255, 0, 0))
             _pen.setWidth(10)
 
-            self.parent.tilt_grid_item = pg.InfiniteLine([512, 512],
+            self.parent.tilt_grid_item = pg.InfiniteLine([self.parent.tilt_correction_item_x_position,
+                                                          self.parent.tilt_correction_item_x_position],
                                                          angle=90-tilt_value_float,
                                                          movable=True,
                                                          pen=_pen)
             self.parent.tilt_correction_image_view.addItem(self.parent.tilt_grid_item)
+            self.parent.tilt_grid_item.sigPositionChanged.connect(self.parent.tilt_item_moved_by_user)
+
+    def tilt_item_moved_by_user(self):
+        item = self.parent.tilt_grid_item
+        value = item.value()
+        if type(value) is float:
+            self.parent.tilt_correction_item_x_position = value
+        else:
+            self.parent.tilt_correction_item_x_position = value[0]
 
     def master_checkBox_clicked(self):
         master_value = self.parent.ui.tilt_correction_checkBox.isChecked()

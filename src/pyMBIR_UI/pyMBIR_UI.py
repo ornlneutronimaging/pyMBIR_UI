@@ -59,6 +59,7 @@ class PyMBIRUILauncher(QMainWindow):
     crop_image_view = None
     center_of_rotation_image_view = None
     tilt_correction_image_view = None
+    tilt_correction_item_x_position = 512
 
     # infinite line and their labels
     crop_from_slice_item = None
@@ -314,19 +315,19 @@ class PyMBIRUILauncher(QMainWindow):
     def tilt_correction_algorithm_changed(self):
         o_tilt = TiltHandler(parent=self)
         o_tilt.correction_algorithm_changed()
+        o_tilt.file_index_changed()
 
     def tilt_correction_set_up_images_at_0_and_180_degrees_pushed(self):
         o_tilt = TiltHandler(parent=self)
         o_tilt.set_up_images_at_0_and_180_degrees()
 
-    def tilt_correction_show_tilt_clicked(self):
-        o_tilt = TiltHandler(parent=self)
-        o_tilt.file_index_changed()
-
     def tilt_correction_user_defined_value_changed(self, new_value):
         o_tilt = TiltHandler(parent=self)
         o_tilt.correction_algorithm_changed()
-        self.tilt_correction_show_tilt_clicked()
+
+    def tilt_item_moved_by_user(self):
+        o_tilt = TiltHandler(parent=self)
+        o_tilt.tilt_item_moved_by_user()
 
     @wait_cursor
     def tilt_refresh_calculation_clicked(self):
