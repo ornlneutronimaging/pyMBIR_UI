@@ -1,4 +1,5 @@
 import numpy as np
+import asyncio
 import os
 import glob
 import logging
@@ -141,10 +142,6 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         # for debugging only !!! remove me
         dictionary_of_arguments['n_vox_z'] = 6
 
-
-
-
-
         base_output_folder = os.path.basename(dictionary_of_arguments['data_path'])
         full_output_folder = os.path.join(dictionary_of_arguments['op_path'], base_output_folder +
                                           "_pymbir_reconstructed")
@@ -179,6 +176,25 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
                                  ],
                                 shell=False)
         self.batch_process_id = proc
+
+    @staticmethod
+    async def check_asyncio(output_folder):
+        is_continue = True
+        list_file_found_in_output_folder = []
+
+        while is_continue:
+            list_files = glob.glob(os.path.join(output_folder, '*.tiff'))
+            if len(list_files) > len(list_file_found_in_output_folder):
+                for _file in list_files:
+                    if not (_file in list_files):
+                        print(f"-> new file: {_file}")
+                        list_file_found_in_output_folder.append(_file)
+            elif len(list_file_found_in_output_folder) == 6:
+                print(f"-> no new files found!")
+                return
+            else:
+                print("waiting 3 seconds!")
+                await asyncio.sleep(3)
 
     def kill(self):
         logging.info("Batch process has been stopped by user!")

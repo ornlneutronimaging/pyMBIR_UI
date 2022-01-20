@@ -1,3 +1,4 @@
+import asyncio
 from qtpy.QtWidgets import QMainWindow, QApplication
 from qtpy.QtGui import QGuiApplication
 import sys
@@ -352,6 +353,7 @@ class PyMBIRUILauncher(QMainWindow):
         self.o_reconstruction = ReconstructionBatchLauncher(parent=self)
         self.o_reconstruction.initialization()
         self.o_reconstruction.run()
+        asyncio.run(ReconstructionBatchLauncher.check_asyncio("/Users/j35/Desktop/test_output/test/"))
 
     def display_latest_output_file_button_clicked(self):
         self.o_reconstruction.check_output_file()

@@ -49,7 +49,7 @@ def main():
     for _file in list_files:
         shutil.copy(_file, input_dict['op_path'])
 
-    return   # just for testing
+    return   # just for testing   # REMOVE ME
 
     pprint.pprint(input_dict)
     max_core = input_dict['max_core']
