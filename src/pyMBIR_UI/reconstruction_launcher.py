@@ -128,6 +128,12 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         ReconstructionLauncher.initialization(self)
         self.parent.list_file_found_in_output_folder = None
 
+    @staticmethod
+    def _fix_n_vox(dictionary_of_arguments):
+        dictionary_of_arguments["n_vox_x"] = dictionary_of_arguments["n_vox_x"] - 1
+        dictionary_of_arguments["n_vox_y"] = dictionary_of_arguments["n_vox_y"] - 1
+        dictionary_of_arguments["n_vox_z"] = dictionary_of_arguments["n_vox_z"] - 1
+
     def run(self):
         logging.info("Running reconstruction in Batch mode")
         logging.info(f"-> algorithm selected: {self.reconstruction_algorithm_selected}")
@@ -148,6 +154,10 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         dictionary_of_arguments['temp_op_dir'] = self.tmp_output_folder
         logging.info(f"-> reset temporary folder: {dictionary_of_arguments['temp_op_dir']}")
         make_or_reset_folder(dictionary_of_arguments['temp_op_dir'])
+
+        # fix n_vox_x, n_vox_y and n_vox_z to follow pymbir convention
+        # n_vox_x, y and z have a start index of 1 in the UI, 0 in the algorithm
+        ReconstructionBatchLauncher._fix_n_vox(dictionary_of_arguments)
 
         logging.info(f"-> Dictionary of arguments: {dictionary_of_arguments}")
 
