@@ -10,14 +10,12 @@
 # -----------------------------------------------------------------------
 
 import argparse
-import numpy as np
-import time
 from tomopy import remove_stripe_fw
 try:
     from dxchange.writer import write_tiff_stack
     from pyMBIR.reconEngine import analytic, MBIR
     from pyMBIR.utils import apply_proj_tilt
-    from readNeutronData import *
+    from src.pyMBIR_UI.readNeutronData import *
     import dxchange
 except ModuleNotFoundError:
     pass
@@ -36,22 +34,22 @@ def main():
     with open(args.input_json, "r") as read_file:
          input_dict = json.load(read_file)
 
-    # for testing only
-    import glob
-    list_files = glob.glob("/Volumes/G-DRIVE/IPTS/IPTS-25967-pymbir/output_folder/real_output_folder/*.tiff")
-
-    import time
-    import shutil
-    for _file in list_files:
-        time.sleep(.5)
-        shutil.copy(_file, input_dict['temp_op_dir'])
-
-    for _file in list_files:
-        shutil.copy(_file, input_dict['op_path'])
-
-    return   # just for testing
-
+    import pprint
     pprint.pprint(input_dict)
+
+    # for testing only
+    #import glob
+   # list_files = glob.glob("/Volumes/G-DRIVE/IPTS/IPTS-25967-pymbir/output_folder/real_output_folder/*.tiff")
+
+    # #import time
+    # import shutil
+    # for _file in list_files:
+    #     time.sleep(.5)
+    #     shutil.copy(_file, input_dict['temp_op_dir'])
+    #
+    # for _file in list_files:
+    #     shutil.copy(_file, input_dict['op_path'])
+
     max_core = input_dict['max_core']
     num_wav_level = input_dict['wav_level']
     tot_col = input_dict['tot_col']
@@ -152,7 +150,7 @@ def main():
     import pyqtgraph as pg
     pg.image(rec_mbir);
     pg.QtGui.QApplication.exec_()
-    if input_dict.write_op == True:
+    if input_dict["write_op"] == True:
         dxchange.write_tiff_stack(rec_mbir, fname=input_dict["op_path"], start=z_start, overwrite=True)
 
 
