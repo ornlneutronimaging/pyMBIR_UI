@@ -22,7 +22,7 @@ from pyMBIR_UI.venkat_function import VenkatWorker as Worker
 from .status_message_config import show_status_message, StatusMessageStatus
 from .event_handler import EventHandler
 from NeuNorm.normalization import Normalization
-from .utilities.file_utilities import make_or_reset_folder
+from .utilities.file_utilities import make_or_reset_folder, make_folder
 from .venkat_function import MBIR_fromGUI
 # from .recon_HFIR_script_batch import recon_HFIR_script_launcher
 from .reconstructed_output_handler import ReconstructedOutputHandler
@@ -138,9 +138,6 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         dictionary_of_arguments = o_dictionary.get_dictionary()
         dictionary_of_arguments['running_mode'] = 'batch'
 
-        # for debugging only !!! remove me
-        #dictionary_of_arguments['n_vox_z'] = 6
-
         base_output_folder = os.path.basename(dictionary_of_arguments['data_path'])
         full_output_folder = os.path.join(dictionary_of_arguments['op_path'])
 
@@ -148,17 +145,15 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
  #                                         "_pymbir_reconstructed")
 #        dictionary_of_arguments['op_path'] = full_output_folder
         logging.info(f"Final image will be output in {full_output_folder}")
-        make_or_reset_folder(dictionary_of_arguments['op_path'])
-        logging.info(f"Reset output folder: {full_output_folder}")
+        make_folder(dictionary_of_arguments['op_path'])
+        logging.info(f"Making sure output folder ({full_output_folder}) exists!")
 
-        dictionary_of_arguments['temp_op_dir'] = os.path.join(dictionary_of_arguments['op_path'], "temporary_pymbir_reconstructed")
+        self.tmp_output_folder = os.path.join(dictionary_of_arguments['op_path'], "temporary_pymbir_reconstructed")
+        dictionary_of_arguments['temp_op_dir'] = self.tmp_output_folder
+        logging.info(f"-> reset temporary folder: {dictionary_of_arguments['temp_op_dir']}")
         make_or_reset_folder(dictionary_of_arguments['temp_op_dir'])
 
         logging.info(f"-> Dictionary of arguments: {dictionary_of_arguments}")
-
-        logging.info(f"-> reset temporary folder: {dictionary_of_arguments['temp_op_dir']}")
-        make_or_reset_folder(dictionary_of_arguments['temp_op_dir'])
-        self.tmp_output_folder = dictionary_of_arguments['temp_op_dir']
 
         self.parent.ui.reconstruction_launch_pushButton.setEnabled(False)
         self.parent.ui.reconstruction_display_latest_output_file_pushButton.setEnabled(True)

@@ -157,7 +157,7 @@ class Get:
             return nbr_gpu
 
         except FileNotFoundError:
-            return 0
+            return 1
 
     @staticmethod
     def full_home_file_name(base_file_name):

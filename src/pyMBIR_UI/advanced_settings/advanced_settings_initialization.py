@@ -57,12 +57,12 @@ class AdvancedSettingsInitialization:
             session_dict = self.parent.session_dict
             if session_dict.get('crop', None) is None:
                 image_width = self.parent.image_size['width']
-                n_vox_x = int(image_width / vox_xy_to_use) * det_x_to_use
-                n_vox_y = int(image_width / vox_xy_to_use) * det_x_to_use
+                n_vox_x = int(int(image_width / vox_xy_to_use) * det_x_to_use)
+                n_vox_y = int(int(image_width / vox_xy_to_use) * det_x_to_use)
                 n_vox_x_y_value = n_vox_x
             else:
                 crop_width = session_dict['crop']['width']
-                n_vox_x_y_value = int(crop_width / vox_xy_to_use) * det_x_to_use
+                n_vox_x_y_value = int(int(crop_width / vox_xy_to_use) * det_x_to_use)
                 n_vox_x = n_vox_x_y_value
                 n_vox_y = n_vox_x_y_value
         n_vox_x_to_use = n_vox_x
@@ -70,14 +70,14 @@ class AdvancedSettingsInitialization:
 
         n_vox_z_mode = config['n_vox_z']["mode"]
         if n_vox_z_mode == "user":
-            n_vox_z = config['n_vox_z']['user_value']
+            n_vox_z = int(config['n_vox_z']['user_value'])
         else:
             if session_dict.get('crop', None) is None:
                 image_height = self.parent.image_size['height']
-                n_vox_z = int(image_height / vox_z_to_use) * det_y_to_use
+                n_vox_z = int(int(image_height / vox_z_to_use) * det_y_to_use)
             else:
                 crop_height = session_dict['crop']['to slice - from slice']
-                n_vox_z = int(crop_height / vox_z_to_use) * det_y_to_use
+                n_vox_z = int(int(crop_height / vox_z_to_use) * det_y_to_use)
         n_vox_z_to_use = n_vox_z
 
         write_output_flag = config['write output']

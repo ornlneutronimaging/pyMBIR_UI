@@ -105,8 +105,6 @@ class PyMBIRUILauncher(QMainWindow):
     # batch mode - last time a file was added to output folder
     list_file_found_in_output_folder = None
 
-
-
     def __init__(self, parent=None):
 
         super(PyMBIRUILauncher, self).__init__(parent)
