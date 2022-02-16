@@ -166,7 +166,9 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         self.dictionary_of_arguments = dictionary_of_arguments
 
         logging.info(f"-> Saving config file to be called from command line script")
-        with open("/home/j35/config_to_test_batch_mode.json", 'w') as json_file:
+        home_folder = os.path.abspath("~/")
+        json_file_name = os.path.join(home_folder, "config_batch_mode.json" )
+        with open(json_file_name, 'w') as json_file:
             json.dump(dictionary_of_arguments, json_file)
 
         current_location = os.path.abspath(os.path.dirname(__file__))
@@ -175,8 +177,8 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         proc = subprocess.Popen(['python',
                                  script_exe,
                                  '--input_json',
-                                 "/home/j35/config_to_test_batch_mode.json",
-                                 ],
+                                 json_file_name,
+],
                                 shell=False)
         self.batch_process_id = proc
 

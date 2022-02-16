@@ -23,6 +23,8 @@ from tomopy.misc.corr import median_filter
 import os
 import json
 
+STOP_FILE_NAME = "OVER.txt"
+
 
 def main():
 
@@ -147,11 +149,14 @@ def main():
 
     print('Starting MBIR..')
     rec_mbir = np.float32(MBIR(proj_data, count_data, proj_params, miscalib, vol_params, rec_params))
-    import pyqtgraph as pg
-    pg.image(rec_mbir);
-    pg.QtGui.QApplication.exec_()
+    #import pyqtgraph as pg
+    #pg.image(rec_mbir);
+    #pg.QtGui.QApplication.exec_()
     if input_dict["write_op"] == True:
         dxchange.write_tiff_stack(rec_mbir, fname=input_dict["op_path"], start=z_start, overwrite=True)
+
+    # when done write stop file in batch mode
+    #if input_dict["running_mode"] == "batch":
 
 
 if __name__ == "__main__":
