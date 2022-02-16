@@ -138,12 +138,8 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         dictionary_of_arguments = o_dictionary.get_dictionary()
         dictionary_of_arguments['running_mode'] = 'batch'
 
-        base_output_folder = os.path.basename(dictionary_of_arguments['data_path'])
         full_output_folder = os.path.join(dictionary_of_arguments['op_path'])
 
- #       full_output_folder = os.path.join(dictionary_of_arguments['op_path'], base_output_folder +
- #                                         "_pymbir_reconstructed")
-#        dictionary_of_arguments['op_path'] = full_output_folder
         logging.info(f"Final image will be output in {full_output_folder}")
         make_folder(dictionary_of_arguments['op_path'])
         logging.info(f"Making sure output folder ({full_output_folder}) exists!")
@@ -161,9 +157,9 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
 
         self.dictionary_of_arguments = dictionary_of_arguments
 
-        logging.info(f"-> Saving config file to be called from command line script")
         home_folder = os.path.expanduser("~")
         json_file_name = os.path.join(home_folder, "config_batch_mode.json")
+        logging.info(f"-> Saving config file to be called from command line script into {json_file_name}")
         with open(json_file_name, 'w') as json_file:
             json.dump(dictionary_of_arguments, json_file)
 
@@ -173,8 +169,7 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         proc = subprocess.Popen(['python',
                                  script_exe,
                                  '--input_json',
-                                 json_file_name,
-],
+                                 json_file_name],
                                 shell=False)
         self.batch_process_id = proc
 
@@ -292,14 +287,9 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         o_event.update_output_plot()
 
     def check_output_3d_volume(self):
-        print("in check 3D")
-        base_output_folder = os.path.basename(self.dictionary_of_arguments['data_path'])
         output_folder = self.dictionary_of_arguments['op_path']
-        print(f"output_folder: {output_folder}")
         list_tiff_files_in_output_folder = glob.glob(os.path.join(output_folder, "*.tif?"))
-        print(f"list tiff:{list_tiff_files_in_output_folder}")
         number_of_files_in_output_folder = len(list_tiff_files_in_output_folder)
-        print(f"number of files: {number_of_files_in_output_folder}")
         if number_of_files_in_output_folder == 0:
             self.parent.ui.tabWidget_3.setTabEnabled(1, False)
             return
