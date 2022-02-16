@@ -153,11 +153,15 @@ def main():
     #pg.image(rec_mbir);
     #pg.QtGui.QApplication.exec_()
     if input_dict["write_op"] == True:
-        dxchange.write_tiff_stack(rec_mbir, fname=input_dict["op_path"], start=z_start, overwrite=True)
+        print(f"input_dict['op_path']: {input_dict['op_path']}")
+        temp_path = os.path.join(input_dict['op_path'], "mbir")
+        dxchange.write_tiff_stack(rec_mbir, fname=temp_path, start=z_start, overwrite=True)
 
     # when done write stop file in batch mode
-    #if input_dict["running_mode"] == "batch":
-    #    with open(STOP_FILE_NAME
+    if input_dict["running_mode"] == "batch":
+        with open(STOP_FILE_NAME, 'w') as json_file:
+            json.dump({"stop": True}, json_file)
+
 
 if __name__ == "__main__":
     main()

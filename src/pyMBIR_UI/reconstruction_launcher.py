@@ -141,17 +141,18 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         # for debugging only !!! remove me
         #dictionary_of_arguments['n_vox_z'] = 6
 
-
-
-
-
         base_output_folder = os.path.basename(dictionary_of_arguments['data_path'])
-        full_output_folder = os.path.join(dictionary_of_arguments['op_path'], base_output_folder +
-                                          "_pymbir_reconstructed")
-        dictionary_of_arguments['op_path'] = full_output_folder
+        full_output_folder = os.path.join(dictionary_of_arguments['op_path'])
+
+ #       full_output_folder = os.path.join(dictionary_of_arguments['op_path'], base_output_folder +
+ #                                         "_pymbir_reconstructed")
+#        dictionary_of_arguments['op_path'] = full_output_folder
         logging.info(f"Final image will be output in {full_output_folder}")
         make_or_reset_folder(dictionary_of_arguments['op_path'])
         logging.info(f"Reset output folder: {full_output_folder}")
+
+        dictionary_of_arguments['temp_op_dir'] = os.path.join(dictionary_of_arguments['op_path'], "temporary_pymbir_reconstructed")
+        make_or_reset_folder(dictionary_of_arguments['temp_op_dir'])
 
         logging.info(f"-> Dictionary of arguments: {dictionary_of_arguments}")
 
@@ -167,7 +168,7 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
 
         logging.info(f"-> Saving config file to be called from command line script")
         home_folder = os.path.expanduser("~")
-        json_file_name = os.path.join(home_folder, "config_batch_mode.json" )
+        json_file_name = os.path.join(home_folder, "config_batch_mode.json")
         with open(json_file_name, 'w') as json_file:
             json.dump(dictionary_of_arguments, json_file)
 
@@ -296,9 +297,14 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         o_event.update_output_plot()
 
     def check_output_3d_volume(self):
-        output_folder = self.dictionary_of_arguments["op_path"]
+        print("in check 3D")
+        base_output_folder = os.path.basename(self.dictionary_of_arguments['data_path'])
+        output_folder = self.dictionary_of_arguments['op_path']
+        print(f"output_folder: {output_folder}")
         list_tiff_files_in_output_folder = glob.glob(os.path.join(output_folder, "*.tif?"))
+        print(f"list tiff:{list_tiff_files_in_output_folder}")
         number_of_files_in_output_folder = len(list_tiff_files_in_output_folder)
+        print(f"number of files: {number_of_files_in_output_folder}")
         if number_of_files_in_output_folder == 0:
             self.parent.ui.tabWidget_3.setTabEnabled(1, False)
             return
