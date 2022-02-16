@@ -23,7 +23,7 @@ from tomopy.misc.corr import median_filter
 import os
 import json
 
-STOP_FILE_NAME = "OVER.txt"
+STOP_FILE_NAME = "OVER.json"
 
 
 def main():
@@ -157,7 +157,7 @@ def main():
 
     # when done write stop file in batch mode
     #if input_dict["running_mode"] == "batch":
-
+    #    with open(STOP_FILE_NAME
 
 if __name__ == "__main__":
     main()
