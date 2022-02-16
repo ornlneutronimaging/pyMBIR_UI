@@ -160,6 +160,10 @@ class PyMBIRDictionaryCreator:
         # number of voxels along x, y and z dimension in the object to be reconstructed
         n_vox_x = session_dict['advanced settings']['n_vox_x, n_vox_y']['n_vox_x_to_use']
         n_vox_y = session_dict['advanced settings']['n_vox_x, n_vox_y']['n_vox_y_to_use']
+
+        print("in build dictionary")
+        print(f"session_dict['advanced settings']['n_vox_z']: {session_dict['advanced settings']['n_vox_z']}")
+
         n_vox_z = session_dict['advanced settings']['n_vox_z']['n_vox_z_to_use']
         arguments['n_vox_x'] = n_vox_x
         arguments['n_vox_y'] = n_vox_y
