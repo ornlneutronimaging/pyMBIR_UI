@@ -1,20 +1,40 @@
 name: pyMBIR_UI
 channels:
-  - defaults
   - conda-forge
 dependencies:
-  - python=3.7
-  - qt=5.12.9
+  # base
+  - python=3.12
+  - versioningit
+  - toml
+  # GUI
+  - qt
+  - qtpy
+  - pyqt
+  # image
   - pillow
   - scikit-image
   - inflect
-  - qtpy=1.6.0
-  - pyqt=5.*
   - astropy
   - numpy
   - dxchange
-  - h5py=3.3.0
+  - h5py
   - tomopy
+  # -- Development
+  # utils
+  - pre-commit
+  # packaging
+  - anaconda-client
+  - boa
+  - conda-build < 4
+  - conda-verify
+  - python-build
+  # doc
+  - pydocstyle
+  - sphinx
+  - sphinx_rtd_theme
+  # pip
   - pip:
-      - pyqtgraph
-      - NeuNorm
+    - check-wheel-contents
+    - pytest-playwright
+    - pyqtgraph
+    - NeuNorm
