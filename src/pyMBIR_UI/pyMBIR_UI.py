@@ -8,23 +8,23 @@ import versioneer
 import numpy as np
 from qtpy.QtCore import QObject, QThread, Signal
 
-from .import_data_handler import ImportDataHandler
-from .gui_initialization import GuiInitialization
-from .event_handler import EventHandler
-from .session_handler import SessionHandler
-from .preview import PreviewHandler, PreviewLauncher
-from .load_previous_session_launcher import LoadPreviousSessionLauncher
-from .utilities.get import Get
-from .log_launcher import LogLauncher
-from . import DataType, TiltAlgorithm
+from pyMBIR_UI.import_data_handler import ImportDataHandler
+from pyMBIR_UI.gui_initialization import GuiInitialization
+from pyMBIR_UI.event_handler import EventHandler
+from pyMBIR_UI.session_handler import SessionHandler
+from pyMBIR_UI.preview import PreviewHandler, PreviewLauncher
+from pyMBIR_UI.load_previous_session_launcher import LoadPreviousSessionLauncher
+from pyMBIR_UI.utilities.get import Get
+from pyMBIR_UI.log_launcher import LogLauncher
+from pyMBIR_UI import DataType, TiltAlgorithm
 from pyMBIR_UI.crop.crop_handler import CropHandler
 from pyMBIR_UI.tilt.tilt_handler import TiltHandler
 from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
-from .utilities.decorators import wait_cursor
+from pyMBIR_UI.utilities.decorators import wait_cursor
 from pyMBIR_UI.reconstruction_launcher import ReconstructionLiveLauncher, ReconstructionBatchLauncher
 from pyMBIR_UI.advanced_settings.advanced_settings_handler import AdvancedSettingsPasswordHandler
 from pyMBIR_UI.general_settings_handler import GeneralSettingsHandler
-from .status_message_config import show_status_message, StatusMessageStatus
+from pyMBIR_UI.status_message_config import show_status_message, StatusMessageStatus
 from pyMBIR_UI.reconstructed_output_handler import ReconstructedOutputHandler
 
 # warnings.filterwarnings('ignore')
@@ -151,7 +151,7 @@ class PyMBIRUILauncher(QMainWindow):
                             format='[%(levelname)s] - %(asctime)s - %(message)s',
                             level=logging.INFO)
         logging.info("*** Starting a new session ***")
-        logging.info(f" Version: {versioneer.get_version()}")
+        # logging.info(f" Version: {versioneer.get_version()}")
 
         self.automatic_load_of_previous_session()
 

@@ -19,6 +19,7 @@ dependencies:
   - dxchange
   - h5py
   - tomopy
+  - matplotlib
   # -- Development
   # utils
   - pre-commit
@@ -38,3 +39,4 @@ dependencies:
     - pytest-playwright
     - pyqtgraph
     - NeuNorm
+    - mpl_toolkits
