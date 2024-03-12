@@ -3,18 +3,21 @@ channels:
   - defaults
   - conda-forge
 dependencies:
-  - python=3.7
-  - qt=5.12.9
+  - python
+  - qt
   - pillow
   - scikit-image
   - inflect
-  - qtpy=1.6.0
-  - pyqt=5.*
+  - qtpy
+  - pyqt
   - astropy
   - numpy
   - dxchange
-  - h5py=3.3.0
+  - h5py
   - tomopy
   - pip:
-      - pyqtgraph
       - NeuNorm
+      - olefile
+      - pyqtgraph
+      - six
+      
