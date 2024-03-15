@@ -63,7 +63,7 @@
       <item>
        <widget class="QRadioButton" name="di_radioButton">
         <property name="text">
-         <string>Dark Image</string>
+         <string>Dark Current</string>
         </property>
        </widget>
       </item>
