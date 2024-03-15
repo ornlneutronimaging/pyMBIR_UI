@@ -46,3 +46,7 @@ class TiltAlgorithm:
 class ReconstructionAlgorithm:
     pymbir = "pymbir"
     other = "other"
+
+
+class SessionKeys:
+    homepath = "homepath"

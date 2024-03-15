@@ -12,6 +12,7 @@ from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
 from pyMBIR_UI.tilt.tilt_handler import TiltHandler
 from pyMBIR_UI.general_settings_handler import GeneralSettingsHandler
 from pyMBIR_UI.advanced_settings.advanced_settings_initialization import AdvancedSettingsInitialization
+from pyMBIR_UI import SessionKeys
 
 
 class SessionHandler:
@@ -23,7 +24,8 @@ class SessionHandler:
         self.parent = parent
 
     def save_from_ui(self):
-        session_dict = {'config version': self.parent.config["config version"]}
+        session_dict = {'config version': self.parent.config["config version"],
+                        SessionKeys.homepath: self.parent.session_dict[SessionKeys.homepath]}
 
         # import input tab data
         list_ui = self.parent.list_ui

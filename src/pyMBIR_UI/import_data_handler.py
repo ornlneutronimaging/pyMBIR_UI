@@ -11,6 +11,7 @@ from pyMBIR_UI.crop.crop_handler import CropHandler
 from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
 from pyMBIR_UI.tilt.tilt_handler import TiltHandler
 from .loader import Loader
+from pyMBIR_UI import SessionKeys
 
 
 class ImportDataHandler:
@@ -32,12 +33,12 @@ class ImportDataHandler:
         """
         folder_name = QFileDialog.getExistingDirectory(self.parent,
                                                        caption='Select directory',
-                                                       directory=self.parent.homepath)
+                                                       directory=self.parent.session_dict[SessionKeys.homepath])
         if len(folder_name) > 0:
             logging.info(f"browse {self.data_type} via file dialog: {folder_name}")
             self.update_widgets_with_name_of_folder(folder_name=folder_name)
             if self.data_type == DataType.projections:
-                self.parent.homepath = os.path.dirname(folder_name)
+                self.parent.session_dict[SessionKeys.homepath] = os.path.dirname(folder_name)
         else:
             logging.info(f"User cancel browsing for {self.data_type}")
 

@@ -26,6 +26,7 @@ from pyMBIR_UI.advanced_settings.advanced_settings_handler import AdvancedSettin
 from pyMBIR_UI.general_settings_handler import GeneralSettingsHandler
 from .status_message_config import show_status_message, StatusMessageStatus
 from pyMBIR_UI.reconstructed_output_handler import ReconstructedOutputHandler
+from pyMBIR_UI import SessionKeys
 
 # warnings.filterwarnings('ignore')
 
@@ -41,7 +42,7 @@ class PyMBIRUILauncher(QMainWindow):
     image_size = {'width': None, 'height': None}
 
     # all infos from the UI  used to save the entire session
-    session_dict = {}
+    session_dict = {SessionKeys.homepath: "~/"}
     # {DataType.projections: {'folder': 'name_of_folder',
     #                         'list_files': [file1, file2, file3],
     #                        },
