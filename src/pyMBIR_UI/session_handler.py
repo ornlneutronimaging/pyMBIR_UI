@@ -168,7 +168,7 @@ class SessionHandler:
             self.parent.ui.crop_to_slice_spinBox.blockSignals(False)
             self.parent.ui.crop_from_slice_spinBox.blockSignals(False)
 
-            self.parent.ui.crop_width_horizontalSlider.setValue(crop_width/2)
+            self.parent.ui.crop_width_horizontalSlider.setValue(int(crop_width/2))
             self.parent.ui.crop_width_label.setText(str(crop_width))
             self.parent.ui.crop_width_horizontalSlider.setMinimum(10)
             # o_crop.width_changed()
