@@ -60,7 +60,7 @@ class Get:
         #     deg_before_comma = split_basename[-3]
         #     deg_after_comma = split_basename[-2]
         #     full_deg_value = f"{deg_before_comma}.{deg_after_comma}"
-        #     list_angles.append(np.float(full_deg_value))
+        #     list_angles.append(float(full_deg_value))
         #
         # offset_with_180degrees = np.abs(np.array(list_angles) - 180.0)
         # min_value = np.min(offset_with_180degrees)

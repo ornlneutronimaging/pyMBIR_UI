@@ -109,7 +109,7 @@ class CenterOfRotation:
 
             value = rotation.find_center_pc(image_0_degree,
                                             image_180_degree)
-            self.parent.ui.center_of_rotation_calculated_label.setText(str(np.int(value)))
+            self.parent.ui.center_of_rotation_calculated_label.setText(str(int(value)))
 
         QApplication.restoreOverrideCursor()
         QApplication.processEvents()
@@ -119,7 +119,7 @@ class CenterOfRotation:
         if algorithm_selected == Algorithm.tomopy:
             value = str(self.parent.ui.center_of_rotation_calculated_label.text())
             if value != "N/A":
-                value = np.float(value)
+                value = float(value)
             logging.info("Center of rotation calculated via tomopy (find_center_pc)")
         elif algorithm_selected == Algorithm.user:
             value = self.parent.ui.center_of_rotation_user_defined_doubleSpinBox.value()

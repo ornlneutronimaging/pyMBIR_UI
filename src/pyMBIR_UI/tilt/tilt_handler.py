@@ -72,7 +72,7 @@ class TiltHandler:
 
         # show tilt calculated
         tilt_value = self.parent.ui.tilt_correcton_value_label.text()
-        tilt_value_float = np.float(tilt_value)
+        tilt_value_float = float(tilt_value)
         if np.isfinite(tilt_value_float):
 
             _pen = QtGui.QPen()

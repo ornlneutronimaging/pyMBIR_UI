@@ -43,7 +43,7 @@ class Loader:
             return
 
         if self.parent.loading_from_config:
-            self.parent.input['list angles'] = [np.float(angle) for angle in self.parent.session_dict['list angles']]
+            self.parent.input['list angles'] = [float(angle) for angle in self.parent.session_dict['list angles']]
             self.parent.loading_from_config = False
         else:
             o_get = Get(parent=self.parent)
