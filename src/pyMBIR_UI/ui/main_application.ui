@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1529</width>
-    <height>951</height>
+    <width>1316</width>
+    <height>927</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -89,7 +89,7 @@
              <item row="2" column="0">
               <widget class="QLabel" name="label_3">
                <property name="text">
-                <string>DF</string>
+                <string>DC</string>
                </property>
               </widget>
              </item>
@@ -139,6 +139,19 @@
             </widget>
            </item>
            <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>106</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
             <widget class="QLineEdit" name="output_folder_lineEdit">
              <property name="enabled">
               <bool>false</bool>
@@ -158,19 +171,6 @@
           </layout>
          </widget>
         </item>
-        <item>
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>106</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="tab_2">
@@ -188,8 +188,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1459</width>
-             <height>725</height>
+             <width>1246</width>
+             <height>701</height>
             </rect>
            </property>
            <attribute name="label">
@@ -512,8 +512,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1459</width>
-             <height>725</height>
+             <width>887</width>
+             <height>235</height>
             </rect>
            </property>
            <attribute name="label">
@@ -1175,7 +1175,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>446</width>
+                <width>1216</width>
                 <height>44</height>
                </rect>
               </property>
@@ -1285,7 +1285,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1529</width>
+     <width>1316</width>
      <height>24</height>
     </rect>
    </property>
@@ -1501,7 +1501,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>1484</x>
-     <y>302</y>
+     <y>594</y>
     </hint>
     <hint type="destinationlabel">
      <x>904</x>
@@ -1564,8 +1564,8 @@
    <slot>output_folder_text_field_returned()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>211</x>
-     <y>295</y>
+     <x>318</x>
+     <y>587</y>
     </hint>
     <hint type="destinationlabel">
      <x>902</x>
@@ -1708,8 +1708,8 @@
    <slot>tilt_correction_checkBox_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>109</x>
-     <y>198</y>
+     <x>123</x>
+     <y>96</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -1724,8 +1724,8 @@
    <slot>tilt_correction_file_index_moved()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>224</x>
-     <y>732</y>
+     <x>302</x>
+     <y>145</y>
     </hint>
     <hint type="destinationlabel">
      <x>7</x>
@@ -1740,8 +1740,8 @@
    <slot>tilt_correction_file_index_pressed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>224</x>
-     <y>732</y>
+     <x>302</x>
+     <y>145</y>
     </hint>
     <hint type="destinationlabel">
      <x>1035</x>
@@ -1756,8 +1756,8 @@
    <slot>center_of_rotation_checkBox_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>97</x>
-     <y>164</y>
+     <x>111</x>
+     <y>96</y>
     </hint>
     <hint type="destinationlabel">
      <x>11</x>
@@ -1772,8 +1772,8 @@
    <slot>center_of_rotation_file_index_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>714</y>
+     <x>335</x>
+     <y>148</y>
     </hint>
     <hint type="destinationlabel">
      <x>1064</x>
@@ -1788,8 +1788,8 @@
    <slot>center_of_rotation_file_index_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>744</y>
+     <x>335</x>
+     <y>178</y>
     </hint>
     <hint type="destinationlabel">
      <x>1065</x>
@@ -1804,8 +1804,8 @@
    <slot>center_of_rotation_algorithm_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>790</y>
+     <x>164</x>
+     <y>230</y>
     </hint>
     <hint type="destinationlabel">
      <x>6</x>
@@ -1821,7 +1821,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>249</x>
-     <y>796</y>
+     <y>230</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -1837,7 +1837,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>280</x>
-     <y>834</y>
+     <y>268</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -1868,8 +1868,8 @@
    <slot>tilt_correction_algorithm_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>246</x>
-     <y>823</y>
+     <x>272</x>
+     <y>236</y>
     </hint>
     <hint type="destinationlabel">
      <x>8</x>
@@ -1884,8 +1884,8 @@
    <slot>tilt_correction_algorithm_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>396</x>
-     <y>823</y>
+     <x>415</x>
+     <y>236</y>
     </hint>
     <hint type="destinationlabel">
      <x>282</x>
@@ -1901,7 +1901,7 @@
    <hints>
     <hint type="sourcelabel">
      <x>519</x>
-     <y>823</y>
+     <y>236</y>
     </hint>
     <hint type="destinationlabel">
      <x>1063</x>
@@ -1916,8 +1916,8 @@
    <slot>tilt_correction_set_up_images_at_0_and_180_degrees_pushed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>146</x>
-     <y>779</y>
+     <x>167</x>
+     <y>203</y>
     </hint>
     <hint type="destinationlabel">
      <x>1063</x>
@@ -1932,8 +1932,8 @@
    <slot>tilt_refresh_calculation_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1424</x>
-     <y>830</y>
+     <x>896</x>
+     <y>243</y>
     </hint>
     <hint type="destinationlabel">
      <x>1187</x>
@@ -1948,8 +1948,8 @@
    <slot>run_reconstruction()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>478</x>
-     <y>871</y>
+     <x>125</x>
+     <y>809</y>
     </hint>
     <hint type="destinationlabel">
      <x>1188</x>
@@ -2012,8 +2012,8 @@
    <slot>stop_reconstruction()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1472</x>
-     <y>877</y>
+     <x>227</x>
+     <y>809</y>
     </hint>
     <hint type="destinationlabel">
      <x>889</x>
@@ -2092,8 +2092,8 @@
    <slot>output_slider_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>178</x>
-     <y>652</y>
+     <x>98</x>
+     <y>115</y>
     </hint>
     <hint type="destinationlabel">
      <x>240</x>
@@ -2108,8 +2108,8 @@
    <slot>output_slider_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>178</x>
-     <y>652</y>
+     <x>98</x>
+     <y>115</y>
     </hint>
     <hint type="destinationlabel">
      <x>1521</x>
@@ -2124,8 +2124,8 @@
    <slot>output_checkbox_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>128</x>
-     <y>623</y>
+     <x>146</x>
+     <y>108</y>
     </hint>
     <hint type="destinationlabel">
      <x>9</x>
@@ -2156,8 +2156,8 @@
    <slot>final_reconstructed_slider_moved()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1012</x>
-     <y>639</y>
+     <x>119</x>
+     <y>115</y>
     </hint>
     <hint type="destinationlabel">
      <x>1521</x>
@@ -2172,8 +2172,8 @@
    <slot>final_reconstructed_slider_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1025</x>
-     <y>639</y>
+     <x>119</x>
+     <y>115</y>
     </hint>
     <hint type="destinationlabel">
      <x>1524</x>
@@ -2188,8 +2188,8 @@
    <slot>final_reconstructed_slider_clicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>860</x>
-     <y>640</y>
+     <x>119</x>
+     <y>115</y>
     </hint>
     <hint type="destinationlabel">
      <x>1527</x>
@@ -2204,8 +2204,8 @@
    <slot>final_reconstructed_slider_moved()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1094</x>
-     <y>646</y>
+     <x>119</x>
+     <y>115</y>
     </hint>
     <hint type="destinationlabel">
      <x>1526</x>
@@ -2220,8 +2220,8 @@
    <slot>tilt_correction_algorithm_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>590</x>
-     <y>811</y>
+     <x>634</x>
+     <y>236</y>
     </hint>
     <hint type="destinationlabel">
      <x>672</x>
@@ -2236,8 +2236,8 @@
    <slot>tilt_correction_user_defined_value_changed()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>677</x>
-     <y>816</y>
+     <x>720</x>
+     <y>237</y>
     </hint>
     <hint type="destinationlabel">
      <x>1000</x>
