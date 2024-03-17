@@ -159,14 +159,14 @@
          </widget>
         </item>
         <item>
-         <spacer name="verticalSpacer">
+         <spacer name="verticalSpacer_3">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>106</height>
+            <height>40</height>
            </size>
           </property>
          </spacer>
@@ -189,7 +189,7 @@
              <x>0</x>
              <y>0</y>
              <width>1459</width>
-             <height>725</height>
+             <height>719</height>
             </rect>
            </property>
            <attribute name="label">
@@ -340,8 +340,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>313</width>
-             <height>227</height>
+             <width>301</width>
+             <height>236</height>
             </rect>
            </property>
            <attribute name="label">
@@ -512,8 +512,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>1459</width>
-             <height>725</height>
+             <width>875</width>
+             <height>232</height>
             </rect>
            </property>
            <attribute name="label">
@@ -1175,7 +1175,7 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>446</width>
+                <width>1429</width>
                 <height>44</height>
                </rect>
               </property>
