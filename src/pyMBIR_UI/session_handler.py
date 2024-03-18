@@ -40,7 +40,7 @@ class SessionHandler:
         session_dict[DataType.df] = retrieve_infos_from_import_data(data_type=DataType.df)
 
         # list of angles
-        if not (self.parent.input['list angles'] is None):
+        if self.parent.input.get('list angles', None):
             session_dict['list angles'] = [str(angle) for angle in self.parent.input['list angles']]
 
         # output folder
