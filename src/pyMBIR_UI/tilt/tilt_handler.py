@@ -76,8 +76,8 @@ class TiltHandler:
         if np.isfinite(tilt_value_float):
 
             _pen = QtGui.QPen()
-            _pen.setColor(QtGui.QColor(255, 0, 0))
-            _pen.setWidth(10)
+            _pen.setColor(QtGui.QColor(0, 255, 255))
+            _pen.setWidth(5)
 
             self.parent.tilt_grid_item = pg.InfiniteLine([self.parent.tilt_correction_item_x_position,
                                                           self.parent.tilt_correction_item_x_position],
