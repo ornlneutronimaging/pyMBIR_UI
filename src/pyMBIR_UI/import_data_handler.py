@@ -51,7 +51,7 @@ class ImportDataHandler:
     def browse_output_folder_via_filedialog(self):
         folder_name = QFileDialog.getExistingDirectory(self.parent,
                                                        caption='Select directory',
-                                                       directory=self.parent.homepath)
+                                                       directory=self.parent.session_dict[SessionKeys.homepath])
         if len(folder_name) > 0:
             logging.info(f"select output folder: {folder_name}")
             self.parent.ui.output_folder_lineEdit.setText(folder_name)
