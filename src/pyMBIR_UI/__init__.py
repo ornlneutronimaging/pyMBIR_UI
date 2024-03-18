@@ -1,10 +1,10 @@
-from ._version import get_versions
+# from ._version import get_versions
 from qtpy.uic import loadUi
 from qtpy import QtGui
 import os
 
-__version__ = get_versions()['version']
-del get_versions
+# __version__ = get_versions()['version']
+# del get_versions
 
 __all__ = ['load_ui', 'lock_image', 'unlock_image']
 
