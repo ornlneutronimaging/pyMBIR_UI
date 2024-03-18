@@ -1,9 +1,9 @@
 from qtpy.QtWidgets import QDialog
 import os
 
-from . import load_ui
-from .session_handler import SessionHandler
-from .utilities.get import Get
+from tomoORNL_ui import load_ui
+from tomoORNL_ui.session_handler import SessionHandler
+from tomoORNL_ui.utilities.get import Get
 
 
 class LoadPreviousSessionLauncher(QDialog):

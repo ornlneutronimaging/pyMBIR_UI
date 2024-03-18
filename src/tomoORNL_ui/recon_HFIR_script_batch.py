@@ -11,14 +11,11 @@
 
 import argparse
 from tomopy import remove_stripe_fw
-try:
-    from dxchange.writer import write_tiff_stack
-    from pyMBIR.reconEngine import analytic, MBIR
-    from pyMBIR.utils import apply_proj_tilt
-    from src.pyMBIR_UI.readNeutronData import *
-    import dxchange
-except ModuleNotFoundError:
-    pass
+from dxchange.writer import write_tiff_stack
+from pyMBIR.reconEngine import analytic, MBIR
+from pyMBIR.utils import apply_proj_tilt
+from src.tomoORNL_ui.readNeutronData import *
+import dxchange
 from tomopy.misc.corr import median_filter
 import os
 import json

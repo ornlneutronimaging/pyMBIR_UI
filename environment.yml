@@ -1,4 +1,4 @@
-name: pyMBIR_UI
+name: tomoORNL_ui
 channels:
   - conda-forge
 dependencies:

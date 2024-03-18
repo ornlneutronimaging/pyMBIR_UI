@@ -5,10 +5,10 @@ import pyqtgraph as pg
 from tomopy.recon import rotation
 import logging
 
-from pyMBIR_UI import DataType
-from pyMBIR_UI.utilities.gui import Gui
-from pyMBIR_UI.utilities.get import Get
-from pyMBIR_UI.loader import Loader
+from tomoORNL_ui import DataType
+from tomoORNL_ui.utilities.gui import Gui
+from tomoORNL_ui.utilities.get import Get
+from tomoORNL_ui.loader import Loader
 
 
 class Algorithm:

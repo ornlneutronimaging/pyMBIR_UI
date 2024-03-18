@@ -1,6 +1,6 @@
 import numpy as np
 
-from pyMBIR_UI.utilities.get import Get
+from tomoORNL_ui.utilities.get import Get
 
 
 class AdvancedSettingsInitialization:

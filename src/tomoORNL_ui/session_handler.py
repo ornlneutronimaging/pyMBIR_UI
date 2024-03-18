@@ -4,15 +4,15 @@ import json
 import logging
 import numpy as np
 
-from .status_message_config import StatusMessageStatus, show_status_message
-from .utilities.get import Get
-from . import DataType, TiltAlgorithm
-from pyMBIR_UI.crop.crop_handler import CropHandler
-from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
-from pyMBIR_UI.tilt.tilt_handler import TiltHandler
-from pyMBIR_UI.general_settings_handler import GeneralSettingsHandler
-from pyMBIR_UI.advanced_settings.advanced_settings_initialization import AdvancedSettingsInitialization
-from pyMBIR_UI import SessionKeys
+from tomoORNL_ui.status_message_config import StatusMessageStatus, show_status_message
+from tomoORNL_ui.utilities.get import Get
+from tomoORNL_ui import DataType, TiltAlgorithm
+from tomoORNL_ui.crop.crop_handler import CropHandler
+from tomoORNL_ui.center_of_rotation.center_of_rotation import CenterOfRotation
+from tomoORNL_ui.tilt.tilt_handler import TiltHandler
+from tomoORNL_ui.general_settings_handler import GeneralSettingsHandler
+from tomoORNL_ui.advanced_settings.advanced_settings_initialization import AdvancedSettingsInitialization
+from tomoORNL_ui import SessionKeys
 
 
 class SessionHandler:

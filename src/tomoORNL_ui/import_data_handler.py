@@ -4,14 +4,14 @@ import logging
 
 from NeuNorm.normalization import Normalization
 
-from .status_message_config import show_status_message, StatusMessageStatus
-from .utilities.file_utilities import get_list_files, get_list_file_extensions
-from . import DataType, normal_style, error_style, interact_me_style, file_extension_accepted
-from pyMBIR_UI.crop.crop_handler import CropHandler
-from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
-from pyMBIR_UI.tilt.tilt_handler import TiltHandler
-from .loader import Loader
-from pyMBIR_UI import SessionKeys
+from tomoORNL_ui.status_message_config import show_status_message, StatusMessageStatus
+from tomoORNL_ui.utilities.file_utilities import get_list_files, get_list_file_extensions
+from tomoORNL_ui import DataType, normal_style, error_style, interact_me_style, file_extension_accepted
+from tomoORNL_ui.crop.crop_handler import CropHandler
+from tomoORNL_ui.center_of_rotation.center_of_rotation import CenterOfRotation
+from tomoORNL_ui.tilt.tilt_handler import TiltHandler
+from tomoORNL_ui.loader import Loader
+from tomoORNL_ui import SessionKeys
 
 
 class ImportDataHandler:

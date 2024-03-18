@@ -4,11 +4,11 @@ import logging
 import json
 import numpy as np
 
-from pyMBIR_UI import load_ui
-from pyMBIR_UI.session_handler import SessionHandler
-from pyMBIR_UI.utilities.get import Get
-from pyMBIR_UI.algorithm_dictionary_creator import AlgorithmDictionaryCreator
-from pyMBIR_UI.general_settings_handler import GeneralSettingsHandler
+from tomoORNL_ui import load_ui
+from tomoORNL_ui.session_handler import SessionHandler
+from tomoORNL_ui.utilities.get import Get
+from tomoORNL_ui.algorithm_dictionary_creator import AlgorithmDictionaryCreator
+from tomoORNL_ui.general_settings_handler import GeneralSettingsHandler
 
 
 class AdvancedSettingsPasswordHandler(QMainWindow):

@@ -3,8 +3,8 @@ from qtpy import QtGui
 import pyqtgraph as pg
 import logging
 
-from pyMBIR_UI import DataType
-from pyMBIR_UI.loader import Loader
+from tomoORNL_ui import DataType
+from tomoORNL_ui.loader import Loader
 
 
 class CropHandler:

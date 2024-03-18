@@ -1,11 +1,11 @@
 from qtpy.QtWidgets import QDialog, QVBoxLayout
 import os
-from . import load_ui
 import pyqtgraph as pg
 import numpy as np
 
-from . import DataType
-from .loader import Loader
+from tomoORNL_ui import DataType
+from tomoORNL_ui.loader import Loader
+from tomoORNL_ui import load_ui
 
 
 class PreviewHandler:

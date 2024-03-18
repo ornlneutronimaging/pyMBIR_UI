@@ -1,7 +1,7 @@
 import dxchange
 import numpy as np
 
-from .status_message_config import show_status_message, StatusMessageStatus
+from tomoORNL_ui.status_message_config import show_status_message, StatusMessageStatus
 
 
 class ReconstructedOutputHandler:

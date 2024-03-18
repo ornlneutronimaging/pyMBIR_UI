@@ -1,8 +1,8 @@
 import logging
 import numpy as np
 
-from . import DataType
-from .gui_initialization import GuiInitialization
+from tomoORNL_ui import DataType
+from tomoORNL_ui.gui_initialization import GuiInitialization
 
 
 class EventHandler:

@@ -1,5 +1,6 @@
-from . import ReconstructionAlgorithm
-from . import DataType
+from tomoORNL_ui import ReconstructionAlgorithm
+from tomoORNL_ui import DataType
+
 
 class GeneralSettingsHandler:
 

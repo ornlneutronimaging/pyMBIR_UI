@@ -3,35 +3,35 @@ from qtpy.QtGui import QGuiApplication
 import sys
 import os
 import logging
-from . import load_ui
 import versioneer
 import numpy as np
 from qtpy.QtCore import QObject, QThread, Signal
 
-from pyMBIR_UI.import_data_handler import ImportDataHandler
-from pyMBIR_UI.gui_initialization import GuiInitialization
-from pyMBIR_UI.event_handler import EventHandler
-from pyMBIR_UI.session_handler import SessionHandler
-from pyMBIR_UI.preview import PreviewHandler, PreviewLauncher
-from pyMBIR_UI.load_previous_session_launcher import LoadPreviousSessionLauncher
-from pyMBIR_UI.utilities.get import Get
-from pyMBIR_UI.log_launcher import LogLauncher
-from pyMBIR_UI import DataType, TiltAlgorithm
-from pyMBIR_UI.crop.crop_handler import CropHandler
-from pyMBIR_UI.tilt.tilt_handler import TiltHandler
-from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
-from pyMBIR_UI.utilities.decorators import wait_cursor
-from pyMBIR_UI.reconstruction_launcher import ReconstructionLiveLauncher, ReconstructionBatchLauncher
-from pyMBIR_UI.advanced_settings.advanced_settings_handler import AdvancedSettingsPasswordHandler
-from pyMBIR_UI.general_settings_handler import GeneralSettingsHandler
-from pyMBIR_UI.status_message_config import show_status_message, StatusMessageStatus
-from pyMBIR_UI.reconstructed_output_handler import ReconstructedOutputHandler
-from pyMBIR_UI import SessionKeys
+from tomoORNL_ui import load_ui
+from tomoORNL_ui.import_data_handler import ImportDataHandler
+from tomoORNL_ui.gui_initialization import GuiInitialization
+from tomoORNL_ui.event_handler import EventHandler
+from tomoORNL_ui.session_handler import SessionHandler
+from tomoORNL_ui.preview import PreviewHandler, PreviewLauncher
+from tomoORNL_ui.load_previous_session_launcher import LoadPreviousSessionLauncher
+from tomoORNL_ui.utilities.get import Get
+from tomoORNL_ui.log_launcher import LogLauncher
+from tomoORNL_ui import DataType, TiltAlgorithm
+from tomoORNL_ui.crop.crop_handler import CropHandler
+from tomoORNL_ui.tilt.tilt_handler import TiltHandler
+from tomoORNL_ui.center_of_rotation.center_of_rotation import CenterOfRotation
+from tomoORNL_ui.utilities.decorators import wait_cursor
+from tomoORNL_ui.reconstruction_launcher import ReconstructionLiveLauncher, ReconstructionBatchLauncher
+from tomoORNL_ui.advanced_settings.advanced_settings_handler import AdvancedSettingsPasswordHandler
+from tomoORNL_ui.general_settings_handler import GeneralSettingsHandler
+from tomoORNL_ui.status_message_config import show_status_message, StatusMessageStatus
+from tomoORNL_ui.reconstructed_output_handler import ReconstructedOutputHandler
+from tomoORNL_ui import SessionKeys
 
 # warnings.filterwarnings('ignore')
 
 
-class PyMBIRUILauncher(QMainWindow):
+class tomoORNLUILauncher(QMainWindow):
 
     automatic_config_file_name = None
     loading_from_config = False
@@ -115,7 +115,7 @@ class PyMBIRUILauncher(QMainWindow):
                                                  'main_application.ui'))
 
         self.ui = load_ui(ui_full_path, baseinstance=self)
-        self.setWindowTitle("pyMBIR_UI")
+        self.setWindowTitle("tomoORNL_ui")
 
         self.list_ui = {'select button': {DataType.projections: self.ui.select_projections_pushButton,
                                           DataType.ob: self.ui.select_ob_pushButton,
@@ -412,7 +412,7 @@ class PyMBIRUILauncher(QMainWindow):
         o_session = SessionHandler(parent=self)
         o_session.save_from_ui()
         o_session.automatic_save()
-        logging.info(" #### Leaving pyMBIR_UI ####")
+        logging.info(" #### Leaving tomoORNL_ui ####")
         self.close()
 
 
@@ -420,8 +420,8 @@ def main(args):
     app = QApplication(args)
     app.setStyle('Fusion')
     app.aboutToQuit.connect(clean_up)
-    app.setApplicationDisplayName("pyMBIR_UI")
-    window = PyMBIRUILauncher()
+    app.setApplicationDisplayName("tomoORNL_ui")
+    window = tomoORNLUILauncher()
     window.show()
     sys.exit(app.exec_())
 

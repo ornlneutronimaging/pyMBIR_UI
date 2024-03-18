@@ -12,20 +12,20 @@ import dxchange
 from mpl_toolkits import mplot3d
 import matplotlib.pyplot as plt
 
-from . import DataType, ReconstructionAlgorithm
-from .session_handler import SessionHandler
-from .general_settings_handler import GeneralSettingsHandler
-from .algorithm_dictionary_creator import AlgorithmDictionaryCreator
-from .fake_reconstruction_script import main as fake_reconstruction_script
-# from pyMBIR_UI.venkat_function import TestWorker as Worker
-from pyMBIR_UI.venkat_function import VenkatWorker as Worker
-from .status_message_config import show_status_message, StatusMessageStatus
-from .event_handler import EventHandler
+from tomoORNL_ui import DataType, ReconstructionAlgorithm
+from tomoORNL_ui.session_handler import SessionHandler
+from tomoORNL_ui.general_settings_handler import GeneralSettingsHandler
+from tomoORNL_ui.algorithm_dictionary_creator import AlgorithmDictionaryCreator
+from tomoORNL_ui.fake_reconstruction_script import main as fake_reconstruction_script
+# from tomoORNL_ui.venkat_function import TestWorker as Worker
+from tomoORNL_ui.venkat_function import VenkatWorker as Worker
+from tomoORNL_ui.status_message_config import show_status_message, StatusMessageStatus
+from tomoORNL_ui.event_handler import EventHandler
 from NeuNorm.normalization import Normalization
-from .utilities.file_utilities import make_or_reset_folder, make_folder
-from .venkat_function import MBIR_fromGUI
+from tomoORNL_ui.utilities.file_utilities import make_or_reset_folder, make_folder
+from tomoORNL_ui.venkat_function import MBIR_fromGUI
 # from .recon_HFIR_script_batch import recon_HFIR_script_launcher
-from .reconstructed_output_handler import ReconstructedOutputHandler
+from tomoORNL_ui.reconstructed_output_handler import ReconstructedOutputHandler
 
 
 class ReconstructionLauncher:

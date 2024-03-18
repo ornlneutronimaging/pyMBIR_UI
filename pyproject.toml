@@ -1,24 +1,24 @@
 [project]
-name = "pyMBIR_ui"
+name = "tomoORNL_ui"
 authors = [
   {name = "Jean Bilheux", email = "bilheuxjm@ornl.gov"},
 ]
-description = "UI to launch the pyMBIR reconstruction code"
+description = "UI to launch the tomoORNL reconstruction code"
 dynamic = ["version"]
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ""
 license = { text = "BSD 3-Clause License" }
 dependencies = [
   "numpy",
   "matplotlib"
 ]
-keywords = ["pymbir", "CT reconstruction", "tomography", "neutron", "imaging"]
+keywords = ["tomoORNL", "CT reconstruction", "tomography", "neutron", "imaging"]
 
 [project.urls]
-Repository = "https://github.com/ornlneutronimaging/pyMBIR_UI"
+Repository = "https://github.com/ornlneutronimaging/tomoORNL_ui"
 
 #[project.scripts]
-#pymbir_ui_cli = "pyMBIR_UI.__main__:"
+#pymbir_ui_cli = "tomoORNL_ui.__main__:"
 
 [build-system]
 requires = [
