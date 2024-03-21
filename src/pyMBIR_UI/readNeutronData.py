@@ -7,6 +7,7 @@ from PIL import Image
 from collections import OrderedDict
 import os
 
+
 def get_angles(data_path):
     '''
     Script to read angles from tiff files at ORNL 

@@ -170,14 +170,15 @@ class PyMBIRDictionaryCreator:
         write_output_flag = session_dict['advanced settings']['write output']
         arguments['write_op'] = write_output_flag
 
-        # output folder
-        output_folder = session_dict[DataType.output]['folder']
-        arguments['op_path'] = output_folder
-
         # temp output folder
         temp_output_folder = self.parent.config['temp_local_output_folder']
         full_home_file_name = Get.full_home_file_name(temp_output_folder)
         arguments['temp_op_dir'] = full_home_file_name
+
+        # output folder
+        base_file_name = os.path.basename(data_path)
+        output_folder = session_dict[DataType.output]['folder']
+        arguments['op_path'] = os.path.join(output_folder, base_file_name)
 
         arguments['running_mode'] = ''  # ['live', 'batch']
 

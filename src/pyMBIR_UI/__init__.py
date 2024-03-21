@@ -1,7 +1,8 @@
-from ._version import get_versions
 from qtpy.uic import loadUi
 from qtpy import QtGui
 import os
+
+from pyMBIR_UI._version import get_versions
 
 __version__ = get_versions()['version']
 del get_versions

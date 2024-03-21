@@ -12,20 +12,21 @@ import dxchange
 from mpl_toolkits import mplot3d
 import matplotlib.pyplot as plt
 
-from . import DataType, ReconstructionAlgorithm
-from .session_handler import SessionHandler
-from .general_settings_handler import GeneralSettingsHandler
-from .algorithm_dictionary_creator import AlgorithmDictionaryCreator
-from .fake_reconstruction_script import main as fake_reconstruction_script
+from NeuNorm.normalization import Normalization
+
+from pyMBIR_UI import DataType, ReconstructionAlgorithm
+from pyMBIR_UI.session_handler import SessionHandler
+from pyMBIR_UI.general_settings_handler import GeneralSettingsHandler
+from pyMBIR_UI.algorithm_dictionary_creator import AlgorithmDictionaryCreator
+from pyMBIR_UI.fake_reconstruction_script import main as fake_reconstruction_script
 # from pyMBIR_UI.venkat_function import TestWorker as Worker
 from pyMBIR_UI.venkat_function import VenkatWorker as Worker
-from .status_message_config import show_status_message, StatusMessageStatus
-from .event_handler import EventHandler
-from NeuNorm.normalization import Normalization
-from .utilities.file_utilities import make_or_reset_folder, make_folder
-from .venkat_function import MBIR_fromGUI
+from pyMBIR_UI.status_message_config import show_status_message, StatusMessageStatus
+from pyMBIR_UI.event_handler import EventHandler
+from pyMBIR_UI.utilities.file_utilities import make_or_reset_folder, make_folder
+from pyMBIR_UI.venkat_function import MBIR_fromGUI
 # from .recon_HFIR_script_batch import recon_HFIR_script_launcher
-from .reconstructed_output_handler import ReconstructedOutputHandler
+from pyMBIR_UI.reconstructed_output_handler import ReconstructedOutputHandler
 
 
 class ReconstructionLauncher:
@@ -151,6 +152,7 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         logging.info(f"Making sure output folder ({full_output_folder}) exists!")
 
         self.tmp_output_folder = os.path.join(dictionary_of_arguments['op_path'], "temporary_pymbir_reconstructed")
+        self.output_folder = dictionary_of_arguments['op_path']
         dictionary_of_arguments['temp_op_dir'] = self.tmp_output_folder
         logging.info(f"-> reset temporary folder: {dictionary_of_arguments['temp_op_dir']}")
         make_or_reset_folder(dictionary_of_arguments['temp_op_dir'])
@@ -176,6 +178,8 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
         current_location = os.path.abspath(os.path.dirname(__file__))
         script = 'recon_HFIR_script_batch.py'
         script_exe = os.path.abspath(os.path.join(current_location, script))
+        print(f"{script_exe =}")
+        print(f"{json_file_name =}")
         proc = subprocess.Popen(['python',
                                  script_exe,
                                  '--input_json',
@@ -192,7 +196,8 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
 
     def check_output_file(self):
         # retrieve the latest output file from the folder
-        output_folder = self.tmp_output_folder
+        # output_folder = self.tmp_output_folder
+        output_folder = self.output_folder
         list_files = glob.glob(os.path.join(output_folder, '*.tiff'))
         list_files.sort()
 
@@ -218,6 +223,7 @@ class ReconstructionBatchLauncher(ReconstructionLauncher):
                 return
 
         if self.parent.list_file_found_in_output_folder is None:
+            
             self.parent.full_reconstructed_array = []
             self.parent.list_file_found_in_output_folder = []
 
