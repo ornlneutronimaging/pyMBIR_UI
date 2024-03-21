@@ -174,6 +174,7 @@ class ImportDataHandler:
 
     def retrieve_list_of_files(self, folder_name="./"):
         list_files = get_list_files(directory=folder_name, file_extension=["*.fits", "*.tiff", "*.tif"])
+        list_files.sort()
         list_extension = get_list_file_extensions(list_filename=list_files)
         return list_files, list_extension
 

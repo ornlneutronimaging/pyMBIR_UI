@@ -1,4 +1,4 @@
-name: pyMBIR_UI
+name: pyMBIR_UI_37
 channels:
   - conda-forge
 dependencies:

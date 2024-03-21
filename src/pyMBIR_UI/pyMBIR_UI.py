@@ -3,11 +3,11 @@ from qtpy.QtGui import QGuiApplication
 import sys
 import os
 import logging
-from . import load_ui
 import versioneer
 import numpy as np
 from qtpy.QtCore import QObject, QThread, Signal
 
+from pyMBIR_UI import load_ui
 from pyMBIR_UI.import_data_handler import ImportDataHandler
 from pyMBIR_UI.gui_initialization import GuiInitialization
 from pyMBIR_UI.event_handler import EventHandler
