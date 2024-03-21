@@ -1,6 +1,5 @@
 name: pyMBIR_UI_37
 channels:
-  - defaults
   - conda-forge
 dependencies:
   - python
@@ -15,9 +14,26 @@ dependencies:
   - dxchange
   - h5py
   - tomopy
+  - matplotlib
+  # -- Development
+  # utils
+  - pre-commit
+  # packaging
+  - anaconda-client
+  - boa
+  - conda-build < 4
+  - conda-verify
+  - python-build
+  # doc
+  - pydocstyle
+  - sphinx
+  - sphinx_rtd_theme
+  # pip
   - pip:
-      - NeuNorm
-      - olefile
-      - pyqtgraph
-      - six
-      
+    - NeuNorm
+    - olefile
+    - pyqtgraph
+    - six
+    - mpl_toolkits
+    - check-wheel-contents
+    - pytest-playwright

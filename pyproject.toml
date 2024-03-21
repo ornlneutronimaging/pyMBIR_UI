@@ -1,0 +1,30 @@
+[project]
+name = "pyMBIR_ui"
+authors = [
+  {name = "Jean Bilheux", email = "bilheuxjm@ornl.gov"},
+]
+description = "UI to launch the pyMBIR reconstruction code"
+dynamic = ["version"]
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "BSD 3-Clause License" }
+dependencies = [
+  "numpy",
+  "matplotlib"
+]
+keywords = ["pymbir", "CT reconstruction", "tomography", "neutron", "imaging"]
+
+[project.urls]
+Repository = "https://github.com/ornlneutronimaging/pyMBIR_UI"
+
+#[project.scripts]
+#pymbir_ui_cli = "pyMBIR_UI.__main__:"
+
+[build-system]
+requires = [
+  "setuptools >= 40.6.0",
+  "wheel",
+  "toml",
+  "versioningit"
+]
+build-backend = "setuptools.build_meta"

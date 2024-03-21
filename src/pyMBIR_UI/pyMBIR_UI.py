@@ -152,7 +152,7 @@ class PyMBIRUILauncher(QMainWindow):
                             format='[%(levelname)s] - %(asctime)s - %(message)s',
                             level=logging.INFO)
         logging.info("*** Starting a new session ***")
-        logging.info(f" Version: {versioneer.get_version()}")
+        # logging.info(f" Version: {versioneer.get_version()}")
 
         self.automatic_load_of_previous_session()
 
