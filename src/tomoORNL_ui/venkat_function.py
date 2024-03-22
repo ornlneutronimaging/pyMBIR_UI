@@ -1,13 +1,14 @@
 import logging
 from qtpy.QtCore import QObject, Signal
 from tomopy import remove_stripe_fw
-from pyMBIR.reconEngine import analytic, MBIR
-from pyMBIR.utils import apply_proj_tilt
-from tomoORNL_ui.readNeutronData import *
+from tomoORNL.reconEngine import analytic, MBIR
+from tomoORNL.utils import apply_proj_tilt
 from tomopy.misc.corr import median_filter
 import os
 import dxchange
 import time
+
+from tomoORNL_ui.readNeutronData import *
 
 
 class TestWorker(QObject):
