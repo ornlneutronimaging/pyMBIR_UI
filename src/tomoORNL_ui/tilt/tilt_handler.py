@@ -2,14 +2,14 @@ import numpy as np
 import pyqtgraph as pg
 from qtpy import QtGui
 
-from pyMBIR_UI import DataType
-from pyMBIR_UI.utilities.get import Get
-from pyMBIR_UI.tilt.direct_minimization import DirectMinimization
-from pyMBIR_UI.tilt.phase_correlation import PhaseCorrelation
-from pyMBIR_UI.tilt.use_center import UseCenter
-from pyMBIR_UI.tilt.setup_0_180_degree_handler import Setup0180DegreeHandler
-from pyMBIR_UI.loader import Loader
-from pyMBIR_UI import TiltAlgorithm
+from tomoORNL_ui import DataType
+from tomoORNL_ui.utilities.get import Get
+from tomoORNL_ui.tilt.direct_minimization import DirectMinimization
+from tomoORNL_ui.tilt.phase_correlation import PhaseCorrelation
+from tomoORNL_ui.tilt.use_center import UseCenter
+from tomoORNL_ui.tilt.setup_0_180_degree_handler import Setup0180DegreeHandler
+from tomoORNL_ui.loader import Loader
+from tomoORNL_ui import TiltAlgorithm
 
 
 class TiltHandler:

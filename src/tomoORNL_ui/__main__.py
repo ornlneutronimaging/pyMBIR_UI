@@ -1,9 +1,9 @@
-from .pyMBIR_UI import main
+from tomoORNL_ui.tomoORNL_ui import main
 
 import multiprocessing
 import sys
 
-__file__ = "pyMBIR_UI"
+__file__ = "tomoORNL_ui"
 
 # Run the GUI
 #multiprocessing.freeze_support()

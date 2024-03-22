@@ -1,8 +1,8 @@
 from qtpy.QtWidgets import QProgressBar, QVBoxLayout
 import pyqtgraph as pg
 
-from .config_handler import ConfigHandler
-from . import interact_me_style
+from tomoORNL_ui.config_handler import ConfigHandler
+from tomoORNL_ui import interact_me_style
 
 
 class GuiInitialization:

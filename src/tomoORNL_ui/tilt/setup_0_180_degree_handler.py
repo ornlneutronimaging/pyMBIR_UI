@@ -7,7 +7,7 @@ import logging
 
 from .. import load_ui
 from ..utilities.gui import Gui
-from pyMBIR_UI import DataType
+from tomoORNL_ui import DataType
 from ..loader import Loader
 
 

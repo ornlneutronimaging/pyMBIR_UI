@@ -3,8 +3,8 @@ import logging
 
 from roiselector import RoiSelectorDialog
 
-from .status_message_config import show_status_message, StatusMessageStatus
-from .utilities.get import Get
+from tomoORNL_ui.status_message_config import show_status_message, StatusMessageStatus
+from tomoORNL_ui.utilities.get import Get
 
 
 class RoiHandler:

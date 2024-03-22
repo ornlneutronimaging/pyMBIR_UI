@@ -1,10 +1,10 @@
 from qtpy.QtWidgets import QDialog, QMainWindow
 import os
-from . import load_ui
+from tomoORNL_ui import load_ui
 import versioneer
 
 from ngievaluation import available_algorithms
-from .utilities.get import Get
+from tomoORNL_ui.utilities.get import Get
 
 
 class HelpHandler:

@@ -4,10 +4,10 @@ from qtpy.QtGui import QIcon
 from qtpy import QtGui
 import logging
 
-from . import load_ui
-from .utilities.get import Get
-from .utilities.file_utilities import read_ascii, write_ascii
-from . import refresh_image
+from tomoORNL_ui import load_ui
+from tomoORNL_ui.utilities.get import Get
+from tomoORNL_ui.utilities.file_utilities import read_ascii, write_ascii
+from tomoORNL_ui import refresh_image
 
 
 class LogLauncher:

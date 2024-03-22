@@ -1,10 +1,10 @@
 import os
 import json
 
-from . import ReconstructionAlgorithm, DataType
-from pyMBIR_UI.center_of_rotation.center_of_rotation import CenterOfRotation
-from pyMBIR_UI.advanced_settings.advanced_settings_initialization import AdvancedSettingsInitialization
-from .utilities.get import Get
+from tomoORNL_ui import ReconstructionAlgorithm, DataType
+from tomoORNL_ui.center_of_rotation.center_of_rotation import CenterOfRotation
+from tomoORNL_ui.advanced_settings.advanced_settings_initialization import AdvancedSettingsInitialization
+from tomoORNL_ui.utilities.get import Get
 
 
 class AlgorithmDictionaryCreator:

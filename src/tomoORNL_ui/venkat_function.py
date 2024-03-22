@@ -1,12 +1,9 @@
 import logging
 from qtpy.QtCore import QObject, Signal
 from tomopy import remove_stripe_fw
-try:
-    from pyMBIR.reconEngine import analytic, MBIR
-    from pyMBIR.utils import apply_proj_tilt
-except ModuleNotFoundError:
-    pass
-from pyMBIR_UI.readNeutronData import *
+from pyMBIR.reconEngine import analytic, MBIR
+from pyMBIR.utils import apply_proj_tilt
+from tomoORNL_ui.readNeutronData import *
 from tomopy.misc.corr import median_filter
 import os
 import dxchange

@@ -3,8 +3,8 @@ import logging
 
 from NeuNorm.normalization import Normalization
 
-from . import DataType
-from pyMBIR_UI.utilities.get import Get
+from tomoORNL_ui import DataType
+from tomoORNL_ui.utilities.get import Get
 
 
 class Loader:
