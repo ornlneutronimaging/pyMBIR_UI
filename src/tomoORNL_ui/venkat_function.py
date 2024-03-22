@@ -2,7 +2,7 @@ import logging
 from qtpy.QtCore import QObject, Signal
 from tomopy import remove_stripe_fw
 from tomoORNL.reconEngine import analytic, MBIR
-from tomoORNL.utils import apply_proj_tilt
+from tomoORNL.corrections import apply_proj_tilt
 from tomopy.misc.corr import median_filter
 import os
 import dxchange

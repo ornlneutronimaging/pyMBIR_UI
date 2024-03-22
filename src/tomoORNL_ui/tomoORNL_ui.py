@@ -108,7 +108,7 @@ class tomoORNLUILauncher(QMainWindow):
 
     def __init__(self, parent=None):
 
-        super(PyMBIRUILauncher, self).__init__(parent)
+        super(tomoORNLUILauncher, self).__init__(parent)
 
         ui_full_path = os.path.join(os.path.dirname(__file__),
                                     os.path.join('ui',
