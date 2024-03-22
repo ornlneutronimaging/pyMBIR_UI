@@ -188,8 +188,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>299</width>
-             <height>153</height>
+             <width>331</width>
+             <height>193</height>
             </rect>
            </property>
            <attribute name="label">
@@ -340,8 +340,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>287</width>
-             <height>196</height>
+             <width>313</width>
+             <height>227</height>
             </rect>
            </property>
            <attribute name="label">
@@ -512,8 +512,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>807</width>
-             <height>187</height>
+             <width>887</width>
+             <height>235</height>
             </rect>
            </property>
            <attribute name="label">
@@ -1175,8 +1175,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>397</width>
-                <height>41</height>
+                <width>446</width>
+                <height>44</height>
                </rect>
               </property>
               <attribute name="label">
@@ -1229,8 +1229,8 @@
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>204</width>
-                <height>41</height>
+                <width>184</width>
+                <height>44</height>
                </rect>
               </property>
               <attribute name="label">
@@ -1286,7 +1286,7 @@
      <x>0</x>
      <y>0</y>
      <width>1316</width>
-     <height>20</height>
+     <height>24</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp">
@@ -1294,8 +1294,6 @@
      <string>Help</string>
     </property>
     <addaction name="actionLog_2"/>
-    <addaction name="separator"/>
-    <addaction name="actionAdvanced_Settings"/>
    </widget>
    <widget class="QMenu" name="menuSession">
     <property name="title">
@@ -1305,6 +1303,8 @@
     <addaction name="actionSaveSession"/>
     <addaction name="separator"/>
     <addaction name="actionFull_Reset"/>
+    <addaction name="separator"/>
+    <addaction name="actionAdvanced_Settings_2"/>
    </widget>
    <addaction name="menuSession"/>
    <addaction name="menuHelp"/>
@@ -1413,6 +1413,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+A</string>
+   </property>
+  </action>
+  <action name="actionAdvanced_Settings_2">
+   <property name="text">
+    <string>Settings ...</string>
    </property>
   </action>
  </widget>
