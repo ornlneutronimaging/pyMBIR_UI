@@ -1303,11 +1303,16 @@
     <addaction name="actionSaveSession"/>
     <addaction name="separator"/>
     <addaction name="actionFull_Reset"/>
-    <addaction name="separator"/>
-    <addaction name="actionAdvanced_Settings_2"/>
+   </widget>
+   <widget class="QMenu" name="menuSettings">
+    <property name="title">
+     <string>Settings</string>
+    </property>
+    <addaction name="actionAdvanced_Settings_3"/>
    </widget>
    <addaction name="menuSession"/>
    <addaction name="menuHelp"/>
+   <addaction name="menuSettings"/>
   </widget>
   <action name="actionSelect_new_instrument">
    <property name="enabled">
@@ -1418,6 +1423,11 @@
   <action name="actionAdvanced_Settings_2">
    <property name="text">
     <string>Settings ...</string>
+   </property>
+  </action>
+  <action name="actionAdvanced_Settings_3">
+   <property name="text">
+    <string>Advanced ...</string>
    </property>
   </action>
  </widget>
@@ -1963,7 +1973,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionAdvanced_Settings</sender>
+   <sender>actionAdvanced_Settings_3</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>advanced_settings_clicked()</slot>
